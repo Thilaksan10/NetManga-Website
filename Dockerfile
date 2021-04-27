@@ -4,7 +4,7 @@ ENV PATH="/scripts:${PATH}"
 
 COPY ./requirements/prod.txt /requirements/prod.txt
 RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
-RUN apk add python3-dev musl-dev postgresql-dev jpeg-dev zlib-dev libjpeg
+RUN apk add python3-dev musl-dev postgresql-dev jpeg-dev zlib-dev libjpeg libpcre3 libpcre3-dev
 RUN pip install -r /requirements/prod.txt
 RUN apk del .tmp
 
