@@ -6,3 +6,5 @@ build:
   docker:
     website: Dockerfile
     proxy: proxy/Dockerfile
+  run:
+    website: ["entrypoint.sh"]
