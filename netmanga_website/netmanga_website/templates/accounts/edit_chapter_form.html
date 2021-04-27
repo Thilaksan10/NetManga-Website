@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+{% block content %}
+<br />
+<div class="row signup-mask">
+    <div class="col-lg-10 mx-auto">
+        <h2>Edit Chapter</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="control-group">
+                {% for field in chapterform %}
+                <div id="text-input" class="form-group">
+                    
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                
+                <div class="picture-upload">
+                    <label class="picture-upload-label">Upload Pages:</label>
+                    <input name="images" type="file" multiple class="form-control" accept="image/*">
+                </div>
+            </div>
+            <small class="img-disclaimer"> * for the best user experience and the best image resolution upload images with the format 450x720 px or higher with the same proportion</small>
+            <br />
+            <br />
+            <div class="form-group" style="margin: 0 auto;">
+                <button class="btn btn-login btn-xl" type="submit">Save</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

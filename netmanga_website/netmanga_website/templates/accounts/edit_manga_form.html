@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+{% block content %}
+<br />
+<div class="row signup-mask">
+    <div class="col-lg-10 mx-auto">
+        <h2>Edit Manga Series</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="control-group">
+                {% for field in form %}
+                {% if form.cover_picture == field %}
+                
+                <div class="picture-upload">
+                    <label class="cover-picture-label">Cover Picture:</label>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <small class="img-disclaimer"> * for the best user experience and the best image resolution upload images with the format 185x265 px or higher with the same proportion</small>
+                
+                {% elif form.primary_Genre == field %}
+                <div class="genre-select" style="float:left">
+                  <h5 class="genre-label">Primary Genre:</h5>
+                  {{field}}
+                  {% for error in field.errors %}
+                  <p class="help-block text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>                  
+                {% elif form.secondary_Genre == field %}
+                <div class="genre-select" style="float:right">
+                  <h5 class="genre-label">Secondary Genre:</h5>
+                  {{field}}
+                  {% for error in field.errors %}
+                  <p class="help-block text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+                {% else %}
+                <div id="text-input" class="form-group">
+                    
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <button class="btn btn-login btn-xl" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} Help | NETMANGA {% endblock %}
+
+{% block content %}
+
+<!-- Contact Section Form-->
+<div class="row help-page">
+    <div class="col-lg-8 mx-auto">
+
+        {% if success %}
+        <div class="alert alert-success" role="alert">
+            Your Message was sent! Check your Inbox for a response
+        </div>
+        {% endif %}
+
+        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+        <form id="contactForm" name="sentMessage" novalidate="novalidate" method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    {{ field.label_tag }}
+                    {% if user.is_authenticated %}
+                        {{ field }}
+                    {% else %}
+                    {{ field }}
+                    {% endif %}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <br />
+            <div class="form-group"></div>
+                <button class="btn btn-subscribe btn-xl" id="sendMessageButton" type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

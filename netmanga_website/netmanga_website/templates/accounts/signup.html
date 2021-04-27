@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up :: NETMANGA {% endblock %}
+
+{% block content %}
+<br />
+<div class="row signup-mask">
+    <div class="col-lg-8 mx-auto">
+        <h2>Sign Up</h2>
+        <form id="contactForm" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            <div class="control-group">
+                {% for field in form %}
+                {% if form.advertise_consent == field or form.third_party_advertise_consent == field or form.analytics_consent == field or form.terms_consent == field %}
+                <div class="customCheckbox">
+                    <div class="input-container">
+                        {{ field }}
+                        {{ field.label_tag }}
+                        <p class="help-text">
+                        {% if form.advertise_consent == field %}
+                            I agree to receive service updates, news and events form NETMANGA by email.    
+                        {% elif form.third_party_advertise_consent == field %}
+                        I agree that my personal data may be used by trusted thrid parties of NETMANGA for advertising and marketing purposes. The use of data can be managed by category in the Settings page.
+                        {% elif form.analytics_consent == field %}
+                        I agree that may personal data may be used by trusted third parties of NETMANGA for service analysus and performance measurement. The use of data can be managed by category in the Settings page.
+                        {% else %}
+                            I agree to NETMANGA's <a href="{% url 'public:user_terms' %}">Creator Terms</a>. You also have the right to lodge a complaint about our processing of your personal data with the competent supervisory authority, such as the French Data Protection Authority (CNIL).   To learn more about the processing of your personal data , please refer to our Section Privacy Policy in <a href="{% url 'public:user_terms' %}">Privacy Policy</a>.
+                        {% endif %}
+                        </p>
+                        {% for error in field.errors %}
+                        <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br />
+            <div class="form-group">
+                <button class="btn btn-login btn-xl" type="submit">Sign up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

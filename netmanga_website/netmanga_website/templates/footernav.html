@@ -1,0 +1,32 @@
+{% load static %}
+<!--
+<div class="container">
+    
+    <a class="social-media-link" href="">
+        <i class="fa fa-facebook"></i>
+    </a>
+    <i class="fa fa-facebook"></i>
+    <a class="social-media-link" href="">
+        <i class="fa fa-instagram"></i>
+    </a>
+
+    <a class="social-media-link" href="">
+        <i class="fa fa-twitter"></i>
+    </a>
+
+    <a class="social-media-link" href="">
+        <i class="fa fa-youtube"></i>
+    </a>
+</div>
+-->
+<div class="container">
+    <a class="footer-link" href="{% url 'public:about' %}">About</a>
+    <a class="footer-link" href="{% url 'help:help' %}">Help</a>
+    <a class="footer-link" href="{% url 'public:creator_terms' %}"><nobr>Creator Terms</nobr></a>
+    <a class="footer-link" href="{% url 'public:user_terms' %}"><nobr>User Terms</nobr></a>
+    <a class="footer-link" href="{% url 'public:privacy_policy' %}"><nobr>Privacy Policy</nobr></a>
+    </br>
+    <p class="copyright">Copyright © NETMANGA</p>  
+    <br/>
+    <img src="{% static '/img/netmanga_logo.png' %}" class="footer-logo"> 
+</div>

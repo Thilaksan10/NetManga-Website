@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+{% block content %}
+{% if manga_infos|length == 0 and chapter_infos|length == 0 %}
+    <div class="chapterlist-content">
+        <h1 class="nothing-found">
+            Nothing found for
+            </br> "{{search}}"
+        </h1>
+    </div>
+{% else %}
+<div class="chapterlist-content">
+    <div class="chapter-view">
+        <div>
+            <section class="section placeholder loading loaded">
+                <div class="chapterlist">
+                    {% for manga_info in manga_infos %}
+                    <a href="{% url 'public:chapterlist' pk=manga_info.manga.pk %}" style="text-decoration: none;">
+                        <div class="chapter-card">
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}">
+                            </div>
+                            <div class="manga-data">
+                                <div class="scroller vb vb-invisible">
+                                    <div class="scroller-wrap vb-content">
+                                        <div class="info">
+                                            <div class="chapter-info">
+                                                <div>
+                                                    <div>
+                                                        <div class="manga-title">
+                                                            {{manga_info.manga.title}}
+                                                        </div>
+                                                        <div class="latest-chapter">
+                                                            <h6>{{manga_info.latest_chapter.no}} Chapters</h6>
+                                                            <h6>Latest upload on: {{manga_info.latest_chapter.published | date:"d.m.Y"}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="card-footer">
+                                    <div class="genres">
+                                        <div class="genre">{{manga_info.manga.primary_Genre}}</div>
+                                        {% if manga_info.manga.primary_Genre != manga_info.manga.secondary_Genre %}
+                                        <div class="genre">{{manga_info.manga.secondary_Genre}}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% for chapter_info in chapter_infos %}
+                    <a href="{% url 'public:chapter_reader' pk=chapter_info.chapter.pk %}" style="text-decoration: none;">
+                        <div class="chapter-card">
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <img class="chapter-image loaded" src="{{ chapter_info.chapter.manga.cover_picture.url }}">
+                            </div>
+                            <div class="data">
+                                <div class="scroller vb vb-invisible">
+                                    <div class="scroller-wrap vb-content">
+                                        <div class="info">
+                                            <div class="chapter-info">
+                                                <div>
+                                                    <div>
+                                                        <div class="chapter-title">
+                                                            {{chapter_info.chapter.title}}
+                                                        </div>
+                                                        <div class="chapter-number">
+                                                            Chapter {{chapter_info.chapter.no}}
+                                                        </div>
+                                                        <div class="publishing-date">
+                                                            {{chapter_info.chapter.published|date:'d.m.Y'}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="performance-wrap">
+                                            <div class="chapter-views-view">
+                                                {{chapter_info.views}} Views
+                                            </div>
+                                            <div class="chapter-ratings-view">
+                                                <i class="fa fa-thumbs-up">
+                                                </i> 
+                                                <small class="thumbs-up">{{chapter_info.likes}}</small>
+                                            </div>
+                                            <div class="chapter-ratings-view">
+                                                <i class="fa fa-thumbs-down">
+                                                </i> 
+                                                <small class="thumbs-down">{{chapter_info.dislikes}}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{%endif%}
+{% endblock %}

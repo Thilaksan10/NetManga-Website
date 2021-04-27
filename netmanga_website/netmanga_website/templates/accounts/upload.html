@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+{% block content %}
+<!--
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">-->
+        <!-- Masthead Heading-->
+        <!--<h1 class="masthead-heading text-uppercase mb-0">PUBLISH YOUR MANGA</h1>-->
+        <!-- Masthead Subheading-->
+        <!--<p class="masthead-subheading font-weight-light mb-0">Be Creative</p>
+    </div>
+</header>-->
+<!--Recommended Section-->
+{% url 'accounts:new_manga_form' as new_manga_form_url %}
+<!--
+<div class="section">
+    <div class="container">
+        <ul class="upload">
+            <li class="upload-item">
+                <div class="upload-item-img">
+                    <img src="/static/img/17350.jpg" width=95 height=136>
+                </div>
+                <div class="upload-item-title">
+                    <h4>Start a new Manga Series</h4>
+                    <p>Chapter 0</p>    
+                </div>
+                <div class="upload-item-link">
+                    <a href="{{ new_manga_form_url }}">
+                        <h1>+</h1>
+                    </a>
+                </div>
+            </li>
+            {% for manga in mangaseries %}
+            <li class="upload-item">
+                <div class="upload-item-img">
+                    <img src="{{ manga.cover_picture.url }}" width=95 height=136>
+                </div>
+                <div class="upload-item-title">
+                    <h4>{{ manga.title }}</h4>
+                    <p>Chapter 0</p>    
+                </div>
+                <div class="upload-item-link">
+                    <a href="{% url 'accounts:new_chapter_form' pk=manga.pk %}">
+                        <h1>+</h1>
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+-->
+
+<div class="chapterlist-content">
+    <div class="chapter-view">
+        <div>
+            <section class="section placeholder loading loaded">
+                <div class="manga-info upload-list">
+                    <h6 class="total-mangas" style="float: left;">{{manga_infos|length}} Mangas</h6>
+                    <a href="{{ new_manga_form_url }}" class="btn btn-subscribe" style="float:right">
+                        <i class="fa fa-upload" style="font-size: 18px;"></i>
+                        Manga 
+                    </a>
+                </div>
+                
+                <div class="chapterlist">
+                    {% for manga_info in manga_infos %}
+                    
+                    <div class="chapter-card">
+                        
+                        <div class="chapter-cover" rel="noopener noreferrer">
+                            <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
+                                <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}">
+                            </a>
+                        </div>
+                        <div class="manga-data">
+                            <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
+                                <div class="scroller vb vb-invisible">
+                                    <div class="scroller-wrap vb-content">
+                                        <div class="info">
+                                            <div class="chapter-info">
+                                                <div>
+                                                    <div>
+                                                        <div class="manga-title">
+                                                            {{manga_info.manga.title}}
+                                                        </div>
+                                                        <div class="latest-chapter">
+                                                            <h6>{{manga_info.latest_chapter.no}} Chapters</h6>
+                                                            <h6>Latest upload on: {{manga_info.latest_chapter.published | date:"d.m.Y"}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </a>
+                            <div class="card-footer">
+                                <div class="genres">
+                                    <div class="genre">{{manga_info.manga.primary_Genre}}</div>
+                                    {% if manga_info.manga.primary_Genre != manga_info.manga.secondary_Genre %}
+                                    <div class="genre">{{manga_info.manga.secondary_Genre}}</div>
+                                    {% endif %}
+                                </div>
+                                <a class="btn-edit-manga" href="{% url 'accounts:edit_manga_form' pk=manga_info.manga.pk %}">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

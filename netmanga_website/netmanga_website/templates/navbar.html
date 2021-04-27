@@ -1,0 +1,103 @@
+{% load static %}
+
+{% url 'accounts:profile' as profile_url %}
+{% url 'accounts:login' as login_url %}
+{% url 'accounts:logout' as logout_url %}
+{% url 'accounts:analytics' as analytics_url %}
+{% url 'accounts:upload' as upload_url %}
+
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse w-100 order-1 order-lg-0" id="navigation-collapse">
+            <!--Page Navigation-->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'public:popular' %}">
+                        <h4>Popular</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'public:genre' %}">
+                        <h4>Genre</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="mx-auto order-0">
+            <!--Logo and Homepage Nav-->
+            <a class="navbar-brand mx-auto" href="{% url 'public:index' %}">
+                <img src="{% static 'img/netmanga_logo.png' %}" width="220" height="80" class="">
+            </a>
+        </div>
+        <!--Search Engine and Profile/Login-->
+
+        <div class="navbar-collapse collapse w-100 order-3" id="navigation-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form class="d-flex nav-link" method="post" action="{% url 'public:search' %}">
+                        {% csrf_token %}
+                        <button class="search-button" type="submit">
+                            <i class="fa fa-search search-img"></i>
+                        </button>
+                        <input name="search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px;" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                </li>
+                
+                <li class="nav-item">
+                    <div class="dropdown">
+                        {% if user.is_authenticated %}
+
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{request.user.profile.profile_picture.url}}" width="45" height="45" class="rounded-circle">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ profile_url }}">Profile</a>
+                            {% if user.creator %}
+                            <a class="dropdown-item" href="{{ analytics_url }}">Analytics</a>
+                            <a class="dropdown-item" href="{{ upload_url }}">Upload Manga</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="{{ logout_url }}">Log Out</a>
+                        </div>
+                        {% else %}
+                        <a class="btn btn-outline-login" href="{{ login_url }}">
+                           Log In
+                        </a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--
+<h2>
+    <div>
+        <span><a href="{% url 'public:index' %}">NetManga</a></span>
+        <span><a href="{% url 'public:popular' %}">Popular</a></span>
+        <span><a href="{% url 'public:genre' %}">Genre</a></span>
+        <span style="float:right">
+            {% if user.is_authenticated %}
+                {% url 'accounts:profile' as profile_url %}
+                <span>
+                    {% if request.path == profile_url %}
+                    {{user.username}}
+                    {% else %}
+                    <a href="{{ profile_url}}">
+                        {{user.username}}
+                    </a>
+                    {% endif %}
+                </span>
+                <span><a href="{% url 'accounts:logout' %}">Logout</a><span></span>
+            {% else %}
+                <span><a href="{% url 'accounts:login' %}">Login</a><span></span>
+            {% endif %}
+        </span>
+    </div>
+</h2>
+-->

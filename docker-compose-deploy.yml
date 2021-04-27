@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+    website:
+        build:
+            context: .
+        volumes: 
+            - static_data:/vol/web
+        env_file: 
+            - ./.env
+            - ./.env.secret
+
+    db_migrate:
+        image: netmanga_website
+        command: python manage.py migrate
+        volumes:
+            - static_data:/vol/web
+        env_file: 
+            - ./.env
+            - ./.env.secret
+        depends_on: 
+            - postgres
+        
+    postgres:
+        image: postgres
+        ports:
+            - "5432:5432"
+        env_file: 
+            - ./.env.secret
+        volumes: 
+            - db-data:/var/lib/postgresql/data
+
+    proxy:
+        build:
+            context: ./proxy
+        volumes: 
+            - static_data:/vol/static
+        ports:
+            - "8080:8080"
+        depends_on:
+            - website  
+            - postgres
+            
+volumes: 
+    static_data:
+    db-data:

@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+<script>
+var endpoint = 'api/data/'
+
+$.ajax({
+    method: "GET",
+    url: endpoint,
+    success:function(data){
+        console.log(data)
+        console.log(data.customers * 1000)
+    },
+    error: function(error_data){
+        console.log("error")
+        console.log(error_data)
+    }
+})
+</script>
+
+{% block content %}
+<!--
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">-->
+        <!-- Masthead Heading-->
+        <!--<h1 class="masthead-heading text-uppercase mb-0">PUBLISH YOUR MANGA</h1>-->
+        <!-- Masthead Subheading-->
+        <!--<p class="masthead-subheading font-weight-light mb-0">Be Creative</p>
+    </div>
+</header>-->
+<!--Recommended Section-->
+<div class="analytics">
+    <div class="analytics-content">
+        <main>
+            <div class="container-fluid">
+                <h1>Dashboard</h1>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Earned: 
+                                </div>
+                                <div class="card-data">
+                                    {{user.creator.earned_money|floatformat:2}}€
+                                </div>
+                            </div>
+                            <div class="card-footer-analytics d-flex alugn-items-center justify-content-between">
+                                <a href="#" class="small stretched-link">View Details</a>
+                                <div class="small">
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Total Views: 
+                                </div>
+                                <div class="card-data">
+                                    {{total_views}}
+                                </div>
+                            </div>
+                            <div class="card-footer-analytics d-flex alugn-items-center justify-content-between">
+                                <a href="#" class="small stretched-link">View Details</a>
+                                <div class="small">
+                                    <i class="i fa fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Total Subscription:
+                                </div>
+                                <div class="card-data">
+                                    {{total_subscriptions}}
+                                </div>
+                            </div>
+                            <div class="card-footer-analytics d-flex alugn-items-center justify-content-between">
+                                <a href="#" class="small stretched-link">View Details</a>
+                                <div class="small">
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Received Awards:
+                                </div>
+                                <div class="card-data">
+                                    {{received_awards}}
+                                </div>
+                            </div>
+                            <div class="card-footer-analytics d-flex alugn-items-center justify-content-between">
+                                <a href="#" class="small stretched-link">View Details</a>
+                                <div class="small">
+                                    <i class="fa fa-angle-right"></i>
+                                </div>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fa fa-chart-area mr-1"></i>
+                                Daily Awards
+                            </div>
+                            <div class="card-body">
+                                <div class="chartjs-size-monitor">
+                                    <div class="chart-js-size-monitor-expand">
+                                        <div></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <canvas id="daily_awards" class="chartjs-render-monitor"></canvas>
+                                <script>
+                                    var daily_awards_chart_object = document.getElementById('daily_awards')
+                                    var data = {{daily_awards_data|safe}}
+                                    console.log(data)
+                                    console.log(data.data[0])
+                                    var daily_awards_chart = new Chart(daily_awards_chart_object, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: data.labels,
+                                            datasets: [{
+                                                label:'Bronce Awards',
+                                                data: data.data[0].bronce,
+                                                backgroundColor: [
+                                                    'rgba(191,137,112,0.7)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(191,137,112,1)'
+                                                ],
+                                                borderWidth:1,
+                                            },
+                                            {
+                                                label:'Silver Awards',
+                                                data: data.data[0].silver,
+                                                backgroundColor: [
+                                                    'rgba(192,192,192,0.7)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(192,192,192,1)'
+                                                ],
+                                                borderWidth:1,
+                                            },
+                                            {
+                                                label:'Gold Awards',
+                                                data: data.data[0].gold,
+                                                backgroundColor: [
+                                                    'rgba(226,176,7,0.7)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(226,176,7,1)'
+                                                ],
+                                                borderWidth:1,
+                                            },
+                                            {
+                                                label:'Platinum Awards',
+                                                data: data.data[0].platinum,
+                                                backgroundColor: [
+                                                    'rgba(160,178,198,0.7)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(160,178,198,1)'
+                                                ],
+                                                borderWidth:1,
+                                            }],
+                                        },
+                                        
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fa fa-chart-area mr-1"></i>
+                                Daily Revenue
+                            </div>
+                            <div class="card-body">
+                                <div class="chartjs-size-monitor">
+                                    <div class="chart-js-size-monitor-expand">
+                                        <div></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <canvas id="daily_revenue" class="chartjs-render-monitor"></canvas>
+                                <script>
+                                    var daily_revenue_chart_object = document.getElementById('daily_revenue')
+                                    var data = {{daily_revenue_data|safe}}
+                                    console.log(data)
+                                    var daily_revenue_chart = new Chart(daily_revenue_chart_object, {
+                                        type: 'line',
+                                        data: {
+                                            labels: data.labels,
+                                            datasets: [{
+                                                label:'Revenue in €',
+                                                data: data.data,
+                                                backgroundColor: [
+                                                    'rgba(234,10,142,0.2)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(234,10,142,1)'
+                                                ]
+                                            }]
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fa fa-chart-area mr-1"></i>
+                                Daily Subscriptions
+                            </div>
+                            <div class="card-body">
+                                <div class="chartjs-size-monitor">
+                                    <div class="chart-js-size-monitor-expand">
+                                        <div></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <canvas id="daily_subscriptions" class="chartjs-render-monitor"></canvas>
+                                <script>
+                                    var daily_subscriptions_chart_object = document.getElementById('daily_subscriptions')
+                                    daily_subscriptions_chart_object.height = 120;
+                                    var data = {{daily_subscriptions_data|safe}}
+                                    console.log(data)
+                                    var daily_subscriptions_chart = new Chart(daily_subscriptions_chart_object, {
+                                        type: 'line',
+                                        data: {
+                                            labels: data.labels,
+                                            datasets: [{
+                                                label:'Subscriptions',
+                                                data: data.data,
+                                                backgroundColor: [
+                                                    'rgba(234,10,142,0.2)',
+                                                ],
+                                                borderColor: [
+                                                    'rgba(234,10,142,1)'
+                                                ]
+                                            }]
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

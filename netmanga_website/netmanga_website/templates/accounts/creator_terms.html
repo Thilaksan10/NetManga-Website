@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} Terms of use | NETMANGA {% endblock %}
+
+{% block content %}
+<div class="container">
+      
+</div>
+<div class="row creator_terms-mask">
+    <div class="col-lg-8 mx-auto">
+        <p>
+            We are glad that you are not only want to be part of our community, but also want to contribute to the community as a creator.
+            Before we you can start uploading your fisrt Manga or Webcomic please make sure you read the creator terms and accept them.
+            If you have further questions use the form on the
+            <a href="{% url 'help:help' %}">help</a>
+            page.
+            We hope for a good cooperation.
+        </p>
+        <form id="contactForm" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="control-group">
+                <div class="customCheckbox">
+                    <div class="input-container">
+                        {{ field }}
+                        {{ field.label_tag }}
+                        <p class="help-text">
+                            I agree to NETMANGA's <a href="{% url 'public:creator_terms' %}">Creator Terms</a>. You also have the right to lodge a complaint about our processing of your personal data with the competent supervisory authority, such as the French Data Protection Authority (CNIL).   To learn more about the processing of your personal data , please refer to our Section Privacy Policy in <a href="{% url 'public:privacy_policy' %}">Privacy Policy</a>.
+                        </p>
+                        {% for error in field.errors %}
+                        <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <br />
+            <button class="btn btn-login btn-xl" type="submit">Become a Creator</button>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}

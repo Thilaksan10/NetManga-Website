@@ -1,0 +1,159 @@
+<div class="container-fluid bg-light">
+    {% url 'public:action' as action_url %}
+    {% url 'public:drama' as drama_url %}
+    {% url 'public:comedy' as comedy_url %}
+    {% url 'public:fantasy' as fantasy_url %}
+    {% url 'public:slice_of_life' as slice_of_life_url %}
+    {% url 'public:romance' as romance_url %}
+    {% url 'public:superhero' as superhero_url %}
+    {% url 'public:sci-fi' as sci_fi_url %}
+    {% url 'public:thriller' as thriller_url %}
+    {% url 'public:supernatural' as supernatural_url %}
+    {% url 'public:mystery' as mystery_url %}
+    {% url 'public:sports' as sports_url %}
+    {% url 'public:historical' as historical_url %}
+    {% url 'public:heartwarming' as heartwarming_url %}
+    {% url 'public:horror' as horror_url %}
+    {% url 'public:informative' as informative_url %}
+    <ul class="row genre-nav">
+        {% if request.path == action_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ action_url }}">ACTION</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ action_url }}">ACTION</a>
+        </li>
+        {% endif %}
+        {% if request.path == drama_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ drama_url }}">DRAMA</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ drama_url }}">DRAMA</a>
+        </li>
+        {% endif %}
+        {% if request.path == comedy_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ comedy_url }}">COMEDY</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ comedy_url }}">COMEDY</a>
+        </li>
+        {% endif %}
+        {% if request.path == fantasy_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ fantasy_url }}">FANTASY</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ fantasy_url }}">FANTASY</a>
+        </li>
+        {% endif %}
+        {% if request.path == slice_of_life_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ slice_of_life_url }}">SLICE OF LIFE</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ slice_of_life_url }}">SLICE OF LIFE</a>
+        </li>
+        {% endif %}
+        {% if request.path == romance_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ romance_url }}">ROMANCE</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ romance_url }}">ROMANCE</a>
+        </li>
+        {% endif %}
+        {% if request.path == superhero_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ superhero_url }}">SUPERHERO</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ superhero_url }}">SUPERHERO</a>
+        </li>
+        {% endif %}
+        {% if request.path == sci_fi_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ sci_fi_url }}">SCI-FI</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ sci_fi_url }}">SCI-FI</a>
+        </li>
+        {% endif %}
+        {% if request.path == thriller_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ thriller_url }}">THRILLER</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ thriller_url }}">THRILLER</a>
+        </li>
+        {% endif %}
+        {% if request.path == supernatural_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ supernatural_url }}">SUPERNATURAL</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ supernatural_url }}">SUPERNATURAL</a>
+        </li>
+        {% endif %}
+        {% if request.path == mystery_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ mystery_url }}">MYSTERY</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ mystery_url }}">MYSTERY</a>
+        </li>
+        {% endif %}{% if request.path == sports_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ sports_url }}">SPORTS</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ sports_url }}">SPORTS</a>
+        </li>
+        {% endif %}{% if request.path == historical_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ historical_url }}">HISTORICAL</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ historical_url }}">HISTORICAL</a>
+        </li>
+        {% endif %}{% if request.path == heartwarming_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ heartwarming_url }}">HEARTWARMING</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ heartwarming_url }}">HEARTWARMING</a>
+        </li>
+        {% endif %}{% if request.path == horror_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ horror_url }}">HORROR</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ horror_url }}">HORROR</a>
+        </li>
+        {% endif %}{% if request.path == informative_url %}
+        <li class="genre-box-active">
+            <a class="genre-item" href="{{ informative_url }}">INFORMATIVE</a>
+        </li>
+        {% else %}
+        <li class="genre-box">
+            <a class="genre-item" href="{{ informative_url }}">INFORMATIVE</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

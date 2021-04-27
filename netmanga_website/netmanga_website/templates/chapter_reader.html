@@ -1,0 +1,480 @@
+{% extends 'chapter_reader_base.html' %}
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %} NETMANGA {% endblock %}
+
+{% block content %}
+<!--
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">-->
+        <!-- Masthead Heading-->
+        <!--<h1 class="masthead-heading text-uppercase mb-0">PUBLISH YOUR MANGA</h1>-->
+        <!-- Masthead Subheading-->
+        <!--<p class="masthead-subheading font-weight-light mb-0">Be Creative</p>
+    </div>
+</header>-->
+<!--Recommended Section-->
+<!-- Navigation-->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        
+        
+        <div class=" w-100 order-1 order-sm-0">
+            <!--Logo and Homepage Nav-->
+            <a class="navbar-brand" href="{% url 'public:index' %}">
+                <img src="{% static '/img/netmanga_logo.png' %}" class="logo-nav">
+            </a>
+        </div>
+
+        <div class="mx-auto order-3">
+            <ul class="reader-nav ms-auto">
+                <li class="nav-chapter-item">
+                    {% if chapterpage.no < pages %}
+                    <a class='btn btn-next' href="{% url 'public:next_page' pk=chapter.pk sk=chapterpage.pk %}">
+                        &#8678;
+                    </a>
+                    {% else %}
+                    <a class='btn btn-next-hidden'>
+                        &#8678;
+                    </a> 
+                    {% endif %}
+                </li>
+
+                <li class="nav-chapter-item">
+                    <!--Logo and Homepage Nav-->
+                    <span class="page-no mx-auto">
+                        {{chapterpage.no}}/{{pages}}
+                    </span>
+                </li>
+                <li class="nav-chapter-item">
+                    {% if chapterpage.no > 1 %}
+                    <a class='btn btn-next' href="{% url 'public:previous_page' pk=chapter.pk tk=chapterpage.pk %}">
+                        &#8680;
+                    </a>     
+                    {% else %}
+                    <a class='btn btn-next-hidden'>
+                        &#8680;
+                    </a> 
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        <!--Search Engine and Profile/Login-->
+
+        <div class="navbar-collapse collapse w-100 order-3">
+            <ul class="reader-nav ms-auto">
+                <li class="nav-chapter-item">
+                    <span class="nav-chapter-text">
+                        {{chapter.title}} (Chapter {{chapter.no}})
+                    </span>
+                </li> 
+                <li class="nav-chapter-item">
+                    <span class="nav-chapter-text">
+                        &#60;
+                    </span>
+                </li>
+                <li class="nav-chapter-item">
+                    <a class="nav-chapter-link" href="{% url 'public:chapterlist' pk=chapter.manga.pk%}">
+                        {{chapter.manga.title}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="viewer-content">
+    <div class="page-view">
+        <div>
+            <section class="page-section loaded">
+                <div class="page-list">
+                    <div class="page-card">
+                        <div class="page-cover" rel="noopener noreferrer">
+                            
+                            <img class="chapter-page loaded" src="{{ chapterpage.image.url}} " id="manga-page" galleryimg="no" oncontextmenu="return false;">
+            
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <!--
+    <div class="container">
+        <div class="viewer">
+            {% if chapterpage.no < pages %}
+            <a class='btn btn-next' href="{% url 'public:next_page' pk=chapter.pk sk=chapterpage.pk %}">
+                &#8592;
+            </a>
+            {% else %}
+            <a class='btn btn-next-hidden'>
+                &#8592;
+            </a> 
+            {% endif %}
+            <div class="chapter-page">
+                <img src="{{ chapterpage.image.url}} ">
+            </div>
+            {% if chapterpage.no > 1 %}
+            <a class='btn btn-next' href="{% url 'public:previous_page' pk=chapter.pk tk=chapterpage.pk %}">
+                &#8594;
+            </a>     
+            {% else %}
+            <a class='btn btn-next-hidden'>
+                &#8594;
+            </a> 
+            {% endif %}
+            
+        </div>
+    </div>
+    -->
+    <div class="container-fluid">
+        <div class="feedback">
+            <ul class="ratings">
+                <li>
+                    <h4 class="views">
+                        {{views}} Views 
+                    </h4>
+                    <h6 class="publish-date">
+                        {{chapter.published|date:'d.m.Y'}}
+                    </h6>
+                </li>
+                
+                <li class="like-buttons">
+                    <div>
+                        <form id="like" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="like" value="1"/>
+                            {% if user_rating.rating == True %}
+                            <a href="#" class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                                <i class="fa fa-thumbs-up fa-selected">
+                                </i>
+                                <small class="thumbs-up-selected">{{likes}}</small>
+                            </a>
+                            {% else %}
+                            <a href="#" class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                                <i class="fa fa-thumbs-up">
+                                </i> 
+                                <small class="thumbs-up">{{likes}}</small>
+                            </a> 
+                            {% endif %}
+                        </form>
+                        <form id="dislike" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="dislike" value="2"/>
+                            {% if user_rating.rating == False %}
+                            <a href="#" class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                                <i class="fa fa-thumbs-down fa-selected">
+                                </i>
+                                <small class="thumbs-down-selected">{{dislikes}}</small>
+                            </a>
+                            
+                            {% else %}
+                            <a href="#" class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                                <i class="fa fa-thumbs-down">
+                                </i> 
+                                <small class="thumbs-down">{{dislikes}}</small>
+                            </a>
+                            
+                            {% endif %}
+                        </form>
+                        <div class="dropdown" style="float: right;">
+                            <div class="more-button" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="true">
+                                <span>...</span>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                {% if user.is_authenticated %}
+                                <a class="dropdown-item" id="give_award">
+                                    <div class="dropdown-image">
+                                        <i class="fa fa-gift"></i>
+                                    </div> 
+                                    <div class="dropdown-text">Awards</div> 
+                                </a>
+                                <a class="dropdown-item" id="report_chapter">
+                                    <div class="dropdown-image">
+                                        <i class="fa fa-flag"></i>
+                                    </div> 
+                                    <div class="dropdown-text">Report</div> 
+                                </a>
+                                {% else %}
+                                <a class="dropdown-item" id="give_award" href="{% url 'accounts:login' %}">
+                                    <div class="dropdown-image">
+                                        <i class="fa fa-gift"></i>
+                                    </div> 
+                                    <div class="dropdown-text">Awards</div> 
+                                </a>
+                                <a class="dropdown-item" id="report_chapter" href="{% url 'accounts:login' %}"> 
+                                    <div class="dropdown-image">
+                                        <i class="fa fa-flag"></i>
+                                    </div> 
+                                    <div class="dropdown-text">Report</div> 
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>   
+            </ul>   
+        </div>
+        <div class="feedback">
+            <ul class="ratings">
+                <li>
+                    <a href="{% url 'accounts:show_profile' pk=chapter.manga.creator.user.pk %}">
+                        <img class="creator-picture rounded-circle"  src="{{chapter.manga.creator.user.profile.profile_picture.url}}">
+                        <h5 class="creator-name"  style="float: right;">{{ chapter.manga.creator.user.username }}</h5>
+                    </a>
+                </li>
+                {% if chapter.manga.creator.user == user %}
+                <li  style="float:right;">
+                    <a href="{% url 'accounts:edit_chapter_form' pk=chapter.pk %}" class="btn btn-subscribe">
+                        Edit Chapter
+                    </a>
+                </li>
+                {% else %}
+                <li class="subscribe-button">
+                    <form id="subscribe" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="subscribe" value="1"/>
+                        {% if not subscribed %}
+                        <a href="#" class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
+                            Subscribe
+                        </a>
+                        {% else %}
+                        <a href="#" class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
+                            Subscribed 
+                        </a>
+                        {% endif %}
+                    </form>
+                </li>
+                {% endif %}  
+            </ul>   
+        </div>
+    </div>
+</div>
+{% if request.user.is_authenticated %}
+<div class="bg-awards-modal">
+    <div class="modal-awards-content">
+        <div class="awards-info">
+            <a class="coins-amount-view" target="_blank" href="{% url 'accounts:buy_coins' %}">
+                <i class="fa fa-plus-circle"></i>
+                <img class="awards-coin-img" src="{% static '/img/netmanga_coin.png' %}" width="20" height="20">
+                <h5>{{request.user.profile.coins}}</h5>
+            </a>
+            
+            <div class="awards-close">+</div>
+        </div>
+        <div class=awards-box>
+            <form method="post" class="awards-list" id="award">
+                {% csrf_token %}
+            
+                {% for award in awards %}
+                {% if request.user.profile.coins >= award.price %}
+                    <input type="radio" id="id_{{award.name|cut:' '|lower}}" name="award" value="{{award.name}}" required>
+                    <label for="id_{{award.name|cut:' '|lower}}" class="award-card" id="label_{{award.name|cut:' '|lower}}">
+                        <div class="award-img-box">
+                            <img src="{{ award.image.url }}" alt="" class="award-img loaded">
+                        </div>
+                        <div class="award-label-box">
+                            <div class="award-hidden-box">
+                                <div class="award-label-content-box">
+                                    <div class="div award-label-body">{{award.name}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="award-label-price">
+                            <div class="award-label-content-box">
+                                <div class="div award-price-body">
+                                    <img src="{% static '/img/netmanga_coin.png' %}" height="20" width="20">
+                                    {{award.price}}
+                                </div>
+                            </div>   
+                        </div>
+                    </label>
+                {% else %}
+                    <input type="radio" id="id_{{award.name|cut:' '|lower}}" name="award" value="{{award.name}}" required>
+                    <a class="award-card" id="label_{{award.name|cut:' '|lower}}_link" target="_blank" href="{% url 'accounts:buy_coins' %}">
+                        <div class="award-img-box">
+                            <img src="{{ award.image.url }}" alt="" class="award-img loaded">
+                        </div>
+                        <div class="award-label-box">
+                            <div class="award-hidden-box">
+                                <div class="award-label-content-box">
+                                    <div class="div award-label-body">{{award.name}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="award-label-price">
+                            <div class="award-label-content-box">
+                                <div class="div award-price-body">
+                                    <img src="{% static '/img/netmanga_coin.png' %}" height="20" width="20">
+                                    {{award.price}}
+                                </div>
+                            </div>   
+                        </div>
+                    </a>
+                {% endif %}
+                {% endfor %}
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="btn btn-login btn-xl" type="submit">
+                        Give Award
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>    
+</div>
+
+<div class="bg-reloadpage-modal">
+    <a href="" class="btn btn-reload btn-xl">
+        <span class="reload">&#x21bb</span>
+    </a>
+</div>
+
+<div class="bg-report-modal">
+    <div class="modal-report-content">
+        <div class="report-info">
+            <div class="view-title">
+                <h5>Submit a Report</h5>
+            </div>
+            
+            <div class="report-close">+</div>
+        </div>
+        <div class="report-disclaimer">
+            <p>
+                Thank you for helping this website clean. Type in he box below, whats wrong with this Chapterpage, Chapter or something else.
+                Please be precise as possible so we can look in to it and handle this Problem.
+            </p>
+        </div>
+        <form id="report" method="post">
+            {%csrf_token%}
+            {% for field in report_form %}
+            {{field}}
+            {% endfor %}
+            <div style="float: left; max-width:180px; padding-top: 20px; font-size:12px;">
+                Not sure if something is breaking the rules? Review <a href="{% url 'public:user_terms' %}">NetManga Terms and Policy</a>
+            </div>
+            <button style="float: right; margin-top:25px;" class="btn btn-login">
+                Report
+            </button>
+            
+        </form>
+    </div>    
+</div>
+{% endif %}
+<div class="section">
+    <!---->
+    <div class="container">
+        <ul class="comments">
+            <li class="comment-form">
+                {% if user.is_authenticated %}
+                    <img class="comment-user rounded-circle" height=50 width=50 src="{{user.profile.profile_picture.url}}">
+                {% else %}
+                    <img class="comment-user rounded-circle" height=50 width = 50 src="{% static '/img/no_profile_picture.png' %}">
+                {% endif %}
+                <form id="comment" method="post">
+                    {% csrf_token %}
+                    {% for field in comment_form %}
+                    {{field}}
+                    {% endfor %}
+                    <button class=" btn btn-login">
+                        Publish
+                    </button>
+                </form>
+                </br>
+            </li>
+            {% for comment in comments %}
+            <li class="commentary">
+                <img class="comment-user rounded-circle" height=50 width = 50 src="{{comment.user.profile.profile_picture.url}}">
+                <small class="username">{{ comment.user.username  }}</small>
+                <p class= "comment">{{ comment.comment }}</p>
+                <div class="row">
+                    <form id="commentlike" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="commentlike" value="{{comment.pk}}"/>
+
+                        <button  class="btn btn-like" type="submit">
+
+                            {% for comment_rating in comment_ratings %}
+                            
+                                
+                            {% if comment_rating.comment == comment and comment_rating.rating == True %}
+                            <i class="fa fa-thumbs-up fa-selected"></i>
+                            {% setvar True as selected %}
+
+                            {% elif forloop.last and selected == None %}
+                            <i class="fa fa-thumbs-up"></i>
+                            {% endif %}
+                
+                            {% empty %}
+                            
+                            <i class="fa fa-thumbs-up"></i>
+                            {% endfor %}
+
+                        </button>
+                        {% for comment_rating in comment_ratings %}     
+                        {% if comment_rating.comment == comment and comment_rating.rating == True %}
+                        <small class="thumbs-selected">{{comment.like}} </small>
+                        {% setvar True as selected %}
+
+                        {% elif forloop.last and selected == None %}
+                        <small class="thumbs">{{comment.like}} </small>
+                        
+                        {% endif %}
+                        
+                        {% empty %}
+                        <small class="thumbs">{{comment.like}} </small>
+                        {% endfor %}
+                        
+                        
+                    </form>
+                   
+                    <form id="commentdislike" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="commentdislike" value="{{comment.pk}}"/>
+                        
+                        <button class="btn btn-commentlike" type="submit">
+                            {% for comment_rating in comment_ratings %}
+                            
+                                
+                            {% if comment_rating.comment == comment and comment_rating.rating == False %}
+                            <i class="fa fa-thumbs-down fa-selected"></i>
+                            {% setvar True as selected %}
+
+                            {% elif forloop.last and selected == None %}
+                            <i class="fa fa-thumbs-down"></i>
+                            {% endif %}
+                
+                            {% empty %}
+                            
+                            <i class="fa fa-thumbs-down"></i>
+                            {% endfor %}
+
+                        </a>
+                        {% for comment_rating in comment_ratings %}     
+                        {% if comment_rating.comment == comment and comment_rating.rating == False %}
+                        <small class="thumbs-selected">{{comment.dislike}} </small>
+                        {% setvar True as selected %}
+
+                        {% elif forloop.last and selected == None %}
+                        <small class="thumbs">{{comment.dislike}} </small>
+                        
+                        {% endif %}
+                        
+                        {% empty %}
+                        <small class="thumbs">{{comment.dislike}} </small>
+                        {% endfor %}
+                        
+                        
+                    </form>
+                </div>
+            </li>
+            
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

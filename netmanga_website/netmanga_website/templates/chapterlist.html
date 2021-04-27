@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+
+{% block content %}
+{% if request.user == manga.creator.user %}
+<div class="bg-modal">
+    <div class="modal-content">
+        <div class="close">+</div>
+        <h3>Edit Plot</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="profile-form-label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+            {% endfor %}
+            <div style="margin-top: 15px" class="form-group">
+                <button class="btn btn-login btn-xl" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+<div class="chapterlist-content">
+    <div class="chapter-view">
+        <div>
+            <section class="section placeholder loading loaded">
+                <h2 class="manga-info">
+                    <a href="{% url 'accounts:show_profile' pk=manga.creator.user.pk %}">
+                        <img class="creator-img rounded-circle" src="{{manga.creator.user.profile.profile_picture.url}}">
+                        <h2 class="creator-username rounded-circle">{{manga.creator.user.username}}</h2>
+                    </a>
+                    
+                    {% if user == manga.creator.user %}
+                    <a href="{% url 'accounts:new_chapter_form' pk=manga.pk %}" class="btn btn-subscribe" style="float:right"> 
+                        <i class="fa fa-upload" style="font-size: 18px;"></i>
+                        Chapter
+                    </a>
+                    {% else %}
+                    <form id="subscribe" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="subscribe" value="1"/>
+                        {% if not subscribed %}
+                        <button  class="btn btn-subscribe" type="submit">
+                            Subscribe
+                        </button>
+                        {% else %}
+                        <button class="btn btn-subscribed" type="submit">
+                            Subscribed 
+                        </button>
+                        {% endif %}
+                    </form>
+                    {% endif %}
+                </h2>
+                </br>
+                </br>
+                {% if manga.creator.user == user %}
+                <a id="edit-profile" class="change-plot">
+                    <div class="manga-plot" >
+                        {{manga.plot}}
+                    </div>
+                </a>
+                {% else %}
+                <div class="manga-plot">
+                    {{manga.plot}}
+                </div>
+                {% endif %}
+                <div class="total-preformance" style="margin-top:15px;">
+                    <h6 class="total-views" style="float: left;">{{total_views}} Total Views</h6>
+                    <h6 class="total-subscribers" style="float: right;">{{subscriber_count}} Subscribers</h6>
+                </div>
+                <div class="chapterlist">
+                    {% for chapter_info in chapter_infos %}
+                    <a href="{% url 'public:chapter_reader' pk=chapter_info.chapter.pk %}" style="text-decoration: none;">
+                        <div class="chapter-card">
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <img class="chapter-image loaded" src="{{ manga.cover_picture.url }}">
+                            </div>
+                            <div class="data">
+                                <div class="scroller vb vb-invisible">
+                                    <div class="scroller-wrap vb-content">
+                                        <div class="info">
+                                            <div class="chapter-info">
+                                                <div>
+                                                    <div>
+                                                        <div class="chapter-title">
+                                                            {{chapter_info.chapter.title}}
+                                                        </div>
+                                                        <div class="chapter-number">
+                                                            Chapter {{chapter_info.chapter.no}}
+                                                        </div>
+                                                        <div class="publishing-date">
+                                                            {{chapter_info.chapter.published|date:'d.m.Y'}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="performance-wrap">
+                                            <div class="chapter-views-view">
+                                                {{chapter_info.views}} Views
+                                            </div>
+                                            <div class="chapter-ratings-view">
+                                                <i class="fa fa-thumbs-up">
+                                                </i> 
+                                                <small class="thumbs-up">{{chapter_info.likes}}</small>
+                                            </div>
+                                            <div class="chapter-ratings-view">
+                                                <i class="fa fa-thumbs-down">
+                                                </i> 
+                                                <small class="thumbs-down">{{chapter_info.dislikes}}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="card-footer">
+                                    <div class="awards">  
+                                        {% if chapter_info.platinumawards > 0 %}  
+                                        <div class="award">
+                                            {{chapter_info.platinumawards}}
+                                            <img src="/static/img/awards/netmanga_platinum_award.png" height="15" width="15">
+                                        </div>
+                                        {% endif %}
+                                        {% if chapter_info.goldawards > 0 %} 
+                                        <div class="award">
+                                            {{chapter_info.goldawards}}
+                                            <img src="/static/img/awards/netmanga_gold_award.png" height="15" width="15">
+                                        </div>
+                                        {% endif %}
+                                        {% if chapter_info.silverawards > 0 %} 
+                                        <div class="award">
+                                            {{chapter_info.silverawards}}
+                                            <img src="/static/img/awards/netmanga_silver_award.png" height="15" width="15">
+                                        </div>
+                                        {% endif %}
+                                        {% if chapter_info.bronceawards > 0 %} 
+                                        <div class="award">
+                                            {{chapter_info.bronceawards}}
+                                            <img src="/static/img/awards/netmanga_bronce_award.png" height="15" width="15">
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

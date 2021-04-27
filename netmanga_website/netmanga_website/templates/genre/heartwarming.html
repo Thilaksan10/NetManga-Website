@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} NETMANGA - Heartwarming Mangas {% endblock %}
+
+{% block content %}
+{% include 'genrenav.html' %}
+<div class="main-content">
+    <div class="chart-view">
+        <div>
+            <section class="manga-section loaded">
+                <div class="manga-list">
+                    {% for manga in mangas %}
+                    <div class="manga-card">
+                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                            <div class="background-color"></div>
+                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                        
+                            <div class="overlay">
+                                <!--<a href="" class="title">{{manga.manga.title}}</a>-->
+                                <h5  class="title">{{manga.manga.title}}</h5>
+                                <small>@{{manga.manga.creator.user.username}}</small>
+                            </div>
+                        
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

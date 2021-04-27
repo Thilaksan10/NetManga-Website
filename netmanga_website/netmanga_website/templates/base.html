@@ -1,0 +1,138 @@
+{% load static %}
+{% load custom_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon-->
+        <link rel="icon" type="image/png" href="{% static '/img/netmanga_badge.png' %}">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+         <!-- icons -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- main.css -->
+        <link href="{% static '/css/main.css' %}" rel="stylesheet">
+        
+        <title>{% block title %} NETMANGA - Read and Create Mangas Online {% endblock %}</title>
+    </head>
+    <body>
+        <!--Chart js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js" integrity="sha512-BqNYFBAzGfZDnIWSAEGZSD/QFKeVxms2dIBPfw11gZubWwKUjEgmFUtUls8vZ6xTRZN/jaXGHD/ZaxD9+fDo0A==" crossorigin="anonymous"></script>
+        {% include 'navbar.html' %}
+        {% if user.is_authenticated %}
+        <div class="coins-view">
+            <div class="buy-coins-link">
+                <a class="btn" href="{% url 'accounts:buy_coins'%}" target="_blank" >
+                    <img src="{% static '/img/netmanga_coin.png' %}" style="margin-bottom: 4px;" width="20" height="20"> 
+                    <h6 class="dropdown-coins-amount">
+                    {% if user.profile.coins < 10000 %}
+                    {{user.profile.coins}}
+                    {% elif user.profile.coins >= 10000 and user.profile.coins < 1000000 %}
+                    {{user.profile.coins | div:1000 |floatformat:1}}K
+                    {% elif user.profile.coins >= 1000000 and user.profile.coins < 1000000000%}
+                    {{user.profile.coins | div:1000000| floatformat:1}}M
+                    {% else %}
+                    {{user.profile.coins | div:1000000000 | floatformat:1}}B
+                    {% endif %}
+                    </h6>
+                </a>
+                <!--
+                <div class="dropdown-menu dropdown-menu-end coin-offers" aria-labelledby="dropdownPaymentButton">
+                    {% for offer in coinoffers %}
+                        <div class="offer">
+                            <div class="coins-amount">
+                                <h6>{{ offer.amount }} Coins</h6>
+                            </div> 
+                            <div class="coins-price">
+                                <button class="btn-coins-price" id="id_buy-coins-{{forloop.counter}}">
+                                    {{ offer.price }}€
+                                </button>
+                                {% if offer.bonus > 0 %}
+                                <span class="offer-bonus">
+                                    {{offer.bonus}}% Bonus
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                -->
+            </div>
+        </div>
+        <!--
+        {% for offer in coinoffers %}
+        <div class="bg-payment-modal" id="payment-popup-{{forloop.counter}}">
+            <div class="modal-payment-content">
+                <div class="payment-info">
+                    <img class="coin-img" src={% static '/img/netmanga_coin.png' %} width="20" height="20">
+                    <div class="coins-amount-info">Buy {{offer.amount}} Coins!</div>
+                    <div class="coins-user-info">You are purchasing Coins for the user, {{user.username}}</div>
+                    <div class="payment-close">+</div>
+                </div>
+                <div class="payment-form-container">
+                    <form action="" class="payment-form"></form>
+                    <div class="purchasing-amount">Total: {{offer.price}}€</div>
+                    <div class="terms-agreement">
+                        By purchasing Coins and Awards you agree to the
+                        <a href="{% url 'public:user_terms' %}" target="_blank" rel="noopener noreferrer">NetManga User Agreement</a>
+                    </div>
+                </div>
+                <div class="payment-buttons">
+                    <div id="paypal-button-container"></div>
+                    <script src="https://www.paypal.com/sdk/js?client-id=ART4N5m85NSp7un1KrfvtNK9AOEiu3I6GxIYjHqNV4ogMFEQGAxUUMGUatGeBeYAJu-jrS15f62TD6g_&currency=USD"></script>
+                    <script>
+                        // Render the PayPal button into #paypal-button-container
+                        paypal.Buttons({
+                
+                            // Set up the transaction
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '88.44'
+                                        }
+                                    }]
+                                });
+                            },
+                
+                            // Finalize the transaction
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    // Show a success message to the buyer
+                                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                                });
+                            }
+                
+                
+                        }).render('#paypal-button-container');
+                    </script>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        -->
+        {% endif %}
+        <main>
+            {% block content %}
+                
+            {% endblock %}
+        </main>
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+        <!--JavaScript| Seperate Popper and Bootstrap JS-->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+        -->
+        <!--script.js-->
+        <script src="{% static '/js/script.js' %}"></script>
+        <!--cookie_consent.js-->
+        <script src="{% static '/js/cookie_consent.js' %}"></script>
+    </body>
+    <footer class="footer text-center bg-light">
+        {% include 'footernav.html' %}
+    </footer>
+</html>

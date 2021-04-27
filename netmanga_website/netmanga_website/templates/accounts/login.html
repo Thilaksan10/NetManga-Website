@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} Login : : NETMANGA {% endblock %}
+
+{% block content %}
+<div class="form-section">
+    <div class="row login-mask">
+        <div class="col-lg-8 mx-auto">
+            <h5>Login and enjoy the experience</h5>
+            <form id="contactform" method="post">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                <div class="control-group">
+                    <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% for error in field.errors %}
+                        <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if not success %}
+                <div class="alert alert-danger" role="alert">
+                    Given Username or Password is incorrect
+                </div>
+                {% endif %}
+
+                <br />
+                <a class="forgot-pw" href="#">Forgot Password?</a>
+                <br />
+                <br />
+                <div class="form-group">
+                    {% url 'accounts:signup' as signup_url %}
+                    <a class="btn btn-outline-login btn-xl" href="{{ signup_url }}">Sign Up</a>
+                    <button class="btn btn-login btn-xl" type="submit">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

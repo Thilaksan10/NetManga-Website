@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile :: NETMANGA {% endblock %}
+
+{% block content %}
+{% url 'accounts:creator_terms' as creator_terms_url %}
+{% url 'accounts:analytics' as analytics_url %}
+{% url 'accounts:upload' as upload_url %}
+<div class="">
+    <div class="profile">
+        {% if request.user == profile.user %}
+        <a id="edit-profile" class="profile-edit">
+            <i class="fa fa-edit profile-edit-icon"></i>
+        </a>
+        <br/>
+        <br/>
+        {% endif %}
+        
+        {% if profile %}
+            
+            <img src="{{profile.profile_picture.url}}" height=130 width=130 class="rounded-circle">
+                
+                {% if profile.is_full_name_displayed %}
+                <h1>
+                    {{ profile.user.get_full_name }}
+                </h1>
+                {% endif %}
+                <h3>
+                    @{{ profile.user.username }}
+                </h3>
+            <h5>
+                {{ profile.birth_date|default:"" }}
+            </h5>
+            <div class="bio">
+                {{ profile.bio|default:"" }}
+            </div>
+        {% endif %}
+    </div>
+    
+    
+    {% with creator=profile.user.creator %}
+        {% if creator %}
+        {% if request.user == profile.user %}
+        <div class="creator-links">
+            <a class="btn btn-outline-login btn-xl" href="{{ analytics_url }}">Analytics</a>
+            <a class="btn btn-login btn-xl" href="{{ upload_url }}">Upload</a>
+        </div>
+        {% endif %}
+        <div class="main-content">
+            <div class="chart-view">
+                <div>
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for created_manga in created_mangas %}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=created_manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{created_manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{created_manga.manga.title}}</h5>
+                                        <small>{{created_manga.views}} Views</small>
+                                    </div>
+                                
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% if request.user == profile.user %}
+        <div class="creator-links">
+            <a class="btn btn-login btn-xl" href="{{ creator_terms_url }}">Become a Creator</a>
+        </div>
+        {% endif %}
+        {% endif %}
+    {% endwith %}
+    
+</div>
+<!--Popup-->
+{% if request.user == profile.user %}
+<div class="bg-modal">
+    <div class="modal-content">
+        <div class="close">+</div>
+        <h3>Edit Profile</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            {% if form.display_Full_Name == field %}
+            <div class="customCheckbox">
+                <div class="input-container">
+                    {{field}}
+                    {{ field.label_tag }}
+                    {% for error in field.errors %}
+                    <p class="help-block text-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% elif form.profile_Picture == field %}
+            <div class="profile-form-label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+            {% for error in field.errors %}
+            <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+            {% elif form.bio == field %}
+            <div class="profile-form-label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+            {% for error in field.errors %}
+            <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <div class="form-group">
+                <button class="btn btn-login btn-xl" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

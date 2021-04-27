@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} NETMANGA {% endblock %}
+
+{% block content %}
+<div class="coins-header-section">
+    <div class="coins-header-section-info">
+        <h1 class="coins-header-section-banner">
+            <img src="{% static '/img/netmanga_badge.png' %}">
+            NM Coins
+        </h1>
+        <p class="coins-header-section-paragraph">
+            Coins are a virtual good you can use to award chapters. Support NetManga and encourage your favorite Creators to keep making NetManga better.
+        </p>
+    </div>
+</div>
+<div class="coins-middle-section">
+    <h2 class="coins-middle-section-title">
+        Here is what you can buy with NetMangas's coins
+    </h2>
+    <p class="coins-middle-section-paragraph">
+        Spend your coins on these Awards reserved exclusivley for the finest NetManga Creators. Awarding a chapter will help and encourage the creator to make more mangas with qualitative better chapters. Awards also grant the honoree special bonuses. 
+    </p>
+    <div class="coins-middle-section-awards row">
+        {% for award in awards %}
+        <div class="coins-middle-section-awards-type">
+            <div class="coins-middle-section-awards-type-img-box">
+                <img src="{{award.image.url}}">
+            </div>
+            <div class="coins-middle-section-awards-type-info">
+                <h3 class="coins-middle-section-awards-type-info-title">{{award.name}}</h3>
+                <p class="coins-middle-section-awards-type-info-paragraph">
+                    {% if award.fiat_reward > 0 and award.coins_reward > 0 %}
+                    Shows a {{award.name}} on the chapter, gives the creator {{award.fiat_reward|floatformat:2}}€ and
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.coins_reward}}
+                    </span>
+                    Coins. You'll need 
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.price}}
+                    </span>
+                    Coins.
+                    {% elif award.fiat_reward > 0 and award.coins_reward == 0 %}
+                    Shows a {{award.name}} on the chapter and gives the creator {{award.fiat_reward|floatformat:2}}€.
+                    You'll need 
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.price}}
+                    </span>
+                    Coins.
+                    {% elif award.fiat_reward == 0 and award.coins_reward > 0 %}
+                    Shows a {{award.name}} on the chapter and gives the creator 
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.coins_reward}}
+                    </span>
+                    Coins. You'll need 
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.price}}
+                    </span>
+                    Coins.
+                    {% else %}
+                    Shows a {{award.name}} on the chapter. You'll need 
+                    <span>
+                        <img src="{% static '/img/netmanga_coin.png' %}">
+                        {{award.price}}
+                    </span>
+                    Coins.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="coins-buying-section">
+    <div class="coins-buying-section-offers">
+        {% for offer in coinoffers %}
+        <a class="coinoffer-card" href="{% url 'accounts:buy_coins' pk=offer.pk %}">
+            <div class="coinoffer-img-box">
+                <img src="{% static '/img/netmanga_badge.png' %}" alt="" class="coinoffer-img loaded">
+            </div>
+            <div class="coinoffer-label-box">
+                <div class="coinoffer-hidden-box">
+                    <div class="coinoffer-label-content-box">
+                        <div class="coinoffer-label-body">
+                            <h6 class="coinoffer-label-body-amount">
+                                <img src="{% static '/img/netmanga_coin.png' %}" alt="">
+                                {{offer.amount}} Coins
+                            </h6>
+                            {%if offer.bonus != 0 %}
+                            <h6 class="coinoffer-label-body-bonus">{{offer.bonus}}% Bonus</h6>
+                            {%endif%}
+                            <h6 class="coinoffer-label-body-price">{{offer.price}}€</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <!--
+        <script>
+            var offers = document.querySelectorAll('.coinoffer-card')
+            console.log(offers)
+            if(offers){
+                console.log(offers.length)
+                console.log(false)
+                var i = parseInt("{{forloop.counter0}}")
+                console.log(i)
+                offers[i].onclick = function() {
+                    document.querySelector('.bg-payment-modal').style.display='flex'
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.scroll = "no";
+                    document.querySelector('.coins-amount-info').innerHTML='Buy ' + '{{offer.amount}}' + ' Coins!'
+                    document.querySelector('.purchasing-amount').innerHTML='Total: ' + '{{offer.price}}' + '€'
+                }
+                
+            }
+        </script>
+        -->
+        {% endfor %}
+        <!--
+        <script>
+            var offers = document.querySelectorAll('.coinoffer-card')
+            console.log(offers)
+            if(offers){
+                console.log(offers.length)
+                for(i = 0; i < offers.length; i++){
+                    console.log(false)
+                    console.log(i)
+                    
+                    offers[i].onclick = function() {
+                        document.querySelector('.bg-payment-modal').style.display='flex'
+                        document.querySelector('.coins-amount-info').innerHTML='Buy ' + i + ' Coins!'
+                    }
+                }
+            }
+        </script>
+        -->
+    </div>
+</div>
+{% if coinoffer %}
+<div class="bg-payment-modal" >
+    <div class="modal-payment-content">
+        <div class="payment-info">
+            <img class="coin-img" src="{% static '/img/netmanga_coin.png' %}" width="20" height="20">
+            <div class="coins-amount-info">{{coinoffer.amount}} Coins</div>
+            <div class="coins-user-info">You are purchasing Coins for the user, {{user.username}}</div>
+            <div class="payment-close">+</div>
+        </div>
+        <div class="payment-form-container">
+            <form class="purchase-type">
+                {%csrf_token%}
+                <fieldset>
+                    <label>
+                        <input type="radio" name="payment-option" value="paypal" checked>
+                        <div class="label-img-box">
+                            <div class="label-img-paypal"></div>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-option" value="card">
+                        <div class="label-img-box">
+                            <div class="label-img-visa"></div>
+                            <div class="label-img-mastercard"></div>
+                            <div class="label-img-amex"></div>
+                            <div class="label-img-discover"></div>
+                        </div>
+                    </label>
+                </fieldset>
+            </form>
+            <div class="purchasing-amount">
+                Total: {{coinoffer.price|floatformat:2}}€
+            </div>
+            <div class="terms-agreement">
+                By purchasing Coins and Awards you agree to the
+                <a href="{% url 'public:user_terms' %}" target="_blank" rel="noopener noreferrer">NetManga User Agreement</a>
+            </div>
+        </div>
+
+        <div class="payment-button-container">
+            <div class="payment-balance">
+                Coin balance: 
+                <span> 
+                    <img src="{% static '/img/netmanga_coin.png' %}" width="15" height="15" alt="">
+                </span>
+                {{user.profile.coins}}
+            </div>
+            <div class="payment-button-box">
+                <div>
+                    <div id="paypal-button-container"></div>
+                    <div id="card-button-container" class="hidden"></div>
+
+                    <!--Include the Paypal Javascript SDK -->
+                    <script src="https://www.paypal.com/sdk/js?client-id=ART4N5m85NSp7un1KrfvtNK9AOEiu3I6GxIYjHqNV4ogMFEQGAxUUMGUatGeBeYAJu-jrS15f62TD6g_&currency=EUR"></script>
+                
+                    <script>
+                        // Listen for changes to the radio fields
+                        document.querySelectorAll('input[name=payment-option').forEach(function(el) {
+                            el.addEventListener('change', function(event) {
+
+                                //If PayPal is selected, show the PayPal button
+
+                                if(event.target.value === 'paypal') {
+                                    document.querySelector('#card-button-container').style.display = 'none';
+                                    document.querySelector('#paypal-button-container').style.display = 'block';
+                                }
+
+                                //If Card is selected, show the PayPal button
+                                if(event.target.value ==='card') {
+                                    document.querySelector('#card-button-container').style.display='block';
+                                    document.querySelector('#paypal-button-container').style.display = 'none';
+                                }
+                            });
+                        });
+                        /*
+                        var cards = document.querySelectorAll('.coinoffer-card')
+                        var offers = {{json_coinoffers|safe}}
+                        console.log(offers)
+                        var offer_price = 199.99
+                        
+                        var price = new Array()
+                        for(i=0; i<offers.length; i++){
+                            price.push(offers[i].fields.price)
+                        }
+                        if(cards){
+                            for (i=0; i<offers.length; i++){
+                                var amount = offers[i].fields.amount
+                               
+                                console.log("Amount: " + amount + " Coins")
+                                console.log("Price: " + price[i] + "€")
+                            }
+                        }   
+                        
+                        console.log(offer_price)*/
+                        //Hide Non-PayPal button by default
+                        var price = "{{coinoffer.price}}" 
+                        
+                        paypal.Buttons({
+                            style: {
+                                layout: 'horizontal',
+                                shape: 'pill',
+                                size: 'responsive',
+                            },
+                            fundingSource: paypal.FUNDING.CARD,
+
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: parseFloat(price).toFixed(2)
+                                        }
+                                    }]
+                                })
+                            },
+
+                            onApprove: function(data,actions){
+                                return actions.order.capture().then(function(details) {
+                                    submitFormData()
+                                });
+                            },
+                        }).render('#card-button-container');
+                        document.querySelector('#card-button-container').style.display = 'none';
+                    
+                        //Render the Paypal button into #paypal-button-container
+
+                        paypal.Buttons({
+                            style: {
+                                layout: 'horizontal',
+                                shape: 'pill',
+                                size: 'responsive',
+                            },
+                            fundingSource: paypal.FUNDING.PAYPAL,
+
+                            createOrder: function(data, actions) {
+
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: parseFloat(price).toFixed(2)
+                                        }
+                                    }]
+                                })
+                            },
+
+                            onApprove: function(data,actions){
+                                return actions.order.capture().then(function(details) {
+                                    submitFormData()
+                                });
+                            },
+                        }).render('#paypal-button-container');
+                        
+                    </script>
+
+                    <script>
+                        function submitFormData(){
+                            var price = '{{coinoffer.price}}'
+                            var amount = '{{coinoffer.amount}}'
+                            var form = document.querySelector('.purchase-type')
+                            console.log(form)
+                            csrftoken = form.getElementsByTagName('input')[0].value
+                            console.log('CSRFTOKEN: ' + form.getElementsByTagName('input')[0].value)
+                            console.log('Payment button clicked')
+                            var order = {
+                                'price': parseFloat(price).toFixed(2),
+                                'amount': parseInt(amount),
+                            }
+                            console.log(order)
+                            var url ='process_order'
+                            fetch(url,{
+                                method:'POST',
+                                headers:{
+                                    'Content-Type':'application/json',
+                                    'X-CSRFToken': csrftoken,
+                                },
+                                body:JSON.stringify({'order': order})
+                            })
+                            .then((data) =>{
+                                console.log('Success:', data);
+                                alert('Transaction completed');
+                                window.location.href="{% url 'accounts:buy_coins' %}"
+                            })
+                            .then((response) => response.json())
+                            
+                            
+                        }
+                    </script>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endif%}
+
+
+{% endblock %}
