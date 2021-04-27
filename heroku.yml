@@ -1,4 +1,4 @@
 build:
   docker:
-    web: proxy/Dockerfile
-    worker: Dockerfile
+    website: Dockerfile
+    proxy: proxy/Dockerfile
