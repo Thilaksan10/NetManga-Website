@@ -23,4 +23,4 @@ RUN chown -R user:user /vol
 RUN chmod -R 755 /vol/web
 USER user
 
-CMD /bin/sh -c "envsubst '\$PORT' < /scripts/entrypoint.sh > /scripts/entrypoint.sh" && "entrypoint.sh"
+CMD ["entrypoint.sh"]
