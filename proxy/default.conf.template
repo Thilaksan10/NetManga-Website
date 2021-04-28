@@ -8,10 +8,7 @@ server {
     location / {
         uwsgi_pass netmanga.herokuapp.com:$PORT;
         include /etc/nginx/uwsgi_params;
+        uwsgi_read_timeout 300;
+        proxy_read_timeout 300;
     }
-}
-
-http {
-    uwsgi_read_timeout 300;
-    proxy_read_timeout 300;
 }
