@@ -9,3 +9,5 @@ RUN mkdir -p /vol/static
 RUN chmod 755 /vol/static
 
 USER nginx
+
+CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;"
