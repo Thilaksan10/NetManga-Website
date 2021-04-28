@@ -4,7 +4,7 @@ setup:
       as: DATABASE
 build:
   docker:
-    website: Dockerfile
-    proxy: proxy/Dockerfile
+    web: Dockerfile
+    worker: proxy/Dockerfile
 run:
-  website: "entrypoint.sh"
+  web: "entrypoint.sh"
