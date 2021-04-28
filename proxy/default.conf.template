@@ -10,3 +10,8 @@ server {
         include /etc/nginx/uwsgi_params;
     }
 }
+
+http {
+    uwsgi_read_timeout 300;
+    proxy_read_timeout 300;
+}
