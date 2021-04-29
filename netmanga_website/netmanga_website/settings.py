@@ -15,7 +15,6 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-BASE_DIR2 = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_DIR = os.path.join(BASE_DIR,"netmanga_website")
 
 # Quick-start development settings - unsuitable for production
@@ -140,7 +139,7 @@ STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
 
 STATIC_URL = '/static/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR2, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 STATIC_ROOT = '/vol/web/static'
 
