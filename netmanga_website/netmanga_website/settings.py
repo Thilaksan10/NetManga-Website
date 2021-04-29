@@ -22,7 +22,6 @@ PROJECT_DIR = os.path.join(BASE_DIR,"netmanga_website")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
-#SECRET_KEY = 'f21ebcq4kueu^w2h8)0^b=x%yq3%_p$zxw3^l&z2!ms=av31t5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv('DEBUG',1)))

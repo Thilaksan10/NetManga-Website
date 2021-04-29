@@ -304,13 +304,13 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
 
     def post(self, request,pk, *args, **kwargs):
         form = EditMangaForm(request.POST,request.FILES or None)
-        template = loader.get_template('accounts/new_manga_form.html')
+        template = loader.get_template('accounts/edit_manga_form.html')
         manga = Mangaseries.objects.filter(pk=pk).first()
         if form.is_valid():
             creator = Creator.objects.filter(user=request.user).first()
             manga.title = bleach.clean(form.cleaned_data['title'])
             if form.cleaned_data['cover_picture'] != None:
-                profile.profile_picture = form.cleaned_data['cover_picture']
+                manga.cover_picture = form.cleaned_data['cover_picture']
             manga.plot = bleach.clean(form.cleaned_data['plot'])
             manga.primary_Genre = bleach.clean(form.cleaned_data['primary_Genre'])
             manga.secondary_Genre = bleach.clean(form.cleaned_data['secondary_Genre'])
@@ -338,7 +338,7 @@ class EditChapterFormView(LoginRequiredMixin,TemplateView):
         
         images = request.FILES.getlist('images')
         chapterform=ChapterForm(request.POST)
-        template = loader.get_template('accounts/new_chapter_form.html')   
+        template = loader.get_template('accounts/edit_chapter_form.html')   
         if chapterform.is_valid():
             chapter = Chapter.objects.filter(pk=pk).first()
             chapter.title = bleach.clean(chapterform.cleaned_data['title'])
