@@ -1,6 +1,6 @@
 build:
   docker:
-    web: Dockerfile
-    worker: proxy/Dockerfile
+    worker: Dockerfile
+    web: proxy/Dockerfile
 run:
-  web: "entrypoint.sh"
+  worker: "entrypoint.sh"
