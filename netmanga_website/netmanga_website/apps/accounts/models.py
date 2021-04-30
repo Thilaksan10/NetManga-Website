@@ -13,7 +13,7 @@ from .choices import GENRE_CHOICES
 class Profile(models.Model):
     #owner
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_picture = models.ImageField(default="no_profile_picture.png", null=True, blank=True, upload_to='profilepictures/')
+    profile_picture = models.ImageField(default="static/static/vol/web/media/img/no_profile_picture.png", null=True, blank=True, upload_to='profilepictures/')
     is_full_name_displayed = models.BooleanField(default=True)
 
     # details
