@@ -303,9 +303,13 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
             return HttpResponseRedirect('/accounts/profile')
 
     def post(self, request,pk, *args, **kwargs):
-        form = EditMangaForm(request.POST,request.FILES or None)
         template = loader.get_template('accounts/edit_manga_form.html')
         manga = Mangaseries.objects.filter(pk=pk).first()
+        if request.POST.get('title') == manga.title:
+            post = request.POST.copy()
+            post['title']=''
+            request.POST = post
+        form = EditMangaForm(request.POST,request.FILES or None)
         if form.is_valid():
             creator = Creator.objects.filter(user=request.user).first()
             manga.title = bleach.clean(form.cleaned_data['title'])
