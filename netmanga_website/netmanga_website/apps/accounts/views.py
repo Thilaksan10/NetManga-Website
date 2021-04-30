@@ -312,7 +312,8 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
         form = EditMangaForm(request.POST,request.FILES or None)
         if form.is_valid():
             creator = Creator.objects.filter(user=request.user).first()
-            manga.title = bleach.clean(form.cleaned_data['title'])
+            if form.cleaned_data['title'] != '': 
+                manga.title = bleach.clean(form.cleaned_data['title'])
             if form.cleaned_data['cover_picture'] != None:
                 manga.cover_picture = form.cleaned_data['cover_picture']
             manga.plot = bleach.clean(form.cleaned_data['plot'])
