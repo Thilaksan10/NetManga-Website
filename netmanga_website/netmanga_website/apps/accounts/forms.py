@@ -179,7 +179,6 @@ class MangaForm(forms.ModelForm):
    title = forms.CharField(
       required=True, 
       max_length=100,
-      min_lenght=1, 
       widget=forms.TextInput(
          attrs={
             'class': 'form-control',
