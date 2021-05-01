@@ -1817,15 +1817,7 @@ h5.title:hover {
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out, border-color 0.35s ease-in-out;
 } 
 
-.btn-next:before {
-  content:"";
-  left:0;
-  opacity: .05;
-  position: absolute;
-  top: 0;
-  width:  50%;
-  z-index: 3;
-}
+
 
 .btn-next:hover{
   color: #000;
