@@ -1817,6 +1817,23 @@ h5.title:hover {
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out, border-color 0.35s ease-in-out;
 } 
 
+@media (min-width:300px){
+  .fa-arrow-right {
+    font-size: 25px;
+  }
+  
+  .fa-arrow-left {
+    font-size: 25px;
+  }
+}
+.fa-arrow-right {
+  font-size: 25px;
+}
+
+.fa-arrow-left {
+  font-size: 25px;
+}
+
 .btn-next:hover{
   color: #000;
   background-color: #fff;
@@ -1936,7 +1953,7 @@ h5.title:hover {
   float: left;
 }
 
-.btn .fa {
+.btn .fa.fa-thumbs-up, .fa.fa-thumbs-down {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   font-size: 25px;
   cursor: pointer;
@@ -2559,23 +2576,6 @@ li.subscribe-button {
 
 .more-button span:hover {
   color: #ea0a8e;
-}
-
-@media (min-width:300px) {
-  .fa-arrow-right {
-    font-size: 25px;
-  }
-  
-  .fa-arrow-left {
-    font-size: 25px;
-  }
-}
-.fa-arrow-right {
-  font-size: 25px;
-}
-
-.fa-arrow-left {
-  font-size: 25px;
 }
 
 .bg-awards-modal {
