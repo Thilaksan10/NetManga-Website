@@ -1818,7 +1818,7 @@ h5.title:hover {
 } 
 
 btn.btn-next .fa {
-  padding-bottom: 1px;
+  font-size: 25px;
 }
 
 .btn-next:hover{
