@@ -7,7 +7,7 @@
 <br />
 <div class="row signup-mask">
     <div class="col-lg-10 mx-auto">
-        <h2>Start new Manga Series</h2>
+        <h2>Start new manga series</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% if form.non_field_errors %}
@@ -21,7 +21,7 @@
                 {% if form.cover_picture == field %}
                 
                 <div class="picture-upload">
-                    <label class="cover-picture-label">Cover Picture:</label>
+                    <label class="cover-picture-label">Cover picture:</label>
                     {{field}}
                     {% for error in field.errors %}
                     <p class="help-block text-danger">{{ error }}</p>
@@ -31,7 +31,7 @@
                 
                 {% elif form.primary_Genre == field %}
                 <div class="genre-select" style="float:left">
-                  <h5 class="genre-label">Primary Genre:</h5>
+                  <h5 class="genre-label">Primary genre:</h5>
                   {{field}}
                   {% for error in field.errors %}
                   <p class="help-block text-danger">{{ error }}</p>
@@ -39,7 +39,7 @@
                 </div>                  
                 {% elif form.secondary_Genre == field %}
                 <div class="genre-select" style="float:right">
-                  <h5 class="genre-label">Secondary Genre:</h5>
+                  <h5 class="genre-label">Secondary genre:</h5>
                   {{field}}
                   {% for error in field.errors %}
                   <p class="help-block text-danger">{{ error }}</p>
@@ -59,7 +59,7 @@
             <br />
             <br />
             <div class="form-group">
-                <button class="btn btn-login btn-xl" type="submit">Create Manga</button>
+                <button class="btn btn-login btn-xl" type="submit">Create manga</button>
             </div>
         </form>
     </div>
