@@ -412,7 +412,7 @@ def sign_up(request):
             #user.profile.third_party_advertise = form.cleaned_data['third_party_advertise_consent']
             #user.profile.analytics = form.cleaned_data['analytics_consent']
             user.save()
-            password = bleach.clean(form.cleaned_data['password1'])
+            password = form.cleaned_data['password1']
             user = authenticate(username=user.username, password=password)
             login(request, user)
             return HttpResponseRedirect('/')
@@ -430,8 +430,8 @@ def log_in(request):
     elif request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = bleach.clean(form.cleaned_data['username'])
-            password = bleach.clean(form.cleaned_data['password'])
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
