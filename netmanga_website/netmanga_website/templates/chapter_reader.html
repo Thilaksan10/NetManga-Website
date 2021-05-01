@@ -32,11 +32,11 @@
                 <li class="nav-chapter-item">
                     {% if chapterpage.no < pages %}
                     <a class='btn btn-next' href="{% url 'public:next_page' pk=chapter.pk sk=chapterpage.pk %}">
-                        <i class="fa fa-arrow-left"></i>;
+                        <i class="fa fa-arrow-left"></i>
                     </a>
                     {% else %}
                     <a class='btn btn-next-hidden'>
-                        <i class="fa fa-arrow-left"></i>;
+                        <i class="fa fa-arrow-left"></i>
                     </a> 
                     {% endif %}
                 </li>
@@ -50,11 +50,11 @@
                 <li class="nav-chapter-item">
                     {% if chapterpage.no > 1 %}
                     <a class='btn btn-next' href="{% url 'public:previous_page' pk=chapter.pk tk=chapterpage.pk %}">
-                        <i class="fa fa-arrow-right"></i>;
+                        <i class="fa fa-arrow-right"></i>
                     </a>     
                     {% else %}
                     <a class='btn btn-next-hidden'>
-                        <i class="fa fa-arrow-right"></i>;
+                        <i class="fa fa-arrow-right"></i>
                     </a> 
                     {% endif %}
                 </li>
