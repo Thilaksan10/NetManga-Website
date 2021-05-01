@@ -301,6 +301,7 @@ def chapterreader(request,pk):
 
 
 def previous_page(request,pk,tk):
+    template =loader.get_template('chapter_reader.html')
     chapter = Chapter.objects.filter(pk=pk).first()
     chapterpages = Chapterimages.objects.filter(chapter=pk)
     currentpage = Chapterimages.objects.filter(pk=tk).first()
