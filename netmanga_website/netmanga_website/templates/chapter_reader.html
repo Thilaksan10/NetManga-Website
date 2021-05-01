@@ -149,13 +149,13 @@
                             {% csrf_token %}
                             <input type="hidden" name="like" value="1"/>
                             {% if user_rating.rating == True %}
-                            <a href="#" class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                            <a class="btn btn-like" onclick="document.forms[0].submit();return false;">
                                 <i class="fa fa-thumbs-up fa-selected">
                                 </i>
                                 <small class="thumbs-up-selected">{{likes}}</small>
                             </a>
                             {% else %}
-                            <a href="#" class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                            <a class="btn btn-like" onclick="document.forms[0].submit();return false;">
                                 <i class="fa fa-thumbs-up">
                                 </i> 
                                 <small class="thumbs-up">{{likes}}</small>
@@ -166,14 +166,14 @@
                             {% csrf_token %}
                             <input type="hidden" name="dislike" value="2"/>
                             {% if user_rating.rating == False %}
-                            <a href="#" class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                            <a class="btn btn-like" onclick="document.forms[1].submit();return false;">
                                 <i class="fa fa-thumbs-down fa-selected">
                                 </i>
                                 <small class="thumbs-down-selected">{{dislikes}}</small>
                             </a>
                             
                             {% else %}
-                            <a href="#" class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                            <a class="btn btn-like" onclick="document.forms[1].submit();return false;">
                                 <i class="fa fa-thumbs-down">
                                 </i> 
                                 <small class="thumbs-down">{{dislikes}}</small>
@@ -240,11 +240,11 @@
                         {% csrf_token %}
                         <input type="hidden" name="subscribe" value="1"/>
                         {% if not subscribed %}
-                        <a href="#" class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
+                        <a  class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
                             Subscribe
                         </a>
                         {% else %}
-                        <a href="#" class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
+                        <a  class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
                             Subscribed 
                         </a>
                         {% endif %}
