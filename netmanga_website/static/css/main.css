@@ -1817,6 +1817,15 @@ h5.title:hover {
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out, border-color 0.35s ease-in-out;
 } 
 
+@media (min-width:300px) {
+  .fa-arrow-right {
+    font-size: 25px;
+  }
+  
+  .fa-arrow-left {
+    font-size: 25px;
+  }
+}
 .fa-arrow-right {
   font-size: 25px;
 }
