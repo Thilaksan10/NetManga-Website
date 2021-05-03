@@ -76,7 +76,6 @@ class ChapterInfo:
         self.bronceawards = bronceawards  
 
 def chapterlist(request,pk):
-    
     template =loader.get_template('chapterlist.html')
     manga = Mangaseries.objects.filter(pk=pk).first()
     chapters = Chapter.objects.filter(manga=pk).order_by('no')

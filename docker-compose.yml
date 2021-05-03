@@ -31,6 +31,8 @@ services:
         env_file: 
             - ./.env
             - ./.env.secret
+        depends_on: 
+            - db_migrate
     
     db_migrate:
         image: netmanga_website
@@ -45,6 +47,7 @@ services:
             - postgres
         
     postgres:
+        hostname: postgres
         image: postgres
         ports:
             - "5432:5432"
@@ -55,5 +58,5 @@ services:
             - db-data:/var/lib/postgresql/data
 
 volumes: 
-    static_data:
-    db-data: 
+    db-data:
+    static_data: 
