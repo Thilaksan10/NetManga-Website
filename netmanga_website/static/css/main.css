@@ -2,6 +2,10 @@ textarea {
   resize: none;
 }
 
+.uploaded {
+  object-fit: cover;
+}
+
 .profile{
   text-align: center;
   margin-top: 0px;
