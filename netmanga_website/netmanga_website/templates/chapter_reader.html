@@ -149,38 +149,102 @@
                             {% csrf_token %}
                             <input type="hidden" name="like" value="1"/>
                             {% if user_rating.rating == True %}
-                            <a class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                            <button class="btn btn-like" onclick="document.forms[0].submit();return false;">
                                 <i class="fa fa-thumbs-up fa-selected">
                                 </i>
                                 <small class="thumbs-up-selected">{{likes}}</small>
-                            </a>
+                            </button>
                             {% else %}
-                            <a class="btn btn-like" onclick="document.forms[0].submit();return false;">
+                            <button class="btn btn-like" onclick="document.forms[0].submit();return false;">
                                 <i class="fa fa-thumbs-up">
                                 </i> 
                                 <small class="thumbs-up">{{likes}}</small>
-                            </a> 
+                            </button> 
                             {% endif %}
                         </form>
                         <form id="dislike" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="dislike" value="2"/>
                             {% if user_rating.rating == False %}
-                            <a class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                            <button class="btn btn-like" onclick="document.forms[1].submit();return false;">
                                 <i class="fa fa-thumbs-down fa-selected">
                                 </i>
                                 <small class="thumbs-down-selected">{{dislikes}}</small>
-                            </a>
+                            </button>
                             
                             {% else %}
-                            <a class="btn btn-like" onclick="document.forms[1].submit();return false;">
+                            <button class="btn btn-like" onclick="document.forms[1].submit();return false;">
                                 <i class="fa fa-thumbs-down">
                                 </i> 
                                 <small class="thumbs-down">{{dislikes}}</small>
-                            </a>
+                            </button>
                             
                             {% endif %}
                         </form>
+                        <script>
+                            var likes = parseInt('{{likes}}')
+                            var dislikes = parseInt('{{dislikes}}')
+                            document.querySelector("#like > button").addEventListener('click',function(){
+                                if(document.querySelector("#like > .btn > .fa-selected")){
+                                    console.log("1")
+                                    document.querySelector("#like > .btn > i").className="fa fa-thumbs-up"
+                                    likes--
+                                    document.querySelector("#like > .btn > small").className="thumbs-up"
+                                    document.querySelector("#like > .btn > small").innerHTML= likes
+                                }
+                                else {
+                                    if(document.querySelector("#dislike > .btn > .fa-selected")){
+                                        console.log('2.1')
+                                        document.querySelector("#dislike > .btn > i").className="fa fa-thumbs-down"
+                                        document.querySelector("#like > .btn > i").className="fa fa-thumbs-up fa-selected"
+                                        likes++
+                                        dislikes--
+                                        document.querySelector("#like > .btn > small").className="thumbs-up-selected"
+                                        document.querySelector("#dislike > .btn > small").className="thumbs-down"
+                                        document.querySelector("#like > .btn > small").innerHTML= likes
+                                        document.querySelector("#dislike > .btn > small").innerHTML= dislikes
+                                    }
+                                    else {
+                                        console.log('2.2')
+                                        document.querySelector("#like > .btn > i").className="fa fa-thumbs-up fa-selected"
+                                        likes++
+                                        document.querySelector("#like > .btn > small").className="thumbs-up-selected"
+                                        document.querySelector("#like > .btn > small").innerHTML= likes
+                                    }
+                                }
+                            });
+                            document.querySelector("#dislike > button").addEventListener('click',function(){
+                                if(document.querySelector("#dislike > .btn > .fa-selected")){
+                                    console.log('3')
+                                    document.querySelector("#dislike > .btn > i").className="fa fa-thumbs-down"
+                                    console.log(dislikes)
+                                    dislikes--
+                                    console.log(dislikes)
+                                    document.querySelector("#dislike > .btn > small").className="thumbs-down"
+                                    document.querySelector("#dislike > .btn > small").innerHTML= dislikes
+                                }
+                                else {
+                                    if(document.querySelector("#like > .btn > .fa-selected")){
+                                        console.log('3.1')
+                                        document.querySelector("#dislike > .btn > i").className="fa fa-thumbs-down fa-selected"
+                                        document.querySelector("#like > .btn > i").className="fa fa-thumbs-up"
+                                        likes--
+                                        dislikes++
+                                        document.querySelector("#like > .btn > small").className="thumbs-up"
+                                        document.querySelector("#dislike > .btn > small").className="thumbs-down-selected"
+                                        document.querySelector("#like > .btn > small").innerHTML= likes
+                                        document.querySelector("#dislike > .btn > small").innerHTML= dislikes
+                                    }
+                                    else {
+                                        console.log('3.2')
+                                        document.querySelector("#dislike > .btn > i").className="fa fa-thumbs-down fa-selected"
+                                        dislikes++
+                                        document.querySelector("#dislike > .btn > small").className="thumbs-down-selected"
+                                        document.querySelector("#dislike > .btn > small").innerHTML= dislikes
+                                    }
+                                }
+                            });
+                        </script>
                         <div class="dropdown" style="float: right;">
                             <div class="more-button" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="true">
@@ -240,11 +304,11 @@
                         {% csrf_token %}
                         <input type="hidden" name="subscribe" value="1"/>
                         {% if not subscribed %}
-                        <a  class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
+                        <button  class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
                             Subscribe
                         </a>
                         {% else %}
-                        <a  class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
+                        <button  class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
                             Subscribed 
                         </a>
                         {% endif %}
@@ -371,9 +435,9 @@
         <ul class="comments">
             <li class="comment-form">
                 {% if user.is_authenticated %}
-                    <img class="comment-user rounded-circle" height=50 width=50 src="{{user.profile.profile_picture.url}}">
+                    <img class="comment-user rounded-circle uploaded" height=50 width=50 src="{{user.profile.profile_picture.url}}">
                 {% else %}
-                    <img class="comment-user rounded-circle" height=50 width = 50 src="{% static '/img/no_profile_picture.png' %}">
+                    <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{% static '/img/no_profile_picture.png' %}">
                 {% endif %}
                 <form id="comment" method="post">
                     {% csrf_token %}
@@ -388,7 +452,7 @@
             </li>
             {% for comment in comments %}
             <li class="commentary">
-                <img class="comment-user rounded-circle" height=50 width = 50 src="{{comment.user.profile.profile_picture.url}}">
+                <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{{comment.user.profile.profile_picture.url}}">
                 <small class="username">{{ comment.user.username  }}</small>
                 <p class= "comment">{{ comment.comment }}</p>
                 <div class="row">

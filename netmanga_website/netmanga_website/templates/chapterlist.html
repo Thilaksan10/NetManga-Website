@@ -72,6 +72,21 @@
                 <div class="total-preformance" style="margin-top:15px;">
                     <h6 class="total-views" style="float: left;">{{total_views}} Total Views</h6>
                     <h6 class="total-subscribers" style="float: right;">{{subscriber_count}} Subscribers</h6>
+                    <script>
+                        var btn_subscribe = document.querySelector('#subscribe > button')
+                        var subscribers = "{{subscriber_count}}"
+                        if(btn_subscribe){
+                            document.querySelector('#subscribe > button').addEventListener('click',function(){
+                                if(document.querySelector('#subscribe > .btn-subscribe')){
+                                    subscribers++
+                                }
+                                else{
+                                    subscribers--
+                                }
+                                document.querySelector('.total-subscribers').innerHTML = parseInt(subscribers) + ' Subscribers'
+                            });
+                        }
+                    </script>
                 </div>
                 <div class="chapterlist">
                     {% for chapter_info in chapter_infos %}
