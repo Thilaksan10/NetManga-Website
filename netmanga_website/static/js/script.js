@@ -89,7 +89,6 @@ if(report_close){
 var btn_subscribe = document.querySelector('#subscribe > button')
 if(btn_subscribe){
     document.querySelector('#subscribe > button').addEventListener('click',function(){
-        console.log('hey')
         if(document.querySelector('#subscribe > .btn-subscribe')){
             document.querySelector('#subscribe > button').className = "btn btn-subscribed"
             document.querySelector('#subscribe > button').innerHTML = "Subscribed"

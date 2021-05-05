@@ -450,93 +450,96 @@
                 </form>
                 </br>
             </li>
-            {% for comment in comments %}
+            {% for comment_info in comment_infos %}
             <li class="commentary">
-                <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{{comment.user.profile.profile_picture.url}}">
-                <small class="username">{{ comment.user.username  }}</small>
-                <p class= "comment">{{ comment.comment }}</p>
+                <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{{comment_info.comment.user.profile.profile_picture.url}}">
+                <small class="username">{{ comment_info.comment.user.username  }}</small>
+                <p class= "comment">{{ comment_info.comment.comment }}</p>
                 <div class="row">
-                    <form id="commentlike" method="post">
+                    <form id="commentlike" class="commentlike-{{forloop.counter}}" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="commentlike" value="{{comment.pk}}"/>
-
+                        <input type="hidden" name="commentlike" value="{{comment_info.comment.pk}}"/>
                         <button  class="btn btn-like" type="submit">
-
-                            {% for comment_rating in comment_ratings %}
-                            
-                                
-                            {% if comment_rating.comment == comment and comment_rating.rating == True %}
+                            {% if comment_info.rating == True %}
                             <i class="fa fa-thumbs-up fa-selected"></i>
-                            {% setvar True as selected %}
-
-                            {% elif forloop.last and selected == None %}
+                            {% else %}
                             <i class="fa fa-thumbs-up"></i>
                             {% endif %}
-                
-                            {% empty %}
-                            
-                            <i class="fa fa-thumbs-up"></i>
-                            {% endfor %}
-
-                        </button>
-                        {% for comment_rating in comment_ratings %}     
-                        {% if comment_rating.comment == comment and comment_rating.rating == True %}
-                        <small class="thumbs-selected">{{comment.like}} </small>
-                        {% setvar True as selected %}
-
-                        {% elif forloop.last and selected == None %}
-                        <small class="thumbs">{{comment.like}} </small>
-                        
-                        {% endif %}
-                        
-                        {% empty %}
-                        <small class="thumbs">{{comment.like}} </small>
-                        {% endfor %}
-                        
-                        
+                        </button>   
+                        {% if comment_info.rating == True %}
+                        <small class="thumbs-selected">{{comment_info.comment.like}} </small>
+                        {% else %}
+                        <small class="thumbs">{{comment_info.comment.like}} </small>
+                        {% endif %}            
                     </form>
                    
-                    <form id="commentdislike" method="post">
+                    <form id="commentdislike" class="commentdislike-{{forloop.counter}}"  method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="commentdislike" value="{{comment.pk}}"/>
-                        
-                        <button class="btn btn-commentlike" type="submit">
-                            {% for comment_rating in comment_ratings %}
-                            
-                                
-                            {% if comment_rating.comment == comment and comment_rating.rating == False %}
+                        <input type="hidden" name="commentdislike" value="{{comment_info.comment.pk}}"/>
+                        <button  class="btn btn-like" type="submit">
+                            {% if comment_info.rating == False %}
                             <i class="fa fa-thumbs-down fa-selected"></i>
-                            {% setvar True as selected %}
-
-                            {% elif forloop.last and selected == None %}
+                            {% else %}
                             <i class="fa fa-thumbs-down"></i>
                             {% endif %}
-                
-                            {% empty %}
-                            
-                            <i class="fa fa-thumbs-down"></i>
-                            {% endfor %}
-
-                        </a>
-                        {% for comment_rating in comment_ratings %}     
-                        {% if comment_rating.comment == comment and comment_rating.rating == False %}
-                        <small class="thumbs-selected">{{comment.dislike}} </small>
-                        {% setvar True as selected %}
-
-                        {% elif forloop.last and selected == None %}
-                        <small class="thumbs">{{comment.dislike}} </small>
-                        
-                        {% endif %}
-                        
-                        {% empty %}
-                        <small class="thumbs">{{comment.dislike}} </small>
-                        {% endfor %}
-                        
-                        
+                        </button>   
+                        {% if comment_info.rating == False %}
+                        <small class="thumbs-selected">{{comment_info.comment.dislike}} </small>
+                        {% else %}
+                        <small class="thumbs">{{comment_info.comment.dislike}} </small>
+                        {% endif %}  
                     </form>
                 </div>
             </li>
-            
+            <script>
+                comment_infos = {{comment_infos_json|safe}}
+                console.log(comment_infos)
+                document.querySelector('.commentlike-{{forloop.counter}} > .btn').addEventListener('click',function(){
+                    if(document.querySelector('.commentlike-{{forloop.counter}} > .btn > .fa-selected')){
+                        document.querySelector('.commentlike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-up'
+                        comment_infos[{{forloop.counter0}}].comment.like--
+                        document.querySelector('.commentlike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.like
+                    }
+                    else {
+                        if(document.querySelector('.commentdislike-{{forloop.counter}} > .btn > .fa-selected')){
+                            document.querySelector('.commentlike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-up fa-selected'
+                            document.querySelector('.commentdislike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-down'
+                            comment_infos[{{forloop.counter0}}].comment.like++
+                            comment_infos[{{forloop.counter0}}].comment.dislike--
+                            document.querySelector('.commentlike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.like
+                            document.querySelector('.commentdislike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.dislike
+                        }
+                        else {
+                            document.querySelector('.commentlike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-up fa-selected'
+                            comment_infos[{{forloop.counter0}}].comment.like++
+                            document.querySelector('.commentlike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.like
+                        }
+                    }
+                });
+                
+                document.querySelector('.commentdislike-{{forloop.counter}} > .btn').addEventListener('click',function(){
+                    if(document.querySelector('.commentdislike-{{forloop.counter}} > .btn > .fa-selected')){
+                        document.querySelector('.commentdislike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-down'
+                        comment_infos[{{forloop.counter0}}].comment.dislike--
+                        document.querySelector('.commentdislike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.dislike
+                    }
+                    else {
+                        if(document.querySelector('.commentlike-{{forloop.counter}} > .btn > .fa-selected')){
+                            document.querySelector('.commentdislike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-down fa-selected'
+                            document.querySelector('.commentlike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-up'
+                            comment_infos[{{forloop.counter0}}].comment.like--
+                            comment_infos[{{forloop.counter0}}].comment.dislike++
+                            document.querySelector('.commentlike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.like
+                            document.querySelector('.commentdislike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.dislike
+                        }
+                        else {
+                            document.querySelector('.commentdislike-{{forloop.counter}} > .btn > i').className = 'fa fa-thumbs-down fa-selected'
+                            comment_infos[{{forloop.counter0}}].comment.dislike++
+                            document.querySelector('.commentdislike-{{forloop.counter}} > small').innerHTML = comment_infos[{{forloop.counter0}}].comment.dislike
+                        }
+                    }
+                });
+            </script>
             {% endfor %}
         </ul>
     </div>
