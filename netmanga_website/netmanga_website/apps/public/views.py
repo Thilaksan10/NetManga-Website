@@ -153,9 +153,7 @@ def create_commentinfojson_list(comments, comment_ratings):
     
     for comment in comments:
         rating = -1
-        profile_picture = comment.user.profile.profile_picture
-        print(profile_picture, flush=True)
-        username = comment.user.username
+        if comment_ratings:
         for comment_rating in comment_ratings:
             if comment_rating.comment.pk == comment.pk:
                 rating = int(comment_rating.rating)
@@ -174,12 +172,10 @@ def create_commentinfo_list(comments, comment_ratings):
     
     for comment in comments:
         rating = -1
-        profile_picture = comment.user.profile.profile_picture
-        print(profile_picture, flush=True)
-        username = comment.user.username
-        for comment_rating in comment_ratings:
-            if comment_rating.comment.pk == comment.pk:
-                rating = int(comment_rating.rating)
+        if comment_ratings:
+            for comment_rating in comment_ratings:
+                if comment_rating.comment.pk == comment.pk:
+                    rating = int(comment_rating.rating)
        
         comment_infos.append(CommentInfo(comment,rating))
 
