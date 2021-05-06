@@ -181,6 +181,7 @@
                             
                             {% endif %}
                         </form>
+                        {%  if user.is_authenticated %}
                         <script>
                             var likes = parseInt('{{likes}}')
                             var dislikes = parseInt('{{dislikes}}')
@@ -245,6 +246,7 @@
                                 }
                             });
                         </script>
+                        {% endif %}
                         <div class="dropdown" style="float: right;">
                             <div class="more-button" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="true">
@@ -315,6 +317,20 @@
                     </form>
                 </li>
                 {% endif %}  
+                {% if user.is_authenticated %}
+                <script>
+                    document.querySelector('#subscribe > button').addEventListener('click',function(){
+                        if(document.querySelector('#subscribe > .btn-subscribe')){
+                            document.querySelector('#subscribe > button').className = "btn btn-subscribed"
+                            document.querySelector('#subscribe > button').innerHTML = "Subscribed"
+                        }
+                        else{
+                            document.querySelector('#subscribe > button').className = "btn btn-subscribe"
+                            document.querySelector('#subscribe > button').innerHTML = "Subscribe"
+                        }
+                    });
+                </script>
+                {% endif %}
             </ul>   
         </div>
     </div>
@@ -491,6 +507,7 @@
                     </form>
                 </div>
             </li>
+            {% if user.is_authenticated %}
             <script>
                 comment_infos = {{comment_infos_json|safe}}
                 console.log(comment_infos)
@@ -540,6 +557,7 @@
                     }
                 });
             </script>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>

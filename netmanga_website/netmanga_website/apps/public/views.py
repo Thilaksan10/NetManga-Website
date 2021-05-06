@@ -110,7 +110,9 @@ def chapterlist(request,pk):
             subscriber_count = len(Subscriber.objects.filter(manga=manga))
             return HttpResponse(template.render({'manga': manga, 'chapter_infos': chapter_infos,'subscriber_count':subscriber_count,'total_views':total_views,'form':form},request))
     elif request.method =='POST':
+        print('check',flush=True)
         if request.user.is_authenticated:
+            print('user',flush=True)
             subscriber = Subscriber.objects.filter(manga=manga, user=request.user).first()
             form = EditPlotForm(request.POST)
             if form.is_valid():
@@ -129,7 +131,8 @@ def chapterlist(request,pk):
             return HttpResponse(status=204)
             #return HttpResponse(template.render({'manga': manga, 'chapter_infos': chapter_infos,'subscribed':subscribed,'subscriber_count':subscriber_count,'total_views':total_views,'form':form},request))
         else:
-            HttpResponseRedirect('accounts/login/')
+            print('redirect',flush=True)
+            return HttpResponseRedirect('/accounts/login')
     #return HttpResponse(template.render({},request))
 
 def calculate_views(chapterpages):
@@ -346,6 +349,7 @@ def chapterreader(request,pk):
                 chapterpage.save()
                 return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
         else:
+            print("redirect",flush=True)
             return HttpResponseRedirect('/accounts/login')
     else:    
         pass
