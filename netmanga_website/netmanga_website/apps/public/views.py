@@ -154,9 +154,9 @@ def create_commentinfojson_list(comments, comment_ratings):
     for comment in comments:
         rating = -1
         if comment_ratings:
-        for comment_rating in comment_ratings:
-            if comment_rating.comment.pk == comment.pk:
-                rating = int(comment_rating.rating)
+            for comment_rating in comment_ratings:
+                if comment_rating.comment.pk == comment.pk:
+                    rating = int(comment_rating.rating)
        
         comment_infos.append(json.loads(CommentInfoJson(comment,rating).toJson()))
 
