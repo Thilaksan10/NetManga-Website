@@ -86,3 +86,9 @@ if(report_close){
     });
 } 
 
+var withdraw_card =  document.querySelector('.card-body-withdraw')
+if(withdraw_card){
+    document.querySelector('.card-body-withdraw').addEventListener('click',function(){
+        document.querySelector('.bg-modal').style.display = 'flex';
+    });
+}

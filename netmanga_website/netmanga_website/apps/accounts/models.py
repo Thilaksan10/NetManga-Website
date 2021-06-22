@@ -7,7 +7,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 
-from .choices import GENRE_CHOICES
+from .choices import GENRE_CHOICES, STATUS_CHOICES
 
 # Create your models here.
 class Profile(models.Model):
@@ -123,6 +123,13 @@ class CoinPurchaseOrder(models.Model):
     price = models.FloatField(default=float(0.00))
     amount = models.IntegerField(default=0)
     time = models.TimeField(auto_now=False, auto_now_add=True)
+
+class WithdrawOrder(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.TimeField(auto_now=False, auto_now_add=True, null=True)
+    paypal = models.CharField(null=False, max_length=10000)
+    amount = models.FloatField(null=False)
+    status = models.CharField(choices=STATUS_CHOICES, null=False,max_length=10)
 
 '''
 class Manga(models.Model):

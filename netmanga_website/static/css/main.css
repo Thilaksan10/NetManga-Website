@@ -4262,6 +4262,7 @@ li.subscribe-button {
 .card-footer-analytics {
   padding: 0.75rem 1.25rem;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  cursor:pointer;
 }
 
 .small.stretched-link{
@@ -4375,4 +4376,23 @@ p a {
 
 p a:hover {
   color: #aa0364;
+}
+
+.card-body-withdraw{
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+  cursor: pointer;
+}
+
+.not-stretched-link {
+  color:#858585;
+  text-decoration: none;
+}
+
+.not-stretched-link:hover {
+  color:#858585;
+}
+
+.card-body-withdraw:hover{
+  background-color: #c5c5c5;
 }
