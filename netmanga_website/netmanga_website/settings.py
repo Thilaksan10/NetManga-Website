@@ -157,9 +157,9 @@ STATICFILES_DIRS = (
 )
 STATIC_ROOT = '/vol/web/static'
 
-MEDIA_URL = '/static/media/'
+#MEDIA_URL = '/static/media/'
 
-MEDIA_ROOT = '/vol/web/media'
+#MEDIA_ROOT = '/vol/web/media'
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
