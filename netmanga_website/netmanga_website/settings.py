@@ -27,9 +27,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(int(os.getenv('DEBUG',1)))
 #DEBUG = True
 
-ALLOWED_HOSTS = ['']
-if os.getenv('ALLOWED_HOSTS'):
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
+ALLOWED_HOSTS = ['www.netmanga.com']
+#if os.getenv('ALLOWED_HOSTS'):
+#    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
 
 
 # Application definition
