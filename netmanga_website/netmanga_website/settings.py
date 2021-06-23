@@ -31,6 +31,24 @@ ALLOWED_HOSTS = ['www.netmanga.com']
 #if os.getenv('ALLOWED_HOSTS'):
 #    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
 
+LOGGING = {
+    'version' : 1,
+    'disable_existing_loggers' : False,
+    'handlers' : {
+        'file' : {
+            'level' : 'DEBUG',
+            'class' : 'logging.FileHandler',
+            'filename' : '/tmp/debug.log',
+        },
+    },
+    'loggers' : { 
+        'django' : { 
+            'handlers' : ['file'],
+            'level' : 'DEBUG',
+            'propagate' : True,
+        },
+    },
+}
 
 # Application definition
 
