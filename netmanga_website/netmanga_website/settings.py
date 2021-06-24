@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost','www.netmanga.com','.netmanga.herokuapp
 #    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
 
 USE_X_FORWARDED_HOST=True
+USE_X_FORWARDED_PORT=True
 
 # Application definition
 
