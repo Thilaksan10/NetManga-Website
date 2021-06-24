@@ -7,7 +7,7 @@ server {
 
     location / {
         proxy_set_header HOST $host;
-        uwsgi_pass netmanga.com:$PORT;
+        uwsgi_pass netmanga.herokuapp.com:$PORT;
         proxy_set_header X-Forwarded-HOST $server_name;
         proxy_set_header X-REAL_IP $remote_addr;
         uwsgi_buffer_size 32k;
