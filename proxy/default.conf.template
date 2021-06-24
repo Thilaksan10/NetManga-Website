@@ -6,7 +6,10 @@ server {
     }
 
     location / {
+        uwsgi_param HOST $host;
         uwsgi_pass netmanga.herokuapp.com:$PORT;
+        uwsgi_param X-FORWARDED-HOST $server_name;
+        uwsgi_param X-REAL-IP $remote_addr;
         uwsgi_buffer_size 32k;
         uwsgi_buffers 8 32k;
         
