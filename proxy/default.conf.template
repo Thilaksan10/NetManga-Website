@@ -12,9 +12,6 @@ server {
         uwsgi_buffers 8 32k;
         
         include /etc/nginx/uwsgi_params;
-        uwsgi_param HOST $host;
-        uwsgi_param X-FORWARDED-HOST $server_name;
-        uwsgi_param X-REAL-IP $remote_addr;
         uwsgi_read_timeout 300;
         proxy_read_timeout 300;
     }
