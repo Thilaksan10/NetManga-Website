@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os, django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -30,9 +30,6 @@ DEBUG = bool(int(os.getenv('DEBUG',1)))
 ALLOWED_HOSTS = ['127.0.0.1','localhost','www.netmanga.com','.netmanga.herokuapp.com']
 #if os.getenv('ALLOWED_HOSTS'):
 #    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
-
-USE_X_FORWARDED_HOST=True
-USE_X_FORWARDED_PORT=True
 
 # Application definition
 
@@ -174,7 +171,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS',1)))
-'''
+
 LOGGING = {
     'version':1,
     'loggers':{
@@ -191,4 +188,5 @@ LOGGING = {
         }
     },
 }
-'''
+
+django_heroku.settings(locals(), logging=False)
