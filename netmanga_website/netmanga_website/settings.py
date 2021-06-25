@@ -175,3 +175,19 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS',1)))
 
+LOGGING = {
+    'version':1,
+    'loggers':{
+        'django':{
+            'handlers':['file'],
+            'level':'DEBUG'
+        }
+    },
+    'handler':{
+        'file':{
+            'level':'DEBUG',
+            'class':'logging.FileHandler',
+            'filename':'./logs/debug.log',
+        }
+    },
+}
