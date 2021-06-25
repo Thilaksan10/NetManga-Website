@@ -180,7 +180,7 @@ LOGGING = {
             'level':'DEBUG'
         }
     },
-    'handler':{
+    'handlers':{
         'file':{
             'level':'DEBUG',
             'class':'logging.FileHandler',
