@@ -174,18 +174,20 @@ EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS',1)))
 
 LOGGING = {
     'version':1,
-    'loggers':{
-        'django':{
-            'handlers':['file'],
-            'level':'DEBUG'
-        }
-    },
+    'disbale_existing_loggers':False,
     'handlers':{
         'file':{
             'level':'DEBUG',
             'class':'logging.FileHandler',
             'filename':'./logs/debug.log',
-        }
+        },
+    },
+    'loggers':{
+        'django':{
+            'handlers':['file'],
+            'level':'DEBUG'
+            'propagate':True,
+        },
     },
 }
 
