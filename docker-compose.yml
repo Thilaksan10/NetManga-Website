@@ -1,23 +1,5 @@
 version: "3.9"
 
-x-data-variables: &database-variables
-    POSTGRES_DB : postgres
-    POSTGRES_USER : postgres
-    POSTGRES_PASSWORD : postgres
-
-x-app-variables: &app-variables
-    <<: *database-variables
-    SECRET_KEY: 'f21ebcq4kueu^w2h8)0^b=x%yq3%_p$zxw3^l&z2!ms=av31t5'
-    POSTGRES_HOST: postgres
-    POSTGRES_NAME: postgres
-    POSTGRES_PORT: 5432
-    DEFAULT_FROM_EMAIL: 'contact.netmanga@gmail.com'
-    EMAIL_HOST: 'smtp.gmail.com' 
-    EMAIL_HOST_USER: 'contact.netmanga@gmail.com'
-    EMAIL_HOST_PASSWORD: 'NetManga2021'
-    EMAIL_PORT: 587
-    EMAIL_USE_TLS: 1
-
 services:
     website:
         build:

@@ -27,12 +27,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(int(os.getenv('DEBUG',1)))
 #DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','www.netmanga.com','.netmanga.herokuapp.com']
-#if os.getenv('ALLOWED_HOSTS'):
-#    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
+ALLOWED_HOSTS = []
+if os.getenv('ALLOWED_HOSTS'):
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
 
 # Application definition
-
+#Comment out 'storages' during Development
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     'netmanga_website.apps.accounts',
     'netmanga_website.apps.help',
     'netmanga_website.apps.public',
-    'storages',
+    #'storages',
 ]
 
+#Comment out 'whitenoise.middleware.WhiteNoiseMiddleware', during Development
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'netmanga_website.urls'
@@ -92,9 +93,10 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+#Comment out following three lines for development
+#import dj_database_url
+#db_from_env = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -129,23 +131,25 @@ USE_L10N = True
 
 USE_TZ = True
 
+#comment out S3 Bucket during development
 #S3 BUCKETS CONFIG
 
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+#AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+#AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+#AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
-AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
-AWS_S3_SIGNATURE_VERSION = os.getenv('AWS_S3_SIGNATURE_VERSION')
+#AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+#AWS_S3_SIGNATURE_VERSION = os.getenv('AWS_S3_SIGNATURE_VERSION')
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#AWS_S3_FILE_OVERWRITE = False
+#AWS_DEFAULT_ACL = None
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Simplifies static file serving.
 # https://warehouse.python.org/project/whitenoise/
+#comment out STATICFILES_STORAGE during development
 
-STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
+#STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -156,9 +160,9 @@ STATICFILES_DIRS = (
 )
 STATIC_ROOT = '/vol/web/static'
 
-#MEDIA_URL = '/static/media/'
+MEDIA_URL = '/static/media/'
 
-#MEDIA_ROOT = '/vol/web/media'
+MEDIA_ROOT = '/vol/web/media'
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
