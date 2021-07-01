@@ -5,6 +5,10 @@ server {
         alias /vol/static;
     }
 
+    location /logs {
+        error_log /var/log/nginx/logs.error.log debug;
+    }
+
     location / {
         uwsgi_pass netmanga.herokuapp.com:$PORT;
         include /etc/nginx/uwsgi_params;
