@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'log_request_id.middleware.ReuquestIDMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -176,25 +177,39 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS',1)))
 
-'''
+LOG_REQUEST_ID_HEADER = 'HTTP_X_REQUEST_ID'
+LOG_REQUESTS = True
+
 LOGGING = {
-    'version':1,
-    'disbale_existing_loggers':False,
-    'handlers':{
-        'file':{
-            'level':'DEBUG',
-            'class':'logging.FileHandler',
-            'filename':'./logs/debug.log',
+    'version': 1,
+    'disbale_existing_loggers': False,
+    'filters': {
+        'request_id': {
+            '()': 'log_request_id.filters:RequestIDFilter'
+        }
+    },
+    'formatters': {
+        'standard': {
+            'format': '%(levelname)-8s [%(asctime)s} [%(request_id)s] %(name)s: %(message)s'
         },
     },
-    'loggers':{
-        'django':{
-            'handlers':['file'],
-            'level':'DEBUG',
-            'propagate':True,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'filters': ['request_id'],
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'log_request_id.middleware': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }
 
+'''
 django_heroku.settings(locals(), logging=False)
 '''
