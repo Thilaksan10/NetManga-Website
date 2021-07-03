@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'log_request_id.middleware.ReuquestIDMiddleware',
+    'log_request_id.middleware.RequestIDMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
