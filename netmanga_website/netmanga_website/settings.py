@@ -185,7 +185,7 @@ LOGGING = {
     'disbale_existing_loggers': False,
     'filters': {
         'request_id': {
-            '()': 'log_request_id.filters:RequestIDFilter'
+            '()': 'log_request_id.filters.RequestIDFilter'
         }
     },
     'formatters': {
