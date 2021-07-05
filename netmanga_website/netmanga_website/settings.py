@@ -27,6 +27,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(int(os.getenv('DEBUG',1)))
 #DEBUG = True
 
+USE_X_FORWARDED_HOST = True
+
 ALLOWED_HOSTS = []
 if os.getenv('ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
