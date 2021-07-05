@@ -10,7 +10,7 @@ server {
     }
 
     location / {
-        uwsgi_pass netmanga.herokuapp.com:$PORT;
+        proxy_pass netmanga.herokuapp.com:$PORT;
         include /etc/nginx/uwsgi_params;
 
     }
