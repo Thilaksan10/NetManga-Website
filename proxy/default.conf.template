@@ -2,7 +2,7 @@ server {
     listen $PORT default_server;
     uwsgi_read_timeout 300;
     uwsgi_connect_timeout 300;
-    uwsgi_read_timeout 300;
+    uwsgi_send_timeout 300;
 
     location /static {
         alias /vol/static;
