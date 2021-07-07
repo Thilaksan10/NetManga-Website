@@ -7,10 +7,11 @@ http{
         location /static {
             alias /vol/static;
         }
+
+        location / {
+            proxy_pass https://netmanga;
+        }
     }
 
-    location / {
-        proxy_pass https://netmanga;
-        
-    }
+    
 }
