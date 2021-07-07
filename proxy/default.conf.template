@@ -10,7 +10,7 @@ http{
     }
 
     location / {
-        uwsgi_pass http://netmanga;
+        uwsgi_pass https://netmanga;
         include /etc/nginx/uwsgi_params;
     }
 }
