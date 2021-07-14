@@ -4,4 +4,4 @@ set -e
 
 python manage.py collectstatic --noinput
 
-uwsgi /var/conf/uwsgi.ini
+uwsgi --ini /var/conf/uwsgi.ini
