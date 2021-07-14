@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 if os.getenv('ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
 
+USE_X_FORWARDED_PORT = True
 # Application definition
 #Comment out 'storages' during Development
 INSTALLED_APPS = [
