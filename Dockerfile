@@ -23,4 +23,6 @@ RUN chown -R user:user /vol
 RUN chmod -R 755 /vol/web
 USER user
 
+ADD uwsgi.ini /var/conf/
+
 CMD ["entrypoint.sh"]
