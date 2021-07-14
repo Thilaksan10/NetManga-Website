@@ -211,6 +211,4 @@ LOGGING = {
     },
 }
 
-'''
 django_heroku.settings(locals(), logging=False)
-'''
