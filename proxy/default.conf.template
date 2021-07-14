@@ -1,49 +1,20 @@
-daemon off;
-worker_processes auto;
+server {
+    listen 80;
+    server_name netmanga.heroukapp.com;
+    keepalive_timeout 5;
 
-events {
-    use epoll;
-    accept_mutex on;
-    worker_connections 1024;
-}
-
-http {
-    gzip on;
-    gzip_comp_level 2;
-    gzip_min_length 512;
-
-    server_tokens off;
-
-    log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
-    access_log logs/nginx/access.log l2met;
-    error_log logs/nginx/error.log;
-
-    include mime.types;
-    default_type application/octet-stream;
-    sendfile on;
-
-    #Must read the body in 5 seconds.
-    client_body_timeout 5;
-
-    server {
-        listen $PORT;
-        server_name netmanga.heroukapp.com;
-        keepalive_timeout 5;
-
-        location /static {
-            alias /vol/static;
-        }
-
-        location / {
-            include uwsgi_params;
-            more_set_headers 'X-Request-Id: $http_x_request_id';
-            uwsgi_pass unix:/tmp/uwsgi.socket;
-            #proxy_set_header HOST $http_host;
-            #proxy_set_header X-Real-IP $remote_addr;
-            #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            #proxy_pass http://netmanga;
-        }
+    location /static {
+        alias /vol/static;
     }
 
-    
+    location / {
+        #include uwsgi_params;
+        #more_set_headers 'X-Request-Id: $http_x_request_id';
+        #uwsgi_pass unix:/tmp/uwsgi.socket;
+        #proxy_set_header HOST $http_host;
+        #proxy_set_header X-Real-IP $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://netmanga.com/;
+    }
 }
+
