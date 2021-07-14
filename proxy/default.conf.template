@@ -1,5 +1,5 @@
 server {
-    listen 8080;
+    listen $PORT;
     server_name netmanga.heroukapp.com;
     keepalive_timeout 5;
 
@@ -8,13 +8,13 @@ server {
     }
 
     location / {
-        include uwsgi_params;
+        #include uwsgi_params;
         #more_set_headers 'X-Request-Id: $http_x_request_id';
         #uwsgi_pass unix:/tmp/uwsgi.socket;
-        #proxy_set_header HOST $http_host;
-        #proxy_set_header X-Real-IP $remote_addr;
-        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        uwsgi_pass netmanga.herokuapp.com:$PORT;
+        proxy_set_header HOST $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://netmanga.com/;
     }
 }
 
