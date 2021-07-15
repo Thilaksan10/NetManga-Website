@@ -33,6 +33,7 @@ if os.getenv('ALLOWED_HOSTS'):
 
 USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
+
 # Application definition
 #Comment out 'storages' during Development
 INSTALLED_APPS = [
