@@ -4,4 +4,4 @@ set -e
 
 python manage.py collectstatic --noinput
 
-uwsgi --ini /var/conf/uwsgi.ini
+gunicorn netmanga_website.wsgi:application 
