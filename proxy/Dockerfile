@@ -10,7 +10,7 @@ RUN mkdir -p /vol/static
 RUN chmod 755 /vol/static
 RUN touch /etc/nginx/conf.d/default.conf
 RUN chown nginx:nginx /etc/nginx/conf.d/default.conf
-RUN +x /run.sh
+RUN chmod +x /run.sh
 
 USER nginx
 
