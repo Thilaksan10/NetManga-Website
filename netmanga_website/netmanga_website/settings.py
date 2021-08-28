@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os, django_heroku
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -30,9 +30,6 @@ DEBUG = bool(int(os.getenv('DEBUG',1)))
 ALLOWED_HOSTS = []
 if os.getenv('ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')  
-
-USE_X_FORWARDED_PORT = True
-USE_X_FORWARDED_HOST = True
 
 # Application definition
 #Comment out 'storages' during Development
@@ -59,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'log_request_id.middleware.RequestIDMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'netmanga_website.urls'
@@ -98,9 +95,9 @@ DATABASES = {
 }
 
 #Comment out following three lines for development
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+#import dj_database_url
+#db_from_env = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -153,15 +150,16 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # https://warehouse.python.org/project/whitenoise/
 #comment out STATICFILES_STORAGE during development
 
-STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
+#STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# comment out STATICFILES_DIRS in prod
+#STATICFILES_DIRS = [   
+#    os.path.join(BASE_DIR, 'static'),
+#]
 STATIC_ROOT = '/vol/web/static'
 
 #MEDIA_URL = '/static/media/'
@@ -179,6 +177,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS',1)))
+
 
 LOG_REQUEST_ID_HEADER = 'HTTP_X_REQUEST_ID'
 LOG_REQUESTS = True
