@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'log_request_id.middleware.RequestIDMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'netmanga_website.urls'
@@ -95,9 +95,9 @@ DATABASES = {
 }
 
 #Comment out following three lines for development
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+#import dj_database_url
+#db_from_env = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -150,7 +150,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # https://warehouse.python.org/project/whitenoise/
 #comment out STATICFILES_STORAGE during development
 
-STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
+#STATICFILES_STORAGE = 'netmanga_website.storage.WhiteNoiseStaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
