@@ -24,7 +24,7 @@ PROJECT_DIR = os.path.join(BASE_DIR,"netmanga_website")
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.getenv('DEBUG',1)))
+DEBUG = bool(int(os.getenv('DEBUG',0)))
 #DEBUG = True
 
 ALLOWED_HOSTS = []
