@@ -11,7 +11,10 @@ from .forms import ContactForm
 def help(request):
     template = loader.get_template('footer/help.html')
     if request.method == 'GET':
+        if request.user.is_authenticated:
             form = ContactForm(initial={"username": request.user.username, "email": request.user.email})
+        else:
+            form = ContactForm()
             #TODO Autofill Username and Email of logged in User in help
             return HttpResponse(template.render({'form': form}, request))
     elif request.method == 'POST':
