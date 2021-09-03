@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'log_request_id.middleware.RequestIDMiddleware',
+    'csp.middleware.CSPMiddleware',
     #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -68,7 +69,7 @@ SESSION_COOKIE_SECURE = True
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_STYLE_SRC = ("'self'", https://netmanga.s3.amazonaws.com/css/)
 CSP_SCRIPT_SRC = ("'self'", https://netmanga.s3.amazonaws.com/js/)
-CSP_IMG_SRC = ("'self'",https://netmanga.s3.amazonaws.com/)
+CSP_IMG_SRC = ("'self'",https://netmanga.s3.amazonaws.com/img/)
 CSP_FONT_SRC = ("'self'",)
 CSP_MEDIA_SRC = ("'self'",https://netmanga.s3.amazonaws.com/)
 
