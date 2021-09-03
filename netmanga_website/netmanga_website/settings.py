@@ -58,8 +58,14 @@ MIDDLEWARE = [
     #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+#Security
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
 
 ROOT_URLCONF = 'netmanga_website.urls'
 
