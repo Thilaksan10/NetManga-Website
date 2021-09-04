@@ -95,12 +95,12 @@ SECURE_BROWSER_XSS_FILTER = True
 #Permissions Policy
 PERMISSIONS_POLICY = {
     'accelerometer': [],
-    'ambient-light-sensor': [],
+    #'ambient-light-sensor': [],
     'autoplay': [],
     #'battery': [],
     'camera': [],
     #'cross-origin-isolated': [],
-    'display-capture': [],
+    #'display-capture': [],
     'document-domain': [],
     'encrypted-media': [],
     #'execution-while-not-rendered': [],
@@ -108,7 +108,7 @@ PERMISSIONS_POLICY = {
     'fullscreen': [],
     'geolocation': [],
     'gyroscope': [],
-    'interest-cohort' : [],
+    #'interest-cohort' : [],
     'magnetometer': [],
     'microphone': [],
     'midi': [],
