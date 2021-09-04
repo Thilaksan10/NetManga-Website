@@ -82,7 +82,7 @@ CSP_FRAME_SRC = ("'self'", "https://www.paypal.com/")
 CSP_CONNECT_SRC = ("'self'", "https://www.paypal.com/xoplatform/logger/api/logger")
 
 #HTTP Strict Security Transport 
-SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
