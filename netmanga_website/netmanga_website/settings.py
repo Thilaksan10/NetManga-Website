@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'log_request_id.middleware.RequestIDMiddleware',
     'csp.middleware.CSPMiddleware',
+    'django_permissions_policy.PermissionsPolicyMiddleware',
     #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -90,6 +91,36 @@ SECURE_HSTS_PRELOAD = True
 
 #X-XSS-Protection
 SECURE_BROWSER_XSS_FILTER = True
+
+#Permissions Policy
+PERMISSIONS_POLICY = {
+    'accelerometer': [],
+    'ambient-light-sensor': [],
+    'autoplay': [],
+    'battery': [],
+    'camera': [],
+    'cross-origin-isolated': [],
+    'display-capture': [],
+    'document-domain': [],
+    'encrypted-media': [],
+    'execution-while-not-rendered': [],
+    'execution-while-out-of-viewport': [],
+    'fullscreen': [],
+    'geolocation': [],
+    'gyroscope': [],
+    'magnetometer': [],
+    'microphone': [],
+    'midi': [],
+    'navigation-override': [],
+    'payment': [],
+    'picture-in-picture': [],
+    'publickey-credentials-get': [],
+    'screen-wake-lock': [],
+    'sync-xhr': [],
+    'usb': [],
+    'web-share': [],
+    'xr-spatial-tracking': [],
+}
 
 ROOT_URLCONF = 'netmanga_website.urls'
 
