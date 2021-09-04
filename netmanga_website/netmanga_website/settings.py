@@ -72,17 +72,17 @@ SESSION_COOKIE_NAME = '__Secure-sessionid'
 CSRF_COOKIE_NAME = '__Secure-csrftoken'
 
 #Content Security Policy
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'",  "'unsafe-inline'", "https://netmanga.s3.amazonaws.com/css/", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "https://netmanga.s3.amazonaws.com/js/", "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js", "https://www.paypal.com/")
-CSP_IMG_SRC = ("'self'", "https://netmanga.s3.amazonaws.com/img/", "https://netmanga.s3.amazonaws.com/", "https://www.redditstatic.com/desktop2x/img/payment-icons/", "https://www.paypal.com/", "data:")
-CSP_FONT_SRC = ("'self'", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/")
-CSP_MEDIA_SRC = ("'self'", "https://netmanga.s3.amazonaws.com/")
-CSP_FRAME_SRC = ("'self'", "https://www.paypal.com/")
-CSP_CONNECT_SRC = ("'self'", "https://www.paypal.com/xoplatform/logger/api/logger")
+#CSP_DEFAULT_SRC = ("'self'",)
+#CSP_STYLE_SRC = ("'self'",  "'unsafe-inline'", "https://netmanga.s3.amazonaws.com/css/", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+#CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "https://netmanga.s3.amazonaws.com/js/", "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.1/chart.min.js", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js", "https://www.paypal.com/")
+#CSP_IMG_SRC = ("'self'", "https://netmanga.s3.amazonaws.com/img/", "https://netmanga.s3.amazonaws.com/", "https://www.redditstatic.com/desktop2x/img/payment-icons/", "https://www.paypal.com/", "data:")
+#CSP_FONT_SRC = ("'self'", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/")
+#CSP_MEDIA_SRC = ("'self'", "https://netmanga.s3.amazonaws.com/")
+#CSP_FRAME_SRC = ("'self'", "https://www.paypal.com/")
+#CSP_CONNECT_SRC = ("'self'", "https://www.paypal.com/xoplatform/logger/api/logger")
 
 #HTTP Strict Security Transport 
-SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
