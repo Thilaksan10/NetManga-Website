@@ -80,6 +80,7 @@ CSP_FONT_SRC = ("'self'", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4
 CSP_MEDIA_SRC = ("'self'", "https://netmanga.s3.amazonaws.com/")
 CSP_FRAME_SRC = ("'self'", "https://www.paypal.com/")
 CSP_CONNECT_SRC = ("'self'", "https://www.paypal.com/xoplatform/logger/api/logger")
+CSP_FRAME_ANCESTORS = ("'None'",)
 
 
 #HTTP Strict Security Transport 
