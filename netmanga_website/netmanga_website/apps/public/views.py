@@ -2,6 +2,8 @@ import bleach
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+
+from ...settings import DEFAULT_FILE_STORAGE
 from ..accounts.models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter
 from .forms import CommentForm, EditPlotForm, ReportForm
 from .algorithms import *
@@ -319,9 +321,9 @@ def chapterreader(request,pk):
         chapter.save()
         
         if request.user.is_authenticated:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': DEFAULT_FILE_STORAGE, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
         else:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': DEFAULT_FILE_STORAGE, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
     elif request.method == 'POST':
         reload = chapter_reader_post(request,chapter)
 
@@ -340,7 +342,7 @@ def chapterreader(request,pk):
                 comment_infos = create_commentinfo_list(comments,comment_ratings)
                 comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
                 print(comment_infos, flush=True)
-                return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+                return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': DEFAULT_FILE_STORAGE, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
         else:
             print("redirect",flush=True)
             return HttpResponseRedirect('/accounts/login')

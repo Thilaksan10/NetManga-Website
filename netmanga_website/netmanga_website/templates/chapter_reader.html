@@ -84,6 +84,7 @@
 <script>
     var currentpage = parseInt('{{chapterpage.no}}') - 1
     var chapterpages = JSON.parse('{{json_chapterpages | safe}}')
+    console.log('{{media_url}}')
     document.getElementById("next-page").addEventListener('click',function(){
         if(currentpage + 1 !== chapterpages.length){
             currentpage = currentpage + 1
