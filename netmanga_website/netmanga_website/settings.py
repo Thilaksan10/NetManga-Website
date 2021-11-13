@@ -61,10 +61,11 @@ MIDDLEWARE = [
 ]
 
 #Comment out Redirect and Cookies during developement
+#Comment out Redirect when working on heroku free dynos
 #Security
 #Redirect
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_SSL_REDIRECT = True
 
 #Cookies
 CSRF_COOKIE_SECURE = True
