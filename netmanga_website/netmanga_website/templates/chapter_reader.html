@@ -85,10 +85,11 @@
     var currentpage = parseInt('{{chapterpage.no}}') - 1
     var chapterpages = JSON.parse('{{json_chapterpages | safe}}')
     console.log('{{media_url}}')
+    console.log(chapterpages[currentpage]["fields"]["image"].url)
     document.getElementById("next-page").addEventListener('click',function(){
         if(currentpage + 1 !== chapterpages.length){
             currentpage = currentpage + 1
-            document.getElementById("manga-page").src = '{{media_url}}' + "static/media/" + chapterpages[currentpage]["fields"]["image"];
+            document.getElementById("manga-page").src = '{{media_url}}'+ chapterpages[currentpage]["fields"]["image"];
             document.getElementById("previous-page").className = "btn btn-next" 
             document.querySelector(".page-no").innerHTML= currentpage+1 + "/" + chapterpages.length
             if(currentpage + 1 === chapterpages.length){
@@ -101,7 +102,7 @@
     document.getElementById("previous-page").addEventListener('click',function(){
         if(currentpage !== 0){
             currentpage = currentpage - 1
-            document.getElementById("manga-page").src = '{{media_url}}' + "static/media/" + chapterpages[currentpage]["fields"]["image"];
+            document.getElementById("manga-page").src = '{{media_url}}'  + chapterpages[currentpage]["fields"]["image"];
             document.getElementById("next-page").className = "btn btn-next" 
             document.querySelector(".page-no").innerHTML= currentpage + 1 + "/" + chapterpages.length
             if(currentpage + 1 === 1){
