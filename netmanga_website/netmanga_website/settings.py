@@ -226,8 +226,8 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #STATIC_URL = '/static/static/'
 # comment out STATICFILES_DIRS in prod
 #STATICFILES_DIRS = [   
-    os.path.join(BASE_DIR, 'static'),
-]
+#    os.path.join(BASE_DIR, 'static'),
+#]
 #STATIC_ROOT = '/vol/web/static'
 
 #MEDIA_URL = '/static/media/'
