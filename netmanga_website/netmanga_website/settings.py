@@ -224,18 +224,18 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-'''
-STATIC_URL = '/static/static/'
+
+#STATIC_URL = '/static/static/'
 # comment out STATICFILES_DIRS in prod
-STATICFILES_DIRS = [   
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_ROOT = '/vol/web/static'
+#STATICFILES_DIRS = [   
+#    os.path.join(BASE_DIR, 'static'),
+#]
+#STATIC_ROOT = '/vol/web/static'
 
-MEDIA_URL = '/static/media/'
+#MEDIA_URL = '/static/media/'
 
-MEDIA_ROOT = '/vol/web/media'
-'''
+#MEDIA_ROOT = '/vol/web/media'
+
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
