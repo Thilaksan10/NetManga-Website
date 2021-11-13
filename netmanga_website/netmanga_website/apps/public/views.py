@@ -7,6 +7,7 @@ from .forms import CommentForm, EditPlotForm, ReportForm
 from .algorithms import *
 from django.forms.models import model_to_dict
 import json
+from django.core import serializers
 
 
 def index(request):
@@ -297,6 +298,10 @@ def chapterreader(request,pk):
     comment_form = CommentForm()
     report_form = ReportForm()
     awards = Award.objects.all().order_by('pk')
+    # only for development
+    #media_url = 'http://localhost:8000/'
+    # only for production
+    media_url = 'https://netmanga.s3.amazonaws.com/'
     if request.method == 'GET':
         rating = Rating.objects.filter(chapter=pk)
         likes = Rating.objects.filter(chapter=pk, rating=True)
@@ -310,18 +315,13 @@ def chapterreader(request,pk):
         comment_infos = create_commentinfo_list(comments,comment_ratings)
         comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
         print(comment_infos, flush=True)
-        views = calculate_views(chapterpages)
-        chapter.views = views
+        chapter.views += 1
         chapter.save()
         
-        chapterpage = Chapterimages.objects.filter(chapter=chapter,no=1).first()
-        chapterpage.views += 1
-        chapterpage.save()
-        
         if request.user.is_authenticated:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
         else:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'views': views, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
     elif request.method == 'POST':
         reload = chapter_reader_post(request,chapter)
 
@@ -340,144 +340,13 @@ def chapterreader(request,pk):
                 comment_infos = create_commentinfo_list(comments,comment_ratings)
                 comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
                 print(comment_infos, flush=True)
-                views = calculate_views(chapterpages)
-                chapter.views = views
-                chapter.save()
-                
-                chapterpage = Chapterimages.objects.filter(chapter=chapter,no=1).first()
-                chapterpage.views += 1
-                chapterpage.save()
-                return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+                return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
         else:
             print("redirect",flush=True)
             return HttpResponseRedirect('/accounts/login')
     else:    
         pass
 
-
-def previous_page(request,pk,tk):
-    template =loader.get_template('chapter_reader.html')
-    chapter = Chapter.objects.filter(pk=pk).first()
-    chapterpages = Chapterimages.objects.filter(chapter=pk)
-    currentpage = Chapterimages.objects.filter(pk=tk).first()
-    comment_form = CommentForm()
-    report_form = ReportForm()
-    awards = Award.objects.all().order_by('pk')
-    if request.method == 'GET':      
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
-        if request.user.is_authenticated:
-            user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-            comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
-            subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
-        comment_infos = create_commentinfo_list(comments,comment_ratings)
-        comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
-        print(comment_infos, flush=True)
-        views = calculate_views(chapterpages)
-        chapter.views = views
-        chapter.save()
-
-        for chapterpage in chapterpages:
-            if chapterpage.no+1 == currentpage.no:
-                if request.user.is_authenticated:
-                    return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json,'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,   'awards': awards, 'report_form':report_form},request))
-                else:
-                    return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'views': views, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form },request))
-    elif request.method == 'POST':
-        reload = chapter_reader_post(request,chapter)
-        
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
-        if request.user.is_authenticated:
-            if not reload:
-                return HttpResponse(status=204)
-            else:
-                user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-                comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
-                subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
-                comment_infos = create_commentinfo_list(comments,comment_ratings)
-                comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
-                print(comment_infos, flush=True)
-                views = calculate_views(chapterpages)
-                chapter.views = views
-                chapter.save()
-                for chapterpage in chapterpages:
-                    if chapterpage.no+1 == currentpage.no:
-                        if request.user.is_authenticated:
-                            return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json,'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,   'awards': awards, 'report_form':report_form},request))
-        else:
-            return HttpResponseRedirect('/accounts/login')
-    else:    
-        pass
-
-
-
-def next_page(request,pk,sk):
-    template =loader.get_template('chapter_reader.html')
-    chapter = Chapter.objects.filter(pk=pk).first()
-    chapterpages = Chapterimages.objects.filter(chapter=pk)
-    currentpage = Chapterimages.objects.filter(pk=sk).first()
-    comment_form = CommentForm()
-    report_form = ReportForm()
-    awards = Award.objects.all().order_by('pk')
-    if request.method == 'GET':
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
-        comment_ratings = None
-        if request.user.is_authenticated:
-            user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-            comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
-            subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
-        comment_infos = create_commentinfo_list(comments,comment_ratings)
-        comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
-        print(comment_infos, flush=True)
-        views = calculate_views(chapterpages)
-        chapter.views = views
-        chapter.save()
-        for chapterpage in chapterpages:
-            if chapterpage.no-1 == currentpage.no:
-                chapterpage.views += 1
-                chapterpage.save()
-                if request.user.is_authenticated:
-                    return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json,'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
-                else:
-                    return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'views': views, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
-    elif request.method == 'POST':
-        reload = chapter_reader_post(request,chapter)
-                
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
-        if request.user.is_authenticated:
-            if not reload:
-                return HttpResponse(status=204)
-            else:
-                user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-                comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
-                subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
-                comment_infos = create_commentinfo_list(comments,comment_ratings)
-                comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
-                print(comment_infos, flush=True)
-                views = calculate_views(chapterpages)
-                chapter.views = views
-                chapter.save()
-                for chapterpage in chapterpages:
-                    if chapterpage.no-1 == currentpage.no:
-                        chapterpage.views += 1
-                        chapterpage.save()
-                        if request.user.is_authenticated:
-                            return HttpResponse(template.render({'chapter': chapter, 'chapterpage': chapterpage, 'pages' : len(chapterpages), 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'views': views, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
-        else:
-            return HttpResponseRedirect('/accounts/login')
-    else:  
-        raise NotImplementedError
 
 ''' All Genre related views '''
 def genre(request):

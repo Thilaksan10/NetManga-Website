@@ -37,7 +37,5 @@ urlpatterns = [
 
     path('chapterlist/<str:pk>', views.chapterlist, name='chapterlist'),
     path('chapter_reader/<str:pk>', views.chapterreader, name='chapter_reader'),
-    path('next_page/<str:pk>/<int:sk>', views.next_page, name='next_page'),
-    path('previous_page/<str:pk>/<int:tk>', views.previous_page, name='previous_page'),
     path('search',views.search, name='search'),
 ]

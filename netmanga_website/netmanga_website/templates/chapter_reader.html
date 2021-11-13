@@ -5,17 +5,10 @@
 {% block title %} NETMANGA {% endblock %}
 
 {% block content %}
-<!--
-<header class="masthead bg-primary text-white text-center">
-    <div class="container d-flex align-items-center flex-column">-->
-        <!-- Masthead Heading-->
-        <!--<h1 class="masthead-heading text-uppercase mb-0">PUBLISH YOUR MANGA</h1>-->
-        <!-- Masthead Subheading-->
-        <!--<p class="masthead-subheading font-weight-light mb-0">Be Creative</p>
-    </div>
-</header>-->
 <!--Recommended Section-->
 <!-- Navigation-->
+
+{% with chapterpage=chapterpages.0 %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         
@@ -30,33 +23,21 @@
         <div class="mx-auto order-3">
             <ul class="reader-nav ms-auto">
                 <li class="nav-chapter-item">
-                    {% if chapterpage.no < pages %}
-                    <a class='btn btn-next' href="{% url 'public:next_page' pk=chapter.pk sk=chapterpage.pk %}">
+                    <div class='btn btn-next' id='next-page'>
                         <i class="fa fa-arrow-left"></i>
-                    </a>
-                    {% else %}
-                    <a class='btn btn-next-hidden'>
-                        <i class="fa fa-arrow-left"></i>
-                    </a> 
-                    {% endif %}
+                    </div>
                 </li>
 
                 <li class="nav-chapter-item">
                     <!--Logo and Homepage Nav-->
                     <span class="page-no mx-auto">
-                        {{chapterpage.no}}/{{pages}}
+                        {{chapterpage.no}}/{{chapterpages.count}}
                     </span>
                 </li>
                 <li class="nav-chapter-item">
-                    {% if chapterpage.no > 1 %}
-                    <a class='btn btn-next' href="{% url 'public:previous_page' pk=chapter.pk tk=chapterpage.pk %}">
+                    <div class='btn btn-next-hidden' id='previous-page'>
                         <i class="fa fa-arrow-right"></i>
-                    </a>     
-                    {% else %}
-                    <a class='btn btn-next-hidden'>
-                        <i class="fa fa-arrow-right"></i>
-                    </a> 
-                    {% endif %}
+                    </div> 
                 </li>
             </ul>
         </div>
@@ -83,7 +64,6 @@
         </div>
     </div>
 </nav>
-
 <div class="viewer-content">
     <div class="page-view">
         <div>
@@ -101,6 +81,37 @@
         </div>
     </div>
 </div>
+<script>
+    var currentpage = parseInt('{{chapterpage.no}}') - 1
+    var chapterpages = JSON.parse('{{json_chapterpages | safe}}')
+    document.getElementById("next-page").addEventListener('click',function(){
+        if(currentpage + 1 !== chapterpages.length){
+            currentpage = currentpage + 1
+            document.getElementById("manga-page").src = '{{media_url}}' + "static/media/" + chapterpages[currentpage]["fields"]["image"];
+            document.getElementById("previous-page").className = "btn btn-next" 
+            document.querySelector(".page-no").innerHTML= currentpage+1 + "/" + chapterpages.length
+            if(currentpage + 1 === chapterpages.length){
+                document.getElementById("next-page").className = "btn btn-next-hidden"
+            }
+        }
+        console.log(currentpage)
+    });
+
+    document.getElementById("previous-page").addEventListener('click',function(){
+        if(currentpage !== 0){
+            currentpage = currentpage - 1
+            document.getElementById("manga-page").src = '{{media_url}}' + "static/media/" + chapterpages[currentpage]["fields"]["image"];
+            document.getElementById("next-page").className = "btn btn-next" 
+            document.querySelector(".page-no").innerHTML= currentpage + 1 + "/" + chapterpages.length
+            if(currentpage + 1 === 1){
+                document.getElementById("previous-page").className = "btn btn-next-hidden"
+            }
+        }
+        console.log(currentpage)
+    });
+
+</script>
+{% endwith %}
 
 <div class="section">
     <!--
@@ -136,7 +147,7 @@
             <ul class="ratings">
                 <li>
                     <h4 class="views">
-                        {{views}} Views 
+                        {{chapter.views}} Views 
                     </h4>
                     <h6 class="publish-date">
                         {{chapter.published|date:'d.m.Y'}}
@@ -317,7 +328,7 @@
                     </form>
                 </li>
                 {% endif %}  
-                {% if user.is_authenticated %}
+                {% if user != chapter.manga.creator.user and user.is_authenticated %}
                 <script>
                     document.querySelector('#subscribe > button').addEventListener('click',function(){
                         if(document.querySelector('#subscribe > .btn-subscribe')){

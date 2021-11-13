@@ -60,17 +60,18 @@ MIDDLEWARE = [
     #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+#Comment out Security and Cookies during developement
 #Security
 #Redirect
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_SSL_REDIRECT = True
 
 #Cookies
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_NAME = '__Secure-sessionid'
-CSRF_COOKIE_NAME = '__Secure-csrftoken'
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_HTTPONLY = True
+#SESSION_COOKIE_NAME = '__Secure-sessionid'
+#CSRF_COOKIE_NAME = '__Secure-csrftoken'
 
 #Content Security Policy
 CSP_DEFAULT_SRC = ("'none'",)
@@ -199,6 +200,7 @@ USE_TZ = True
 #comment out S3 Bucket during development
 #S3 BUCKETS CONFIG
 
+'''
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
@@ -209,7 +211,8 @@ AWS_S3_SIGNATURE_VERSION = os.getenv('AWS_S3_SIGNATURE_VERSION')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+'''
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Simplifies static file serving.
 # https://warehouse.python.org/project/whitenoise/
@@ -220,16 +223,16 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-#STATIC_URL = '/static/static/'
+STATIC_URL = '/static/static/'
 # comment out STATICFILES_DIRS in prod
-#STATICFILES_DIRS = [   
-#    os.path.join(BASE_DIR, 'static'),
-#]
-#STATIC_ROOT = '/vol/web/static'
+STATICFILES_DIRS = [   
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = '/vol/web/static'
 
-#MEDIA_URL = '/static/media/'
+MEDIA_URL = '/static/media/'
 
-#MEDIA_ROOT = '/vol/web/media'
+MEDIA_ROOT = '/vol/web/media'
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
