@@ -3,7 +3,7 @@ from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 
-from ...settings import DEFAULT_FILE_STORAGE
+#from ...settings import DEFAULT_FILE_STORAGE
 from ..accounts.models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter
 from .forms import CommentForm, EditPlotForm, ReportForm
 from .algorithms import *
@@ -296,14 +296,18 @@ def chapter_reader_post(request,chapter):
 def chapterreader(request,pk):
     template =loader.get_template('chapter_reader.html')
     chapter = Chapter.objects.filter(pk=pk).first()
-    chapterpages = Chapterimages.objects.filter(chapter=pk)
+    chapterpages = Chapterimages.objects.filter(chapter=pk).order_by('no')
     comment_form = CommentForm()
     report_form = ReportForm()
     awards = Award.objects.all().order_by('pk')
+    image_urls = []
+    for chapterpage in chapterpages:
+        print(chapterpage.image.url)
+        image_urls.append(chapterpage.image.url)
     # only for development
-    #media_url = 'http://localhost:8000/'
+    #media_url = 'http://localhost:8000'
     # only for production
-    media_url = 'https://netmanga.s3.amazonaws.com/'
+    media_url = 'https://netmanga.s3.amazonaws.com'
     if request.method == 'GET':
         rating = Rating.objects.filter(chapter=pk)
         likes = Rating.objects.filter(chapter=pk, rating=True)
@@ -321,9 +325,9 @@ def chapterreader(request,pk):
         chapter.save()
         
         if request.user.is_authenticated:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
         else:
-            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+            return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
     elif request.method == 'POST':
         reload = chapter_reader_post(request,chapter)
 
@@ -342,7 +346,7 @@ def chapterreader(request,pk):
                 comment_infos = create_commentinfo_list(comments,comment_ratings)
                 comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
                 print(comment_infos, flush=True)
-                return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+                return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'media_url': media_url, 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'subscribed': subscribed, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
         else:
             print("redirect",flush=True)
             return HttpResponseRedirect('/accounts/login')
