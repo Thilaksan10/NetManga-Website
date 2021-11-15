@@ -16,8 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 PROJECT_DIR = os.path.join(BASE_DIR,"netmanga_website")
-PROJECT_ROOT2 = os.path.dirname(os.path.abspath(__file__))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -225,7 +223,7 @@ if(DEV == False):
     STATIC_URL = '/static/static/'
     # comment out STATICFILES_DIRS in prod
     STATICFILES_DIRS = [   
-        os.path.join('/vol/web/', 'static'),
+        os.path.join(BASE_DIR, 'static'),
     ]
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -264,6 +262,22 @@ LOG_REQUESTS = True
 
 LOGGING = {
     'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
+'''
+LOGGING = {
+    'version': 1,
     'disbale_existing_loggers': False,
     'filters': {
         'request_id': {
@@ -291,3 +305,4 @@ LOGGING = {
         },
     },
 }
+'''
