@@ -226,7 +226,7 @@ if(DEV == False):
         os.path.join(BASE_DIR, 'static'),
     ]
 
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 else:
     # Static files (CSS, JavaScript, Images)
