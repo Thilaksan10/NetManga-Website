@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    #'django.contrib.staticfiles',
     'netmanga_website.apps.accounts',
     'netmanga_website.apps.help',
     'netmanga_website.apps.public',
