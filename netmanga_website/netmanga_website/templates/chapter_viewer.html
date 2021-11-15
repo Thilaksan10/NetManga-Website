@@ -14,7 +14,7 @@
         <div class=" w-100 order-1 order-sm-0">
             <!--Logo and Homepage Nav-->
             <a class="navbar-brand" href="{% url 'public:index' %}">
-                <img src="{% static '/img/netmanga_logo.png' %}" class="logo-nav">
+                <img src="{% static 'img/netmanga_logo.png' %}" class="logo-nav">
             </a>
         </div>
 
@@ -349,7 +349,7 @@
         <div class="awards-info">
             <a class="coins-amount-view" target="_blank" href="{% url 'accounts:buy_coins' %}">
                 <i class="fa fa-plus-circle"></i>
-                <img class="awards-coin-img" src="{% static '/img/netmanga_coin.png' %}" width="20" height="20">
+                <img class="awards-coin-img" src="{% static 'img/netmanga_coin.png' %}" width="20" height="20">
                 <h5>{{request.user.profile.coins}}</h5>
             </a>
             
@@ -376,7 +376,7 @@
                         <div class="award-label-price">
                             <div class="award-label-content-box">
                                 <div class="div award-price-body">
-                                    <img src="{% static '/img/netmanga_coin.png' %}" height="20" width="20">
+                                    <img src="{% static 'img/netmanga_coin.png' %}" height="20" width="20">
                                     {{award.price}}
                                 </div>
                             </div>   
@@ -398,7 +398,7 @@
                         <div class="award-label-price">
                             <div class="award-label-content-box">
                                 <div class="div award-price-body">
-                                    <img src="{% static '/img/netmanga_coin.png' %}" height="20" width="20">
+                                    <img src="{% static 'img/netmanga_coin.png' %}" height="20" width="20">
                                     {{award.price}}
                                 </div>
                             </div>   
@@ -461,7 +461,7 @@
                 {% if user.is_authenticated %}
                     <img class="comment-user rounded-circle uploaded" height=50 width=50 src="{{user.profile.profile_picture.url}}">
                 {% else %}
-                    <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{% static '/img/no_profile_picture.png' %}">
+                    <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{% static 'img/no_profile_picture.png' %}">
                 {% endif %}
                 <form id="comment" method="post">
                     {% csrf_token %}

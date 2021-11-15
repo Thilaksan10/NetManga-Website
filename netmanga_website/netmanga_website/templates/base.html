@@ -6,13 +6,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon-->
-        <link rel="icon" type="image/png" href="{% static '/img/netmanga_badge.png' %}">
+        <link rel="icon" type="image/png" href="{% static 'img/netmanga_badge.png' %}">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <!-- icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- main.css -->
-        <link href="{% static '/css/main.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main.css' %}" rel="stylesheet">
         
         <title>{% block title %} NETMANGA - Read and Create Mangas Online {% endblock %}</title>
     </head>
@@ -24,7 +24,7 @@
         <div class="coins-view">
             <div class="buy-coins-link">
                 <a class="btn" href="{% url 'accounts:buy_coins'%}" target="_blank" >
-                    <img src="{% static '/img/netmanga_coin.png' %}" style="margin-bottom: 4px;" width="20" height="20"> 
+                    <img src="{% static 'img/netmanga_coin.png' %}" style="margin-bottom: 4px;" width="20" height="20"> 
                     <h6 class="dropdown-coins-amount">
                     {% if user.profile.coins < 10000 %}
                     {{user.profile.coins}}
@@ -65,7 +65,7 @@
         <div class="bg-payment-modal" id="payment-popup-{{forloop.counter}}">
             <div class="modal-payment-content">
                 <div class="payment-info">
-                    <img class="coin-img" src={% static '/img/netmanga_coin.png' %} width="20" height="20">
+                    <img class="coin-img" src={% static 'img/netmanga_coin.png' %} width="20" height="20">
                     <div class="coins-amount-info">Buy {{offer.amount}} Coins!</div>
                     <div class="coins-user-info">You are purchasing Coins for the user, {{user.username}}</div>
                     <div class="payment-close">+</div>
@@ -128,9 +128,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
         -->
         <!--script.js-->
-        <script src="{% static '/js/script.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
         <!--cookie_consent.js-->
-        <script src="{% static '/js/cookie_consent.js' %}"></script>
+        <script src="{% static 'js/cookie_consent.js' %}"></script>
     </body>
     <footer class="footer text-center bg-light">
         {% include 'footernav.html' %}
