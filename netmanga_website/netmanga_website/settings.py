@@ -219,6 +219,13 @@ if(DEV == False):
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
     #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_ROOT = '/vol/web/static'
+    STATIC_URL = '/static/static/'
+    # comment out STATICFILES_DIRS in prod
+    STATICFILES_DIRS = [   
+        os.path.join(BASE_DIR, 'static'),
+    ]
+
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 else:
