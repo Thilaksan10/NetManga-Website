@@ -187,7 +187,7 @@ def create_commentinfo_list(comments, comment_ratings):
 
     return comment_infos
 
-def chapter_reader_post(request,chapter):
+def chapter_viewer_post(request,chapter):
     reload = False
     if request.user.is_authenticated:
         if request.POST.get('subscribe', False) is not False:
@@ -293,8 +293,8 @@ def chapter_reader_post(request,chapter):
             raise NotImplementedError
     return reload
 
-def chapterreader(request,pk):
-    template =loader.get_template('chapter_reader.html')
+def chapter_viewer(request,pk):
+    template =loader.get_template('chapter_viewer.html')
     chapter = Chapter.objects.filter(pk=pk).first()
     chapterpages = Chapterimages.objects.filter(chapter=pk).order_by('no')
     comment_form = CommentForm()
@@ -302,7 +302,6 @@ def chapterreader(request,pk):
     awards = Award.objects.all().order_by('pk')
     image_urls = []
     for chapterpage in chapterpages:
-        print(chapterpage.image.url)
         image_urls.append(chapterpage.image.url)
     if request.method == 'GET':
         rating = Rating.objects.filter(chapter=pk)
@@ -325,7 +324,7 @@ def chapterreader(request,pk):
         else:
             return HttpResponse(template.render({'chapter': chapter, 'chapterpages': chapterpages, 'json_chapterpages': serializers.serialize('json', chapterpages), 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
     elif request.method == 'POST':
-        reload = chapter_reader_post(request,chapter)
+        reload = chapter_viewer_post(request,chapter)
 
         rating = Rating.objects.filter(chapter=pk)
         likes = Rating.objects.filter(chapter=pk, rating=True)

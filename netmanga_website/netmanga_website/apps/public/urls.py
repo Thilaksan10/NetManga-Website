@@ -36,6 +36,6 @@ urlpatterns = [
     path('privacy_policy',views.privacy_policy, name='privacy_policy'),
 
     path('chapterlist/<str:pk>', views.chapterlist, name='chapterlist'),
-    path('chapter_reader/<str:pk>', views.chapterreader, name='chapter_reader'),
+    path('chapter_viewer/<str:pk>', views.chapter_viewer, name='chapter_viewer'),
     path('search',views.search, name='search'),
 ]

@@ -56,7 +56,7 @@
                     </a>
                     {% endfor %}
                     {% for chapter_info in chapter_infos %}
-                    <a href="{% url 'public:chapter_reader' pk=chapter_info.chapter.pk %}" style="text-decoration: none;">
+                    <a href="{% url 'public:chapter_viewer' pk=chapter_info.chapter.pk %}" style="text-decoration: none;">
                         <div class="chapter-card">
                             <div class="chapter-cover" rel="noopener noreferrer">
                                 <img class="chapter-image loaded" src="{{ chapter_info.chapter.manga.cover_picture.url }}">
