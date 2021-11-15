@@ -225,7 +225,7 @@ if(DEV == False):
     STATIC_URL = '/static/static/'
     # comment out STATICFILES_DIRS in prod
     STATICFILES_DIRS = [   
-        os.path.join(PROJECT_ROOT2, 'static'),
+        os.path.join('/vol/web/', 'static'),
     ]
 
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
