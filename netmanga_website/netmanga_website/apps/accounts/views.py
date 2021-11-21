@@ -447,3 +447,27 @@ def log_in(request):
     
     template = loader.get_template('accounts/login.html')
     return HttpResponse(template.render({'form': form, 'success': True}, request))
+
+'''
+def forgot_password(request):
+    template = loader.get_template('accounts/forgot_password.html')
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return HttpResponseRedirect('/')
+        else:
+            form = ForgotPasswordForm()
+            return HttpResponse(template.render({'form': form, 'success': False, 'danger': False}, request))
+    elif request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User.objects.filter(email=email)
+            if not user:
+                return HttpResponse(template.render({'form': form, 'success': False, 'danger': True}, request))
+            else :
+                # Send Email to given email address
+                return HttpResponse(template.render({'form': form, 'success': True, 'danger': False}, request))
+        return HttpResponse(template.render({'form': form}, request))
+    else:
+        raise NotImplementedError
+'''

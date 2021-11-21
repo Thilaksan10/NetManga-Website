@@ -27,7 +27,7 @@ def help(request):
 
             send_mail(f'{name} with {email} sent an email', message, email, [settings.DEFAULT_FROM_EMAIL])
              
-            return HttpResponse(template.render({'form': ContactForm(initial={"username": request.user.username, "email": request.user.email}), 'success': True}, request))
+            return HttpResponse(template.render({'form': ContactForm(initial={"username": name, "email": email}), 'success': True}, request))
     else:
         raise NotImplementedError
 

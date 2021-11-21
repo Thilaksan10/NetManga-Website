@@ -4396,3 +4396,7 @@ p a:hover {
 .card-body-withdraw:hover{
   background-color: #c5c5c5;
 }
+
+.link-break {
+  word-break: break-all;
+}

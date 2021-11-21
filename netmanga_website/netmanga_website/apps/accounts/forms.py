@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 
 from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating
@@ -287,5 +287,42 @@ class ChapterForm(forms.ModelForm):
       model = Chapter
       fields = ('title',)
 
+class ResetPasswordForm(PasswordResetForm):
 
+   email = forms.EmailField(
+      required=True, 
+      widget=forms.EmailInput(
+         attrs={
+            'class' : 'form-control', 
+            'placeholder': 'Enter Email Address'
+            }
+         )
+      )
 
+class ChangePasswordForm(SetPasswordForm):
+
+   new_password1 = forms.CharField(
+      required=True, 
+      min_length=8, 
+      max_length=20, 
+      label='Password', 
+      widget=forms.PasswordInput(
+         attrs={
+            'class' : 'form-control', 
+            'placeholder': 'Enter Password*'
+            }
+         )
+      )
+
+   new_password2 = forms.CharField(
+      required=True, 
+      min_length=8, 
+      max_length=20, 
+      label='Password Confirmation', 
+      widget=forms.PasswordInput(
+         attrs={
+            'class' : 'form-control', 
+            'placeholder': 'Confirm Password*'
+            }
+         )
+      )
