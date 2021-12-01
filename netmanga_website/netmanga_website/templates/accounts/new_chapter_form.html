@@ -22,17 +22,50 @@
                     
                     {{ field }}
                     {% for error in field.errors %}
-                    <p class="help-block text-danger">{{ error }}</p>
+                        <p class="help-block text-danger">{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% endfor %}
-                
-                <div class="picture-upload">
-                    <label class="picture-upload-label">Upload pages:</label>
-                    <input required name="images" type="file" multiple class="form-control" accept="image/*">
+                <div class="thumb_wrap">
+                    <div class="title_wrap">
+                        <h4 class="publish_title">Upload Mangapages</h4>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="file-size-alert">
+                        <p class="alert-text"></p>
+                    </div>
+                    <div class="alert-danger" role="alert" id="image-count-alert">
+                        <p class="alert-text"></p>
+                    </div>
+                    <div id="mangapagesbrowsebutton" class="mangapagesbrowsebutton">
+                        <div class="mangapages-browse-box">
+                            <input required name="images" type="file" multiple id="id_manga_pages" class="browse-file-input form-control" accept="image/*">
+                        </div>
+                        <div class="mangapages-browse-button mangapages-browse-applied" id="mangaPagesBrowseButton">
+                            <div class="before">
+                                <div class="manga-pages-box">
+                                    <i class="fa fa-arrow-circle-up"></i>
+                                    <p class="placeholder_message">
+                                        Select all images to upload
+                                        or drag the image files here.
+                                    </p>
+                                </div>
+                                <i class="fa fa-arrow-circle-up"></i>
+                                <p class="placeholder_message">
+                                    Select all images to upload
+                                    or drag the image files here.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="publish_thumb_info">
+                        <span class="text">
+                            For the best user experience and the best image resolution upload images with the format 450x720 px or higher with the same proportion. 
+                            You can upload up to 300 images with the total files size of 50MB. Make sure you order the pages by its name before uploading. 
+                            Also make sure, that the images are named with english letters.
+                        </span>
+                    </p>
                 </div>
             </div>
-            <small class="img-disclaimer"> * for the best user experience and the best image resolution upload images with the format 450x720 px or higher with the same proportion</small>
             <br />
             <br />
             <div class="form-group">

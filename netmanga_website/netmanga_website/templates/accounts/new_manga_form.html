@@ -15,45 +15,66 @@
                     {{ form.non_field_errors }}
                 </div>
             {% endif %}
-
+            
             <div class="control-group">
-                {% for field in form %}
-                {% if form.cover_picture == field %}
-                
-                <div class="picture-upload">
-                    <label class="cover-picture-label">Cover picture:</label>
-                    {{field}}
-                    {% for error in field.errors %}
-                    <p class="help-block text-danger">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                <small class="img-disclaimer"> * for the best user experience and the best image resolution upload images with the format 185x265 px or higher with the same proportion</small>
-                
-                {% elif form.primary_Genre == field %}
-                <div class="genre-select" style="float:left">
-                  <h5 class="genre-label">Primary genre:</h5>
-                  {{field}}
-                  {% for error in field.errors %}
-                  <p class="help-block text-danger">{{ error }}</p>
-                  {% endfor %}
-                </div>                  
-                {% elif form.secondary_Genre == field %}
-                <div class="genre-select" style="float:right">
-                  <h5 class="genre-label">Secondary genre:</h5>
-                  {{field}}
-                  {% for error in field.errors %}
-                  <p class="help-block text-danger">{{ error }}</p>
-                  {% endfor %}
-                </div>
-                {% else %}
-                <div id="text-input" class="form-group">
-                    
-                    {{ field }}
-                    {% for error in field.errors %}
-                    <p class="help-block text-danger">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                {% for field in form %}          
+                    {% if form.cover_picture == field %}
+                        <div class="thumb_wrap">
+                            <div class="title_wrap">
+                                <h4 class="publish_title">Cover Picture</h4>
+                            </div>
+                            <div id="browsebutton" class="browsebutton">
+                                <div class="browse-box">
+                                    {{field}}
+                                </div>
+                                <div class="browse-button browse-applied" id="coverPictureBrowseButton">
+                                    <div class="before">
+                                        <img id="coverpicturepreview" src="" alt="Warum?">
+                                        <i class="fa fa-arrow-circle-up"></i>
+                                        <p class="placeholder_message">
+                                            Select an image to upload
+                                            or drag the image file here.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="publish_thumb_info">
+                                <span class="text">
+                                    for the best user experience and the best image resolution upload images with the format 185x265 px or higher with the same proportion
+                                </span>
+                            </p>
+                        </div>
+                    {% elif form.primary_Genre == field %}    
+                        <div class="publish_form">
+                            <h6 class="publish_title">Primary Genre</h6>
+                            <div class="publish_form_select">
+                                <div class="select1">
+                                    {{field}}
+                                </div>
+                            </div>
+                        </div> 
+                    {% elif form.secondary_Genre == field %}
+                        <div class="publish_form2">
+                            <h6 class="publish_title">Secondary Genre</h6>
+                            <div class="publish_form_select">
+                                <div class="select1">
+                                    {{field}}
+                                </div>
+                            </div>
+                        </div> 
+                        {% if invalid_genre %}
+                            <div class="alert alert-danger" role="alert" style="margin-top: 100px; margin-bottom: 15px;">
+                                Please select a primary and a secondary genre
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div id="text-input" class="form-group">
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <p class="help-block text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             <br />

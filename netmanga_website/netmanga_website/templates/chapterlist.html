@@ -70,8 +70,8 @@
                 </div>
                 {% endif %}
                 <div class="total-preformance" style="margin-top:15px;">
-                    <h6 class="total-views" style="float: left;">{{total_views}} Total Views</h6>
-                    <h6 class="total-subscribers" style="float: right;">{{subscriber_count}} Subscribers</h6>
+                    <h6 class="total-views" style="float: left;">{{total_views}} Total View{{total_views|pluralize:",s"}}</h6>
+                    <h6 class="total-subscribers" style="float: right;">{{subscriber_count}} Subscriber{{subscriber_count|pluralize:",s"}}</h6>
                     {% if user.is_authenticated %}
                     <script>
                         var btn_subscribe = document.querySelector('#subscribe > button')
@@ -88,7 +88,12 @@
                                     document.querySelector('#subscribe > button').innerHTML = "Subscribe"
                                     subscribers--
                                 }
-                                document.querySelector('.total-subscribers').innerHTML = parseInt(subscribers) + ' Subscribers'
+                                if(parseInt(subscribers) == 1){
+                                    document.querySelector('.total-subscribers').innerHTML = parseInt(subscribers) + ' Subscriber'
+                                }
+                                else {
+                                    document.querySelector('.total-subscribers').innerHTML = parseInt(subscribers) + ' Subscribers'
+                                }
                             });
                         }
                     </script>
@@ -123,7 +128,7 @@
                                         </div>
                                         <div class="performance-wrap">
                                             <div class="chapter-views-view">
-                                                {{chapter_info.views}} Views
+                                                {{chapter_info.chapter.views}} View{{chapter_info.chapter.views|pluralize:",s"}}
                                             </div>
                                             <div class="chapter-ratings-view">
                                                 <i class="fa fa-thumbs-up">

@@ -59,10 +59,10 @@
         <div>
             <section class="section placeholder loading loaded">
                 <div class="manga-info upload-list">
-                    <h6 class="total-mangas" style="float: left;">{{manga_infos|length}} Mangas</h6>
+                    <h6 class="total-mangas" style="float: left;">{{manga_infos|length}} Manga{{manga_infos|length|pluralize:",s"}}</h6>
                     <a href="{{ new_manga_form_url }}" class="btn btn-subscribe" style="float:right">
                         <i class="fa fa-upload" style="font-size: 18px;"></i>
-                        Manga 
+                        New Manga 
                     </a>
                 </div>
                 
@@ -88,7 +88,7 @@
                                                             {{manga_info.manga.title}}
                                                         </div>
                                                         <div class="latest-chapter">
-                                                            <h6>{{manga_info.latest_chapter.no}} Chapters</h6>
+                                                            <h6>{{manga_info.latest_chapter.no}} Chapter{{manga_info.latest_chapter.no|pluralize:",s"}}</h6>
                                                             <h6>Latest upload on: {{manga_info.latest_chapter.published | date:"d.m.Y"}}</h6>
                                                         </div>
                                                     </div>

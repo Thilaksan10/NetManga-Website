@@ -55,23 +55,12 @@ def sort_view(creator):
         chapters = Chapter.objects.filter(manga=manga)
         view_tuple = Tuple(manga)
         for chapter in chapters:
-            images = Chapterimages.objects.filter(chapter=chapter)
-            view_tuple.add_views(calculate_views(chapter,images))
+            view_tuple.add_views(chapter.views)
             
         sorted_list.append(view_tuple)
         mergeSort_by_total_views(sorted_list)    
     return sorted_list
     
-def calculate_views(chapter, chapterpages):
-    if chapterpages:
-        min = chapterpages[0].views
-        for chapterpage in chapterpages:
-            if min > chapterpage.views:
-                min = chapterpage.views
-
-        return min
-    else:
-        return 0
 
 def mergeSort_by_total_views(list):
     if len(list) > 1:

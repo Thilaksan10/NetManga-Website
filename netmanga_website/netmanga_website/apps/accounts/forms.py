@@ -123,7 +123,7 @@ class EditProfileForm(forms.ModelForm):
       required=False,
       widget=forms.FileInput(
          attrs={
-            'class': 'form-control',
+            'class': 'browse-file-input form-control',
          }
       )
    )
@@ -191,7 +191,7 @@ class MangaForm(forms.ModelForm):
       required=True,
       widget=forms.FileInput(
          attrs={
-            'class': 'form-control',
+            'class': 'browse-file-input form-control',
          }
       )
    )
@@ -211,11 +211,21 @@ class MangaForm(forms.ModelForm):
    primary_Genre = forms.ChoiceField(
          required=True,
          choices=GENRE_CHOICES,
+         widget=forms.Select(
+            attrs={
+               'class': 'form-select',
+            }
+         )
       )
 
    secondary_Genre = forms.ChoiceField(
          required=True,
          choices=GENRE_CHOICES,
+         widget=forms.Select(
+            attrs={
+               'class': 'form-select',
+            }
+         )
       )
 
    class Meta:
@@ -225,7 +235,7 @@ class MangaForm(forms.ModelForm):
 class EditMangaForm(forms.ModelForm):
    
    title = forms.CharField(
-      required=True, 
+      required=False, 
       max_length=100, 
       widget=forms.TextInput(
          attrs={
@@ -239,7 +249,7 @@ class EditMangaForm(forms.ModelForm):
       required=False,
       widget=forms.FileInput(
          attrs={
-            'class': 'form-control',
+            'class': 'browse-file-input form-control',
          }
       )
    )

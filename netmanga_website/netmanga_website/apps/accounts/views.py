@@ -172,13 +172,6 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
         else:
             return HttpResponseRedirect('/accounts/profile')
 
-def get_data(request,*args,**kwargs):
-    data = {
-        'sales':100,
-        'customers':10,
-    }
-    return JsonResponse(data)
-
 class UploadView(LoginRequiredMixin,TemplateView):
     template_name = 'accounts/upload.html'
     def get(self, request, *args, **kwargs):
@@ -244,6 +237,9 @@ class NewMangaFormView(LoginRequiredMixin,TemplateView):
             plot = bleach.clean(form.cleaned_data['plot'])
             primary_Genre = bleach.clean(form.cleaned_data['primary_Genre'])
             secondary_Genre = bleach.clean(form.cleaned_data['secondary_Genre'])
+            if(primary_Genre == 'Select' or secondary_Genre == 'Select'):
+                print('invalid_genre', flush=True)
+                return HttpResponse(template.render({'form': form, 'success': False, 'invalid_genre': True}, request))
             mangaseries = Mangaseries.objects.create(creator=creator,title=title,cover_picture=cover_picture,plot=plot,primary_Genre=primary_Genre,secondary_Genre=secondary_Genre)
             pk = mangaseries.pk
             mangaseries.save()
@@ -283,7 +279,7 @@ class NewChapterFormView(LoginRequiredMixin,TemplateView):
             return HttpResponseRedirect("/accounts/profile")
         else:
             print('Form invalid', flush = True)
-            return HttpResponse(template.render({'chapterform': chapterform,'chapterimagesform':chapterimagesform, 'success': False}, request))
+            return HttpResponse(template.render({'chapterform': chapterform, 'success': False}, request))
 
     def total_chapters(self,mangaseries):
         chapters = Chapter.objects.filter(manga=mangaseries)
@@ -294,11 +290,12 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
     def get(self, request, pk, *args, **kwargs):
         existing_creator = Creator.objects.filter(user=request.user).first()
         manga = Mangaseries.objects.filter(pk=pk).first() 
+        cover_picture = manga.cover_picture
         print(manga , flush=True)
         if existing_creator is not None and manga.creator == existing_creator:
             form=EditMangaForm(initial={'title':manga.title, 'primary_Genre': manga.primary_Genre, 'secondary_Genre': manga.secondary_Genre, 'plot': manga.plot})
             template = loader.get_template('accounts/edit_manga_form.html')
-            return HttpResponse(template.render({'form': form}, request))
+            return HttpResponse(template.render({'form': form, 'cover_picture': cover_picture}, request))
         else:
             return HttpResponseRedirect('/accounts/profile')
 
@@ -313,7 +310,7 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
         if form.is_valid():
             creator = Creator.objects.filter(user=request.user).first()
             if form.cleaned_data['title'] != '': 
-                manga.title = bleach.clean(form.cleaned_data['title'])
+                manga.title = form.cleaned_data['title']
             if form.cleaned_data['cover_picture'] != None:
                 manga.cover_picture = form.cleaned_data['cover_picture']
             manga.plot = bleach.clean(form.cleaned_data['plot'])
@@ -359,7 +356,7 @@ class EditChapterFormView(LoginRequiredMixin,TemplateView):
             return HttpResponseRedirect("/accounts/profile")
         else:
             print('Form invalid', flush = True)
-            return HttpResponse(template.render({'chapterform': chapterform,'chapterimagesform':chapterimagesform, 'success': False}, request))
+            return HttpResponse(template.render({'chapterform': chapterform, 'success': False}, request))
 
 class BuyCoinsView(LoginRequiredMixin,TemplateView):
     template_name= 'accounts/buy_coins.html'
@@ -390,11 +387,19 @@ def process_order(request):
         print(coinoffer,flush=True)
         if(coinoffer):
             coin_purchase_order = CoinPurchaseOrder.objects.create(user=request.user,price=price, amount=amount)
+            coin_purchase_order.save()
             profile = Profile.objects.filter(user=request.user).first()
             profile.coins += amount
             profile.save()
     print('RELOAD',flush=True)
     return HttpResponseRedirect('/accounts/coins')
+
+def get_data(request,*args,**kwargs):
+    data = {
+        'sales':100,
+        'customers':10,
+    }
+    return JsonResponse(data)
 
 def sign_up(request):
     if request.method == 'GET':

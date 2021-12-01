@@ -60,7 +60,7 @@
                                     <div class="overlay">
                                         <!--<a href="" class="title">{{manga.title}}</a>-->
                                         <h5  class="title">{{created_manga.manga.title}}</h5>
-                                        <small>{{created_manga.views}} Views</small>
+                                        <small>{{created_manga.views}} View{{created_manga.views|pluralize:",s"}}</small>
                                     </div>
                                 
                                 </a>
@@ -90,33 +90,51 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-            {% if form.display_Full_Name == field %}
-            <div class="customCheckbox">
-                <div class="input-container">
+                {% if form.display_Full_Name == field %}
+                    <div class="customCheckbox">
+                        <div class="input-container">
+                            {{field}}
+                            {{ field.label_tag }}
+                            {% for error in field.errors %}
+                                <p class="help-block text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% elif form.profile_Picture == field %}
+                    <div class="thumb_wrap">
+                        <div class="title_wrap">
+                            <h4 class="publish_title">Profile Picture:</h4>
+                        </div>
+                        <div id="browsebutton" class="browsebutton profilepic">
+                            <div class="browse-box">
+                                {{field}}
+                            </div>
+                            <div class="browse-button browse-applied" id="profilePictureBrowseButton">
+                                <div class="after">
+                                    <img id="profilepicturepreview" src={{profile.profile_picture.url}} alt="Warum?">
+                                    <i class="fa fa-arrow-circle-up"></i>
+                                    <p class="placeholder_message">
+                                        Select an image to upload
+                                        or drag the image file here.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="publish_thumb_info">
+                            <span class="text">
+                                for the best user experience and the best image resolution upload images with the format 130x130 px or higher with the same proportion
+                            </span>
+                        </p>
+                    </div>
+                {% elif form.bio == field %}
+                    <div class="profile-form-label">
+                        <h4 class="publish_title">{{field.label_tag}}</h4>
+                    </div>
                     {{field}}
-                    {{ field.label_tag }}
                     {% for error in field.errors %}
-                    <p class="help-block text-danger">{{ error }}</p>
+                        <p class="help-block text-danger">{{ error }}</p>
                     {% endfor %}
-                </div>
-            </div>
-            {% elif form.profile_Picture == field %}
-            <div class="profile-form-label">
-                {{field.label_tag}}
-            </div>
-            {{field}}
-            {% for error in field.errors %}
-            <p class="help-block text-danger">{{ error }}</p>
-            {% endfor %}
-            {% elif form.bio == field %}
-            <div class="profile-form-label">
-                {{field.label_tag}}
-            </div>
-            {{field}}
-            {% for error in field.errors %}
-            <p class="help-block text-danger">{{ error }}</p>
-            {% endfor %}
-            {% endif %}
+                {% endif %}
             {% endfor %}
             <div class="form-group">
                 <button class="btn btn-login btn-xl" type="submit">Save</button>

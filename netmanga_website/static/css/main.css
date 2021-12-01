@@ -61,7 +61,7 @@ textarea {
 .modal-content {
   position: relative;
   width: 500px;
-  height: 500px;
+  height: 750px;
   background-color:#fff;
   border-radius: 5px;
   padding:20px;
@@ -4399,4 +4399,467 @@ p a:hover {
 
 .link-break {
   word-break: break-all;
+}
+
+.publish_wrap{
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 0 175px;
+}
+
+.publish_thumb_area{
+  float: left;
+  width: 265px;
+  padding-right: 38px;
+}
+
+.browsebutton{
+  position: relative;
+  width: 185px;
+  height: 265px;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.browsebutton .browse-box{
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  z-index: 32000;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  opacity: 0!important;
+}
+
+.browsebutton .browse-file-input{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.browsebutton .browse-applied {
+  display: block;
+}
+
+.browsebutton .browse-button {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.browsebutton .browse-button .before{
+  background-color: #e8e8e8;
+  height: 265px;
+  padding-top: 80px;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+}
+
+.browsebutton .browse-over .before{
+  border: 1px solid #ea0a8e;
+}
+
+.browsebutton .browse-button .before img{
+  display: none;
+  width: 185px;
+  height: 265px;
+  aspect-ratio: 185 / 265;
+}
+
+.browsebutton .browse-button .after {
+  width: 100%;
+  height: 100%;
+}
+
+.browsebutton .browse-button .after img{
+  display: block;
+  width: 185px;
+  height: 265px;
+  aspect-ratio: 185 / 265;
+}
+
+.browsebutton .browse-over .after:before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  border: 1px solid #ea0a8e;
+}
+
+.browsebutton .browse-button .before i {
+  font-size: 40px;
+}
+
+.browsebutton .browse-over .before i {
+  color: #ea0a8e;
+}
+
+.browsebutton .browse-button .after i {
+  display: none;
+}
+
+.browsebutton .browse-over .after i {
+  display: block;
+  position: absolute;
+  top: 80px;
+  left: 75px;
+  text-align: center;
+  font-size: 40px;
+  color: #ea0a8e;
+}
+
+.browsebutton .browse-button .before p {
+  line-height: 21px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  text-indent: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
+.browsebutton .browse-over .before p {
+  color: #8c8c8c;
+}
+
+.browsebutton .browse-button .after p {
+  display: none;
+}
+
+.browsebutton .browse-over .after p {
+  position: absolute;
+  top: 125px;
+  left: 17px;
+  display: block;
+  width: 150px;
+  color: #8c8c8c;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.publish_thumb_info {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #8c8c8c;
+  letter-spacing: -.56px;
+}
+
+.publish_form {
+  float: left;
+  width: 125px;
+  margin-bottom: 20px;
+}
+
+.publish_form2 {
+  float: right;
+  width: 125px;
+  margin-bottom: 20px;
+}
+
+.publish_title:first-child {
+  margin-top: 10px;
+}
+
+.publish_title {
+  padding-bottom: 0px;
+  font-size: 16px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.publish_form_select {
+  position: relative;
+  z-index: 20;
+  min-height: 41px;
+  margin-top: 0px;
+}
+
+.publish_form_select .select1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  border-color: #e0e0e0;
+}
+
+.select1 {
+  background: #fff;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.browsebutton.profilepic{
+  position: relative;
+  width: 130px;
+  height: 130px;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.browsebutton.profilepic .browse-button .before{
+  background-color: #e8e8e8;
+  height: 130px;
+  padding-top: 25px;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+}
+
+.browsebutton.profilepic .browse-button .after img{
+  display: block;
+  width: 130px;
+  height: 130px;
+  aspect-ratio: 130 / 130;
+}
+
+.browsebutton.profilepic .browse-button .before i {
+  font-size: 20px;
+  margin-left: 55px;
+}
+
+.browsebutton.profilepic .browse-over .before i {
+  color: #ea0a8e;
+}
+
+
+.browsebutton.profilepic .browse-button .after i {
+  display: none;
+}
+
+.browsebutton.profilepic .browse-over .after i {
+  display: block;
+  position: absolute;
+  top: 25px;
+  left: 55px;
+  text-align: center;
+  font-size: 20px;
+  color: #ea0a8e;
+}
+
+.browsebutton.profilepic .browse-button .before p {
+  line-height: 21px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  text-indent: 0;
+  padding: 0 0px;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
+.browsebutton.profilepic .browse-over .before p {
+  color: #8c8c8c;
+}
+
+.browsebutton.profilepic .browse-button .after p {
+  display: none;
+}
+
+.browsebutton.profilepic .browse-over .after p {
+  position: absolute;
+  top: 45px;
+  left: -9px;
+  display: block;
+  width: 150px;
+  color: #ececec;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.mangapagesbrowsebutton{
+  position: relative;
+  height: 600px;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-box{
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  z-index: 32000;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  opacity: 0!important;
+}
+
+.mangapagesbrowsebutton .browse-file-input{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-applied {
+  display: block;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button {
+  position: absolute;
+  left: 0;
+  width: 102.5%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before{
+  background-color: #e8e8e8;
+  height: 600px;
+  padding-top: 200px;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .before{
+  border: 1px solid #ea0a8e;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before img{
+  display: none;
+  width: 150px;
+  height: 240px;
+  aspect-ratio: 450 / 720;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .after{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .after img{
+  display: inline-block;
+  width: 150px;
+  height: 240px;
+  aspect-ratio: 450 / 720;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .after:before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .after .manga-pages-box{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  border: 1px solid #ea0a8e;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before .manga-pages-box i {
+  display: none;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .after .manga-pages-box i {
+  display: block;
+  font-size: 80px;
+  color: #ea0a8e;
+  margin-top: 200px;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before .manga-pages-box p {
+  display: none;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .after .manga-pages-box p {
+  display: block;
+  line-height: 40px;
+  font-size: 25px;
+  font-weight: 500;
+  text-align: center;
+  text-indent: 0;
+  padding: 10px 0px 0 0px;
+  box-sizing: border-box;
+  white-space: normal;
+  color: #ececec;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before i {
+  font-size: 80px;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .before i {
+  color: #ea0a8e;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .after i {
+  display: none;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .before p {
+  line-height: 40px;
+  font-size: 25px;
+  font-weight: 500;
+  text-align: center;
+  text-indent: 0;
+  padding: 10px 0px 0 0px;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-over .before p {
+  color: #8c8c8c;
+}
+
+.mangapagesbrowsebutton .mangapages-browse-button .after p {
+  display: none;
+}
+
+#file-size-alert {
+  display: none;
+}
+
+#file-size-alert .alert-text{
+  margin-bottom: 0px;
+}
+
+#image-count-alert {
+  display: none;
+}
+
+#image-count-alert .alert-text{
+  padding-top: 15px;
+  padding-bottom: 15px;
 }

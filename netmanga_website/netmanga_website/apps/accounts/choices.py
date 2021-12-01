@@ -1,4 +1,5 @@
 GENRE_CHOICES = (
+    ('Select', 'Select'),
     ('Action','Action'),
     ('Drama','Drama'),
     ('Comedy','Comedy'),

@@ -59,7 +59,7 @@ $.ajax({
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title">
-                                    Total Views: 
+                                    Total View{{total_views|pluralize:",s"}}: 
                                 </div>
                                 <div class="card-data">
                                     {{total_views}}
@@ -77,7 +77,7 @@ $.ajax({
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title">
-                                    Total Subscription:
+                                    Total Subscription{{total_subscriptions|pluralize:",s"}}:
                                 </div>
                                 <div class="card-data">
                                     {{total_subscriptions}}
@@ -95,7 +95,7 @@ $.ajax({
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="card-title">
-                                    Received Awards:
+                                    Received Award{{received_awards|pluralize:",s"}}:
                                 </div>
                                 <div class="card-data">
                                     {{received_awards}}

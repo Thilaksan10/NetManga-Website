@@ -3,7 +3,6 @@ from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 
-#from ...settings import DEFAULT_FILE_STORAGE
 from ..accounts.models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter
 from .forms import CommentForm, EditPlotForm, ReportForm
 from .algorithms import *
@@ -38,17 +37,13 @@ def search(request):
         silver_award = Award.objects.get(name="Silver Award")
         bronce_award = Award.objects.get(name="Bronce Award")
         for chapter in chapters:
-            chapterpages = Chapterimages.objects.filter(chapter=chapter)
             likes = Rating.objects.filter(chapter=chapter,rating=True)
             dislikes = Rating.objects.filter(chapter=chapter,rating=False)
             platinum = ChapterAward.objects.filter(chapter=chapter,award=platinum_award).count()
             gold = ChapterAward.objects.filter(chapter=chapter,award=gold_award).count()
             silver = ChapterAward.objects.filter(chapter=chapter,award=silver_award).count()
             bronce = ChapterAward.objects.filter(chapter=chapter,award=bronce_award).count()
-            views = 0
-            if chapterpages:
-                views = calculate_views(chapterpages)
-            chapter_infos.insert(0,ChapterInfo(chapter,views,len(likes),len(dislikes),platinum,gold,silver,bronce))
+            chapter_infos.insert(0,ChapterInfo(chapter,len(likes),len(dislikes),platinum,gold,silver,bronce))
         
         for manga in mangas:
             chapters = len(Chapter.objects.filter(manga=manga))
@@ -70,9 +65,8 @@ def popular(request):
     return HttpResponse(template.render({'mangas':mangas,}, request))
 
 class ChapterInfo:
-    def __init__(self,chapter,views,likes,dislikes,platinumawards,goldawards,silverawards,bronceawards):
+    def __init__(self,chapter,likes,dislikes,platinumawards,goldawards,silverawards,bronceawards):
         self.chapter = chapter
-        self.views = views
         self.likes = likes
         self.dislikes = dislikes
         self.platinumawards = platinumawards
@@ -91,18 +85,14 @@ def chapterlist(request,pk):
     silver_award = Award.objects.get(name="Silver Award")
     bronce_award = Award.objects.get(name="Bronce Award")
     for chapter in chapters:
-        chapterpages = Chapterimages.objects.filter(chapter=chapter)
         likes = Rating.objects.filter(chapter=chapter,rating=True)
         dislikes = Rating.objects.filter(chapter=chapter,rating=False)
         platinum = ChapterAward.objects.filter(chapter=chapter,award=platinum_award).count()
         gold = ChapterAward.objects.filter(chapter=chapter,award=gold_award).count()
         silver = ChapterAward.objects.filter(chapter=chapter,award=silver_award).count()
         bronce = ChapterAward.objects.filter(chapter=chapter,award=bronce_award).count()
-        views = 0
-        if chapterpages:
-            views = calculate_views(chapterpages)
-            total_views += views
-        chapter_infos.insert(0,ChapterInfo(chapter,views,len(likes),len(dislikes),platinum,gold,silver,bronce))
+        chapter_infos.insert(0,ChapterInfo(chapter,len(likes),len(dislikes),platinum,gold,silver,bronce))
+        total_views += chapter.views
     if request.method == 'GET':
         form = EditPlotForm(initial={'plot':manga.plot})
         if request.user.is_authenticated:
@@ -136,15 +126,7 @@ def chapterlist(request,pk):
         else:
             print('redirect',flush=True)
             return HttpResponseRedirect('/accounts/login')
-    #return HttpResponse(template.render({},request))
-
-def calculate_views(chapterpages):
-    min = chapterpages[0].views
-    for chapterpage in chapterpages:
-        if min > chapterpage.views:
-            min = chapterpage.views
-
-    return min         
+    #return HttpResponse(template.render({},request))     
 
 class CommentInfoJson:
     def __init__(self, comment, rating):
