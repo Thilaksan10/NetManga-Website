@@ -96,14 +96,14 @@ class Chapterimages(models.Model):
 
 class CoinOffer(models.Model):
     amount = models.IntegerField(default=0)
-    price = models.FloatField(default=float(0.00))
+    price = models.DecimalField(null=False, max_digits=10, decimal_places=2, default=Decimal(0.00))
     bonus = models.IntegerField(default=0)
 
 class Award(models.Model):
     name = models.CharField(max_length=20)
     image = models.ImageField(blank=True, upload_to='awards/')
     price = models.IntegerField(default=0)
-    fiat_reward = models.FloatField(default=float(0.00))
+    fiat_reward = models.DecimalField(null=False, max_digits=10, decimal_places=2, default=Decimal(0.00))
     coins_reward = models.IntegerField(default=0)
     
 class ChapterAward(models.Model):
@@ -119,7 +119,7 @@ class ReportChapter(models.Model):
     
 class CoinPurchaseOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    price = models.FloatField(default=float(0.00))
+    price = models.DecimalField(null=False, max_digits=10, decimal_places=2, default=Decimal(0.00))
     amount = models.IntegerField(default=0)
     date_time = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
 
