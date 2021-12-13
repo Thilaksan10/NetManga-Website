@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating, Subscriber, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder
+from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating, Subscriber, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder, WithdrawOrder
 
 admin.site.register(Profile)
 admin.site.register(Creator)
@@ -16,3 +16,4 @@ admin.site.register(Award)
 admin.site.register(ChapterAward)
 admin.site.register(ReportChapter)
 admin.site.register(CoinPurchaseOrder)
+admin.site.register(WithdrawOrder)

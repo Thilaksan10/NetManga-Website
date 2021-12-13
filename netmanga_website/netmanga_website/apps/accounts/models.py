@@ -1,11 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.fields import CharField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.postgres.fields import ArrayField
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from decimal import Decimal
 
 from .choices import GENRE_CHOICES, STATUS_CHOICES
 
@@ -41,7 +40,7 @@ class Creator(models.Model):
     total_likes = models.IntegerField(default=0)
     total_dislikes = models.IntegerField(default=0)
     subscribers = models.IntegerField(default=0)
-    earned_money = models.FloatField(default=float(0.00))
+    earned_money = models.DecimalField(null=False, max_digits=10, decimal_places=2, default=Decimal(0.00))
 
 class Mangaseries(models.Model):
     creator = models.ForeignKey(Creator, on_delete=models.CASCADE,blank=True,null=True)
@@ -122,14 +121,15 @@ class CoinPurchaseOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.FloatField(default=float(0.00))
     amount = models.IntegerField(default=0)
-    time = models.TimeField(auto_now=False, auto_now_add=True)
+    date_time = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
 
 class WithdrawOrder(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    time = models.TimeField(auto_now=False, auto_now_add=True, null=True)
+    date_time = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
     paypal = models.CharField(null=False, max_length=10000)
-    amount = models.FloatField(null=False)
+    amount = models.DecimalField(null=False, max_digits=10, decimal_places=2)
     status = models.CharField(choices=STATUS_CHOICES, null=False,max_length=10)
+
 
 '''
 class Manga(models.Model):

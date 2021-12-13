@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
+from django.db.models import fields
 
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating
+from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating, WithdrawOrder
 from .choices import GENRE_CHOICES
 
 class SignUpForm(UserCreationForm):
@@ -296,6 +297,38 @@ class ChapterForm(forms.ModelForm):
    class Meta:
       model = Chapter
       fields = ('title',)
+
+
+class WithdrawForm(forms.ModelForm):
+   
+   paypal = forms.CharField(
+      max_length=50,
+      required=True,
+      label="Paypal Email",
+      widget=forms.EmailInput(
+         attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Paypal Email'
+         }
+      )
+   )
+
+   amount = forms.DecimalField(
+      required=True,
+      decimal_places=2, 
+      max_digits=10,
+      label="Amount in €",
+      widget=forms.TextInput(
+         attrs={
+            'class': 'form-control',
+            'placeholder': '0.00'
+         }
+      )
+   )
+
+   class Meta:
+      model = WithdrawOrder
+      fields = ('paypal', 'amount')
 
 class ResetPasswordForm(PasswordResetForm):
 

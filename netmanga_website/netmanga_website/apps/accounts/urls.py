@@ -18,6 +18,7 @@ urlpatterns = [
     path('coins', views.BuyCoinsView.as_view(), name='buy_coins'),
     path('coins/offer=<int:pk>', views.buy_coins, name='buy_coins'),
     path('coins/process_order', views.process_order, name='process_order'),
+    path('withdraw_order', views.WithdrawOrderView.as_view(), name='withdraw_order'),
 
     #Django Auth
     path('login', views.log_in, name='login'),

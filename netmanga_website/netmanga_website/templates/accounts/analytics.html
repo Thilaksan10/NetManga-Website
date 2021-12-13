@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} NETMANGA - The official Homepage of NetManga {% endblock %}
+{% block title %} Analytics :: NETMANGA {% endblock %}
 
 <script>
 var endpoint = 'api/data/'
@@ -48,7 +48,7 @@ $.ajax({
                                 </div>
                             </div>
                             <div class="card-footer-analytics d-flex align-items-center justify-content-between">
-                                <a href="" class="small not-stretched-link">View Details</a>
+                                <a href="{% url 'accounts:withdraw_order' %}" class="small not-stretched-link">View Orders</a>
                                 <div class="small">
                                     <i class="fa fa-angle-right"></i>
                                 </div>
@@ -278,11 +278,91 @@ $.ajax({
 </div>
 
 <!--Popup-->
-<div class="bg-modal">
-    <div class="modal-content">
-        <div class="close">+</div>
-        <h3>Withdraw</h3>
-        
+{% if error <= 3 %}
+    <div class="bg-modal" style="display: flex;">
+        <div class="modal-content withdraw">
+            <div class="close">+</div>
+            <h3>Withdraw</h3>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if form.paypal == field %}
+                        <div class="profile-form-label">
+                            <h4 class="publish_title">{{field.label_tag}}</h4>
+                        </div>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% elif form.amount == field %}
+                        <div class="profile-form-label">
+                            <h4 class="publish_title">{{field.label_tag}}</h4>
+                        </div>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% if error == 0 %}
+                    <div class="alert alert-danger" role="alert">
+                        You have not enough funds to withdraw this amount.
+                    </div>
+                {% elif error == 1 %}
+                    <div class="alert alert-danger" role="alert">
+                        Withdrawal minimum is 50.00€.
+                    </div>
+                {% endif %}
+                <br>
+                <br>
+                <div class="form-group">
+                    <button class="btn btn-login btn-xl" type="submit">Withdraw</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+{% else %}
+    <div class="bg-modal">
+        <div class="modal-content withdraw">
+            <div class="close">+</div>
+            <h3>Withdraw</h3>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if form.paypal == field %}
+                        <div class="profile-form-label">
+                            <h4 class="publish_title">{{field.label_tag}}</h4>
+                        </div>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% elif form.amount == field %}
+                        <div class="profile-form-label">
+                            <h4 class="publish_title">{{field.label_tag}}</h4>
+                        </div>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <p class="help-block text-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% if error == 0 %}
+                    <div class="alert alert-danger" role="alert">
+                        You have not enough funds to withdraw this amount.
+                    </div>
+                {% elif error == 1 %}
+                    <div class="alert alert-danger" role="alert">
+                        Withdrawal minimum is 50.00€.
+                    </div>
+                {% endif %}
+                <br>
+                <br>
+                <div class="form-group">
+                    <button class="btn btn-login btn-xl" type="submit">Withdraw</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
