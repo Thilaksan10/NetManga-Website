@@ -47,12 +47,12 @@ $.ajax({
                                     {{user.creator.earned_money|floatformat:2}}€
                                 </div>
                             </div>
-                            <div class="card-footer-analytics d-flex align-items-center justify-content-between">
-                                <a href="{% url 'accounts:withdraw_order' %}" class="small not-stretched-link">View Orders</a>
+                            <a href="{% url 'accounts:withdraw_order' %}" class="card-footer-analytics d-flex align-items-center justify-content-between">
+                                <div class="small not-stretched-link">View Orders</div>
                                 <div class="small">
                                     <i class="fa fa-angle-right"></i>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
@@ -65,12 +65,12 @@ $.ajax({
                                     {{total_views}}
                                 </div>
                             </div>
-                            <div class="card-footer-analytics d-flex align-items-center justify-content-between">
-                                <a href="" class="small stretched-link">View Details</a>
+                            <a href="" class="card-footer-analytics d-flex align-items-center justify-content-between">
+                                <div class="small stretched-link">View Details</div>
                                 <div class="small">
                                     <i class="i fa fa-angle-right"></i>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
@@ -83,12 +83,12 @@ $.ajax({
                                     {{total_subscriptions}}
                                 </div>
                             </div>
-                            <div class="card-footer-analytics d-flex align-items-center justify-content-between">
-                                <a href="" class="small stretched-link">View Details</a>
+                            <a href="" class="card-footer-analytics d-flex align-items-center justify-content-between">
+                                <div class="small stretched-link">View Details</div>
                                 <div class="small">
                                     <i class="fa fa-angle-right"></i>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
@@ -101,12 +101,12 @@ $.ajax({
                                     {{received_awards}}
                                 </div>
                             </div>
-                            <div class="card-footer-analytics d-flex align-items-center justify-content-between">
-                                <a href="" class="small stretched-link">View Details</a>
+                            <a href="" class="card-footer-analytics d-flex align-items-center justify-content-between">
+                                <div class="small stretched-link">View Details</div>
                                 <div class="small">
                                     <i class="fa fa-angle-right"></i>
                                 </div>
-                            </div>   
+                            </a>   
                         </div>
                     </div>
                 </div>

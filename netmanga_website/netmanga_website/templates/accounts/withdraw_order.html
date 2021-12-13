@@ -4,38 +4,44 @@
 {% block title %} Withdraw History :: NETMANGA {% endblock %}
 
 {% block content %}
-    <div class="withdraw-order-section">
-        <div class="withdraw-order-list">
-            <h5>Withdrawal History</h5>
-            {% for withdraw_order_info in withdraw_order_infos %}
-                {% if withdraw_order_info.date %}
-                    <div class="withdrawal-dates">
-                        <span>{{withdraw_order_info.order.date_time |date:'d.m.Y'}}</span>
+    {% if withdraw_order_infos %}
+        <div class="withdraw-order-section">
+            <div class="withdraw-order-list">
+                <h5>Withdrawal History</h5>
+                {% for withdraw_order_info in withdraw_order_infos %}
+                    {% if withdraw_order_info.date %}
+                        <div class="withdrawal-dates">
+                            <span>{{withdraw_order_info.order.date_time |date:'d.m.Y'}}</span>
+                        </div>
+                    {% endif %}
+                    <div class="withdraw-card">
+                        <div class="withdraw-status">
+                            {% if withdraw_order_info.order.status == "Pending" %}
+                                <i class="fa fa-hourglass-half" style="color: rgb(255, 194, 27);"></i>
+                            {% elif withdraw_order_info.order.status == "Failed" %}
+                                <i class="fa fa-times-circle" style="color: rgb(255, 27, 27);"></i>
+                            {% else %}
+                                <i class="fa fa-check-circle" style="color: rgb(0, 212, 64);"></i>
+                            {% endif %}
+                        </div>
+                        <div class="withdraw-info">
+                            <p class="withdraw-receiver">
+                                To: {{withdraw_order_info.order.paypal}}
+                            </p>
+                            <p class="order-time">
+                                {{withdraw_order_info.order.date_time |date:'H:i'}}
+                            </p>
+                        </div>
+                        <div class="withdraw-amount">
+                            {{withdraw_order_info.order.amount}}€
+                        </div>
                     </div>
-                {% endif %}
-                <div class="withdraw-card">
-                    <div class="withdraw-status">
-                        {% if withdraw_order_info.order.status == "Pending" %}
-                            <i class="fa fa-hourglass-half" style="color: rgb(255, 194, 27);"></i>
-                        {% elif withdraw_order_info.order.status == "Failed" %}
-                            <i class="fa fa-times-circle" style="color: rgb(255, 27, 27);"></i>
-                        {% else %}
-                            <i class="fa fa-check-circle" style="color: rgb(0, 212, 64);"></i>
-                        {% endif %}
-                    </div>
-                    <div class="withdraw-info">
-                        <p class="withdraw-receiver">
-                            To: {{withdraw_order_info.order.paypal}}
-                        </p>
-                        <p class="order-time">
-                            {{withdraw_order_info.order.date_time |date:'H:i'}}
-                        </p>
-                    </div>
-                    <div class="withdraw-amount">
-                        {{withdraw_order_info.order.amount}}€
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <div class="no-withdrawals">
+            <h1>No Orders</h1>
+        </div>
+    {% endif %}
 {% endblock %}

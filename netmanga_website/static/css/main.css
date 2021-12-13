@@ -4272,11 +4272,11 @@ li.subscribe-button {
   padding: 0.75rem 1.25rem;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
   cursor:pointer;
+  text-decoration: none;
 }
 
 .small.stretched-link{
   color: #858585;
-  text-decoration: none;
 }
 
 .fa.fa-angle-right {
@@ -4988,4 +4988,19 @@ p a:hover {
 
 .withdraw-card .withdraw-status i {
   font-size: 40px;
+}
+
+.no-withdrawals{
+  margin-top: 300px;
+  margin-bottom: 300px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+.no-withdrawals h1{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: 500;
+  color: #e8e8e8;
 }
