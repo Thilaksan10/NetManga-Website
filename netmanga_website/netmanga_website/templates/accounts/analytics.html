@@ -44,7 +44,7 @@ $.ajax({
                                     Balance: 
                                 </div>
                                 <div class="card-data">
-                                    {{user.creator.earned_money|floatformat:2}}€
+                                    {{user.creator.earned_money}}€
                                 </div>
                             </div>
                             <a href="{% url 'accounts:withdraw_order' %}" class="card-footer-analytics d-flex align-items-center justify-content-between">

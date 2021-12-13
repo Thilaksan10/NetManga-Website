@@ -492,15 +492,18 @@ class WithdrawOrderView(LoginRequiredMixin,TemplateView):
         creator = request.user
         print(request.user.creator, flush=True)
         withdraw_orders = WithdrawOrder.objects.filter(creator=creator).order_by('-date_time')
-        withdraw_order_infos = [WithdrawOrderInfo(True, withdraw_orders[0])]
-        for i in range(1,len(withdraw_orders)):
-            print(withdraw_orders[i].date_time.strftime('%d.%m.%y'), flush = True)
-            print(withdraw_orders[i-1].date_time.strftime('%d.%m.%y'), flush = True)
-            if(withdraw_orders[i].date_time.strftime('%d.%m.%y') == withdraw_orders[i-1].date_time.strftime('%d.%m.%y')):
-                withdraw_order_infos.append(WithdrawOrderInfo(False, withdraw_orders[i]))
-            else:
-                withdraw_order_infos.append(WithdrawOrderInfo(True, withdraw_orders[i]))
-            print(len(withdraw_order_infos), flush=True)
+        if withdraw_orders:
+            withdraw_order_infos = [WithdrawOrderInfo(True, withdraw_orders[0])]
+            for i in range(1,len(withdraw_orders)):
+                print(withdraw_orders[i].date_time.strftime('%d.%m.%y'), flush = True)
+                print(withdraw_orders[i-1].date_time.strftime('%d.%m.%y'), flush = True)
+                if(withdraw_orders[i].date_time.strftime('%d.%m.%y') == withdraw_orders[i-1].date_time.strftime('%d.%m.%y')):
+                    withdraw_order_infos.append(WithdrawOrderInfo(False, withdraw_orders[i]))
+                else:
+                    withdraw_order_infos.append(WithdrawOrderInfo(True, withdraw_orders[i]))
+                print(len(withdraw_order_infos), flush=True)
+        else:
+            withdraw_order_infos = []
         return HttpResponse(template.render({'withdraw_order_infos':withdraw_order_infos}, request))
 
 def process_order(request):
