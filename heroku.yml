@@ -3,7 +3,8 @@ build:
     web: Dockerfile
     worker: proxy/Dockerfile
 release: 
-    command: python manage.py migrate
+    command: 
+      - python manage.py migrate
     image: web
 run:
   web: "entrypoint.sh"
