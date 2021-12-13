@@ -3,4 +3,5 @@ build:
     web: Dockerfile
     worker: proxy/Dockerfile
 run:
+  release: python manage.py migrate
   web: "entrypoint.sh"
