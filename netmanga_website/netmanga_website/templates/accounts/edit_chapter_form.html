@@ -38,10 +38,10 @@
                     </div>
                     <div id="mangapagesbrowsebutton" class="mangapagesbrowsebutton">
                         <div class="mangapages-browse-box">
-                            <input required name="images" type="file" multiple id="id_manga_pages" class="browse-file-input form-control" accept="image/*">
+                            <input name="images" type="file" multiple id="id_manga_pages" class="browse-file-input form-control" accept="image/*">
                         </div>
                         <div class="mangapages-browse-button mangapages-browse-applied" id="mangaPagesBrowseButton">
-                            <div class="before">
+                            <div class="after">
                                 <div class="manga-pages-box">
                                     <i class="fa fa-arrow-circle-up"></i>
                                     <p class="placeholder_message">
@@ -54,6 +54,9 @@
                                     Select all images to upload
                                     or drag the image files here.
                                 </p>
+                                {% for chapterimage in chapterimages %}
+                                    <img src={{chapterimage.image.url}} alt="Warum?" class="uploaded-manga-pages">
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

@@ -2,13 +2,14 @@
 {% load static %}
 {% load custom_template_tags %}
 
-{% block title %} NETMANGA - Ch.{{chapter.no}} | {{chapter.manga.title}} {% endblock %}
+{% block title %} NETMANGA - {{oneshot.title}} {% endblock %}
+
 
 {% block content %}
 <!--Recommended Section-->
 <!-- Navigation-->
 
-{% with chapterpage=chapterpages.0 %}
+{% with oneshotpage=oneshotpages.0 %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         
@@ -31,7 +32,7 @@
                 <li class="nav-chapter-item">
                     <!--Logo and Homepage Nav-->
                     <span class="page-no mx-auto">
-                        {{chapterpage.no}}/{{chapterpages.count}}
+                        {{oneshotpage.no}}/{{oneshotpages.count}}
                     </span>
                 </li>
                 <li class="nav-chapter-item">
@@ -46,19 +47,9 @@
         <div class="navbar-collapse collapse w-100 order-3">
             <ul class="viewer-nav ms-auto">
                 <li class="nav-chapter-item">
-                    <span class="nav-chapter-text">
-                        {{chapter.title}} (Chapter {{chapter.no}})
-                    </span>
-                </li> 
-                <li class="nav-chapter-item">
-                    <span class="nav-chapter-text">
-                        &#60;
-                    </span>
-                </li>
-                <li class="nav-chapter-item">
-                    <a class="nav-chapter-link" href="{% url 'public:chapterlist' pk=chapter.manga.pk%}">
-                        {{chapter.manga.title}}
-                    </a>
+                    <div class="nav-chapter-link">
+                        {{oneshot.title}}
+                    </div>
                 </li>
             </ul>
         </div>
@@ -72,7 +63,7 @@
                     <div class="page-card">
                         <div class="page-cover" rel="noopener noreferrer">
                             
-                            <img class="chapter-page loaded" src="{{ chapterpage.image.url}} " id="manga-page" galleryimg="no" oncontextmenu="return false;">
+                            <img class="chapter-page loaded" src="{{ oneshotpage.image.url}} " id="manga-page" galleryimg="no" oncontextmenu="return false;">
             
                         </div>
                     </div>
@@ -82,16 +73,16 @@
     </div>
 </div>
 <script>
-    var currentpage = parseInt('{{chapterpage.no}}') - 1
-    var chapterpages = JSON.parse('{{json_chapterpages | safe}}')
+    var currentpage = parseInt('{{oneshotpage.no}}') - 1
+    var oneshotpages = JSON.parse('{{json_oneshotpages | safe}}')
     var imageurls = {{image_urls | safe}}
     document.getElementById("next-page").addEventListener('click',function(){
-        if(currentpage + 1 !== chapterpages.length){
+        if(currentpage + 1 !== oneshotpages.length){
             currentpage = currentpage + 1
             document.getElementById("manga-page").src = imageurls[currentpage]
             document.getElementById("previous-page").className = "btn btn-next" 
-            document.querySelector(".page-no").innerHTML= currentpage+1 + "/" + chapterpages.length
-            if(currentpage + 1 === chapterpages.length){
+            document.querySelector(".page-no").innerHTML= currentpage+1 + "/" + oneshotpages.length
+            if(currentpage + 1 === oneshotpages.length){
                 document.getElementById("next-page").className = "btn btn-next-hidden"
             }
         }
@@ -102,7 +93,7 @@
             currentpage = currentpage - 1
             document.getElementById("manga-page").src = imageurls[currentpage]
             document.getElementById("next-page").className = "btn btn-next" 
-            document.querySelector(".page-no").innerHTML= currentpage + 1 + "/" + chapterpages.length
+            document.querySelector(".page-no").innerHTML= currentpage + 1 + "/" + oneshotpages.length
             if(currentpage + 1 === 1){
                 document.getElementById("previous-page").className = "btn btn-next-hidden"
             }
@@ -113,43 +104,15 @@
 {% endwith %}
 
 <div class="section">
-    <!--
-    <div class="container">
-        <div class="viewer">
-            {% if chapterpage.no < pages %}
-            <a class='btn btn-next' href="{% url 'public:next_page' pk=chapter.pk sk=chapterpage.pk %}">
-                &#8592;
-            </a>
-            {% else %}
-            <a class='btn btn-next-hidden'>
-                &#8592;
-            </a> 
-            {% endif %}
-            <div class="chapter-page">
-                <img src="{{ chapterpage.image.url}} ">
-            </div>
-            {% if chapterpage.no > 1 %}
-            <a class='btn btn-next' href="{% url 'public:previous_page' pk=chapter.pk tk=chapterpage.pk %}">
-                &#8594;
-            </a>     
-            {% else %}
-            <a class='btn btn-next-hidden'>
-                &#8594;
-            </a> 
-            {% endif %}
-            
-        </div>
-    </div>
-    -->
     <div class="container-fluid">
         <div class="feedback">
             <ul class="ratings">
                 <li>
                     <h4 class="views">
-                        {{chapter.views}} View{{chapter.views|pluralize:",s"}} 
+                        {{oneshot.views}} View{{oneshot.views|pluralize:",s"}} 
                     </h4>
                     <h6 class="publish-date">
-                        {{chapter.published|date:'d.m.Y'}}
+                        {{oneshot.published|date:'d.m.Y'}}
                     </h6>
                 </li>
                 
@@ -299,48 +262,22 @@
         <div class="feedback">
             <ul class="ratings">
                 <li>
-                    <a href="{% url 'accounts:show_profile' pk=chapter.manga.creator.user.pk %}">
-                        <img class="creator-picture rounded-circle"  src="{{chapter.manga.creator.user.profile.profile_picture.url}}">
-                        <h5 class="creator-name"  style="float: right;">{{ chapter.manga.creator.user.username }}</h5>
+                    <a href="{% url 'accounts:show_profile' pk=oneshot.creator.user.pk %}">
+                        <img class="creator-picture rounded-circle"  src="{{oneshot.creator.user.profile.profile_picture.url}}">
+                        <h5 class="creator-name"  style="float: right;">{{ oneshot.creator.user.username }}</h5>
                     </a>
                 </li>
-                {% if chapter.manga.creator.user == user %}
+                {% if oneshot.creator.user == user %}
                 <li  style="float:right;">
-                    <a href="{% url 'accounts:edit_chapter_form' pk=chapter.pk %}" class="btn btn-subscribe">
-                        Edit Chapter
+                    <a href="{% url 'accounts:edit_oneshot_form' pk=oneshot.pk %}" class="btn btn-subscribe">
+                        Edit One-Shot
                     </a>
                 </li>
                 {% else %}
                 <li class="subscribe-button">
-                    <form id="subscribe" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="subscribe" value="1"/>
-                        {% if not subscribed %}
-                        <button  class="btn btn-subscribe" onclick="document.forms[2].submit();return false;">
-                            Subscribe
-                        </a>
-                        {% else %}
-                        <button  class="btn btn-subscribed" onclick="document.forms[2].submit();return false;">
-                            Subscribed 
-                        </a>
-                        {% endif %}
-                    </form>
+                    
                 </li>
                 {% endif %}  
-                {% if user != chapter.manga.creator.user and user.is_authenticated %}
-                <script>
-                    document.querySelector('#subscribe > button').addEventListener('click',function(){
-                        if(document.querySelector('#subscribe > .btn-subscribe')){
-                            document.querySelector('#subscribe > button').className = "btn btn-subscribed"
-                            document.querySelector('#subscribe > button').innerHTML = "Subscribed"
-                        }
-                        else{
-                            document.querySelector('#subscribe > button').className = "btn btn-subscribe"
-                            document.querySelector('#subscribe > button').innerHTML = "Subscribe"
-                        }
-                    });
-                </script>
-                {% endif %}
             </ul>   
         </div>
     </div>
@@ -435,8 +372,8 @@
         </div>
         <div class="report-disclaimer">
             <p>
-                Thank you for helping this website clean. Type in he box below, whats wrong with this Chapterpage, Chapter or something else.
-                Please be precise as possible so we can look in to it and handle this Problem.
+                Thank you for helping this website clean. Type in he box below, whats wrong with this One-Shot or something else.
+                Please be as precise as possible so we can look in to it and handle this Problem faster.
             </p>
         </div>
         <form id="report" method="post">

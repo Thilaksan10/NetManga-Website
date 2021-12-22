@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPa
 from django.contrib.auth.models import User
 from django.db.models import fields
 
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating, WithdrawOrder
+from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, WithdrawOrder, OneShot
 from .choices import GENRE_CHOICES
 
 class SignUpForm(UserCreationForm):
@@ -230,7 +230,7 @@ class MangaForm(forms.ModelForm):
       )
 
    class Meta:
-      model = Mangaseries
+      model = MangaSeries
       fields = ('cover_picture','title','primary_Genre','secondary_Genre','plot')
 
 class EditMangaForm(forms.ModelForm):
@@ -278,7 +278,7 @@ class EditMangaForm(forms.ModelForm):
       )
 
    class Meta:
-      model = Mangaseries
+      model = MangaSeries
       fields = ('cover_picture','title','primary_Genre','secondary_Genre','plot')
 
 
@@ -298,6 +298,100 @@ class ChapterForm(forms.ModelForm):
       model = Chapter
       fields = ('title',)
 
+class OneShotForm(forms.ModelForm):
+
+   title = forms.CharField(
+      required=False, 
+      max_length=100, 
+      widget=forms.TextInput(
+         attrs={
+            'class': 'form-control',
+            'placeholder' : 'Enter One-Shot Title',
+            }
+         )
+      )
+
+   cover_picture = forms.ImageField(
+      required=False,
+      widget=forms.FileInput(
+         attrs={
+            'class': 'browse-file-input form-control',
+         }
+      )
+   )
+
+   plot = forms.CharField(
+      required=True, 
+      widget=forms.Textarea(
+         attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter the One-Shot Plot', 
+            'rows': 7
+            }
+         )
+      )
+
+   primary_Genre = forms.ChoiceField(
+         required=True,
+         choices=GENRE_CHOICES,
+      )
+
+   secondary_Genre = forms.ChoiceField(
+         required=True,
+         choices=GENRE_CHOICES,
+      )
+
+   class Meta:
+      model = OneShot
+      fields = ('cover_picture','title','primary_Genre','secondary_Genre','plot')
+
+class EditOneShotForm(forms.ModelForm):
+   
+   title = forms.CharField(
+      required=False, 
+      max_length=100, 
+      widget=forms.TextInput(
+         attrs={
+            'class': 'form-control',
+            'placeholder' : 'Edit Manga Title',
+            }
+         )
+      )
+
+   cover_picture = forms.ImageField(
+      required=False,
+      widget=forms.FileInput(
+         attrs={
+            'class': 'browse-file-input form-control',
+         }
+      )
+   )
+
+   plot = forms.CharField(
+      required=True, 
+      widget=forms.Textarea(
+         attrs={
+            'class': 'form-control',
+            'placeholder': 'Edit the Manga Plot', 
+            'rows': 7
+            }
+         )
+      )
+
+
+   primary_Genre = forms.ChoiceField(
+         required=True,
+         choices=GENRE_CHOICES,
+      )
+
+   secondary_Genre = forms.ChoiceField(
+         required=True,
+         choices=GENRE_CHOICES,
+      )
+
+   class Meta:
+      model = OneShot
+      fields = ('cover_picture','title','primary_Genre','secondary_Genre','plot')
 
 class WithdrawForm(forms.ModelForm):
    

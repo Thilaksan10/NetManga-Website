@@ -3,7 +3,7 @@ from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 
-from ..accounts.models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter
+from ..accounts.models import OneShot, Profile, Creator, MangaSeries, Chapter, ChapterImages, Subscriber, ChapterRating, ChapterComment, ChapterCommentRating, CoinOffer, Award, ChapterAward, ReportChapter, OneShotImages, OneShotRating, OneShotComment, OneShotCommentRating, OneShotAward, ReportOneShot
 from .forms import CommentForm, EditPlotForm, ReportForm
 from .algorithms import *
 from django.forms.models import model_to_dict
@@ -15,11 +15,12 @@ def index(request):
     template = loader.get_template('index.html')
     
     if request.method == 'GET':
-        mangas = Mangaseries.objects.all()
+        mangas = MangaSeries.objects.all()
+        oneshots = OneShot.objects.all()
         if request.user.is_authenticated:
             subscribed_mangas = Subscriber.objects.filter(user=request.user)
-            return HttpResponse(template.render({'mangas':mangas, 'subscribed_mangas':subscribed_mangas,}, request))
-        return HttpResponse(template.render({'mangas':mangas,}, request))
+            return HttpResponse(template.render({'mangas':mangas, 'oneshots':oneshots, 'subscribed_mangas':subscribed_mangas,}, request))
+        return HttpResponse(template.render({'mangas':mangas, 'oneshots':oneshots}, request))
         
     return HttpResponse(template.render({}, request))
 
@@ -28,8 +29,9 @@ def search(request):
     if request.method=="POST":
         template = loader.get_template('search.html')
         search = request.POST['search']
-        mangas = Mangaseries.objects.filter(title__icontains = search)
+        mangas = MangaSeries.objects.filter(title__icontains = search)
         chapters = Chapter.objects.filter(title__icontains = search)
+        oneshots = OneShot.objects.filter(title__icontains = search)
         chapter_infos=[]
         manga_infos=[]
         platinum_award = Award.objects.get(name="Platinum Award")
@@ -37,8 +39,8 @@ def search(request):
         silver_award = Award.objects.get(name="Silver Award")
         bronce_award = Award.objects.get(name="Bronce Award")
         for chapter in chapters:
-            likes = Rating.objects.filter(chapter=chapter,rating=True)
-            dislikes = Rating.objects.filter(chapter=chapter,rating=False)
+            likes = ChapterRating.objects.filter(chapter=chapter,rating=True)
+            dislikes = ChapterRating.objects.filter(chapter=chapter,rating=False)
             platinum = ChapterAward.objects.filter(chapter=chapter,award=platinum_award).count()
             gold = ChapterAward.objects.filter(chapter=chapter,award=gold_award).count()
             silver = ChapterAward.objects.filter(chapter=chapter,award=silver_award).count()
@@ -52,7 +54,7 @@ def search(request):
             manga_infos.append(MangaInfo(manga,latest_chapter))
             mergeSort_by_latest_upload(manga_infos)
         
-        return HttpResponse(template.render({'manga_infos':manga_infos, 'chapter_infos':chapter_infos,'search':search},request))
+        return HttpResponse(template.render({'manga_infos':manga_infos, 'oneshots':oneshots, 'chapter_infos':chapter_infos,'search':search},request))
     else:
         return HttpResponseRedirect('/')
    
@@ -61,8 +63,9 @@ def popular(request):
     
     template = loader.get_template('popular.html')
     mangas = sort_view()
+    oneshots = OneShot.objects.all().order_by('views')
     
-    return HttpResponse(template.render({'mangas':mangas,}, request))
+    return HttpResponse(template.render({'mangas':mangas, 'oneshots':oneshots}, request))
 
 class ChapterInfo:
     def __init__(self,chapter,likes,dislikes,platinumawards,goldawards,silverawards,bronceawards):
@@ -76,7 +79,7 @@ class ChapterInfo:
 
 def chapterlist(request,pk):
     template =loader.get_template('chapterlist.html')
-    manga = Mangaseries.objects.filter(pk=pk).first()
+    manga = MangaSeries.objects.filter(pk=pk).first()
     chapters = Chapter.objects.filter(manga=pk).order_by('no')
     chapter_infos = []
     total_views = 0
@@ -85,8 +88,8 @@ def chapterlist(request,pk):
     silver_award = Award.objects.get(name="Silver Award")
     bronce_award = Award.objects.get(name="Bronce Award")
     for chapter in chapters:
-        likes = Rating.objects.filter(chapter=chapter,rating=True)
-        dislikes = Rating.objects.filter(chapter=chapter,rating=False)
+        likes = ChapterRating.objects.filter(chapter=chapter,rating=True)
+        dislikes = ChapterRating.objects.filter(chapter=chapter,rating=False)
         platinum = ChapterAward.objects.filter(chapter=chapter,award=platinum_award).count()
         gold = ChapterAward.objects.filter(chapter=chapter,award=gold_award).count()
         silver = ChapterAward.objects.filter(chapter=chapter,award=silver_award).count()
@@ -181,9 +184,9 @@ def chapter_viewer_post(request,chapter):
                 subscriber.delete()
 
         elif request.POST.get('like', False) is not False:
-            rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
+            rating = ChapterRating.objects.filter(chapter=chapter, user=request.user).first()
             if rating is None:
-                rating = Rating.objects.create(chapter=chapter, user=request.user, rating=1)
+                rating = ChapterRating.objects.create(chapter=chapter, user=request.user, rating=1)
                 rating.save()
             else:
                 if rating.rating == 1:
@@ -193,9 +196,9 @@ def chapter_viewer_post(request,chapter):
                     rating.save()
 
         elif request.POST.get('dislike', False) is not False:
-            rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
+            rating = ChapterRating.objects.filter(chapter=chapter, user=request.user).first()
             if rating is None:
-                rating = Rating.objects.create(chapter=chapter, user=request.user, rating=0)
+                rating = ChapterRating.objects.create(chapter=chapter, user=request.user, rating=0)
                 rating.save()
             else:
                 if rating.rating == 0:
@@ -234,17 +237,17 @@ def chapter_viewer_post(request,chapter):
         elif request.POST.get('comment', False) is not False:
             comment_form = CommentForm(request.POST)
             if comment_form.is_valid():
-                comment = Comment.objects.create(chapter=chapter, user=request.user)
+                comment = ChapterComment.objects.create(chapter=chapter, user=request.user)
                 comment.comment = bleach.clean(comment_form.cleaned_data['comment'])
                 comment.save()
                 comment_form = CommentForm()
             reload = True
 
         elif request.POST.get('commentlike', False) is not False:
-            comment = Comment.objects.filter(pk=int(request.POST.get('commentlike'))).first()
-            comment_rating = CommentRating.objects.filter(comment=comment, user=request.user).first()
+            comment = ChapterComment.objects.filter(pk=int(request.POST.get('commentlike'))).first()
+            comment_rating = ChapterCommentRating.objects.filter(comment=comment, user=request.user).first()
             if comment_rating is None:
-                comment_rating = CommentRating.objects.create(comment=comment, user=request.user, rating=True)
+                comment_rating = ChapterCommentRating.objects.create(comment=comment, user=request.user, rating=True)
                 comment_rating.save()
             else:
                 if comment_rating.rating == 1:
@@ -252,15 +255,15 @@ def chapter_viewer_post(request,chapter):
                 else:
                     comment_rating.rating = 1
                     comment_rating.save()
-            comment.like = len(CommentRating.objects.filter(comment=comment,rating=True))
-            comment.dislike = len(CommentRating.objects.filter(comment=comment,rating=False))
+            comment.like = len(ChapterCommentRating.objects.filter(comment=comment,rating=True))
+            comment.dislike = len(ChapterCommentRating.objects.filter(comment=comment,rating=False))
             comment.save()
 
         elif request.POST.get('commentdislike', False) is not False:
-            comment = Comment.objects.filter(pk=int(request.POST.get('commentdislike'))).first()
-            comment_rating = CommentRating.objects.filter(comment=comment, user=request.user).first()
+            comment = ChapterComment.objects.filter(pk=int(request.POST.get('commentdislike'))).first()
+            comment_rating = ChapterCommentRating.objects.filter(comment=comment, user=request.user).first()
             if comment_rating is None:
-                comment_rating = CommentRating.objects.create(comment=comment, user=request.user, rating=False)
+                comment_rating = ChapterCommentRating.objects.create(comment=comment, user=request.user, rating=False)
                 comment_rating.save()
             else:
                 if comment_rating.rating == 0:
@@ -268,8 +271,8 @@ def chapter_viewer_post(request,chapter):
                 else:
                     comment_rating.rating = 0
                     comment_rating.save()
-            comment.like = len(CommentRating.objects.filter(comment=comment,rating=True))
-            comment.dislike = len(CommentRating.objects.filter(comment=comment,rating=False))
+            comment.like = len(ChapterCommentRating.objects.filter(comment=comment,rating=True))
+            comment.dislike = len(ChapterCommentRating.objects.filter(comment=comment,rating=False))
             comment.save()
         else:
             raise NotImplementedError
@@ -278,7 +281,7 @@ def chapter_viewer_post(request,chapter):
 def chapter_viewer(request,pk):
     template =loader.get_template('chapter_viewer.html')
     chapter = Chapter.objects.filter(pk=pk).first()
-    chapterpages = Chapterimages.objects.filter(chapter=pk).order_by('no')
+    chapterpages = ChapterImages.objects.filter(chapter=pk).order_by('no')
     comment_form = CommentForm()
     report_form = ReportForm()
     awards = Award.objects.all().order_by('pk')
@@ -286,14 +289,14 @@ def chapter_viewer(request,pk):
     for chapterpage in chapterpages:
         image_urls.append(chapterpage.image.url)
     if request.method == 'GET':
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
+        rating = ChapterRating.objects.filter(chapter=pk)
+        likes = ChapterRating.objects.filter(chapter=pk, rating=True)
+        dislikes = ChapterRating.objects.filter(chapter=pk, rating=False)
+        comments = ChapterComment.objects.filter(chapter=pk)
         comment_ratings = None
         if request.user.is_authenticated:
-            user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-            comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
+            user_rating = ChapterRating.objects.filter(chapter=chapter, user=request.user).first()
+            comment_ratings = ChapterCommentRating.objects.filter(comment__in=comments, user=request.user)
             subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
         comment_infos = create_commentinfo_list(comments,comment_ratings)
         comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
@@ -308,17 +311,17 @@ def chapter_viewer(request,pk):
     elif request.method == 'POST':
         reload = chapter_viewer_post(request,chapter)
 
-        rating = Rating.objects.filter(chapter=pk)
-        likes = Rating.objects.filter(chapter=pk, rating=True)
-        dislikes = Rating.objects.filter(chapter=pk, rating=False)
-        comments = Comment.objects.filter(chapter=pk)
+        rating = ChapterRating.objects.filter(chapter=pk)
+        likes = ChapterRating.objects.filter(chapter=pk, rating=True)
+        dislikes = ChapterRating.objects.filter(chapter=pk, rating=False)
+        comments = ChapterComment.objects.filter(chapter=pk)
         comment_ratings = None
         if request.user.is_authenticated:
             if not reload:
                 return HttpResponse(status=204)
             else:
-                user_rating = Rating.objects.filter(chapter=chapter, user=request.user).first()
-                comment_ratings = CommentRating.objects.filter(comment__in=comments, user=request.user)
+                user_rating = ChapterRating.objects.filter(chapter=chapter, user=request.user).first()
+                comment_ratings = ChapterCommentRating.objects.filter(comment__in=comments, user=request.user)
                 subscribed = Subscriber.objects.filter(manga=chapter.manga, user=request.user).first() != None
                 comment_infos = create_commentinfo_list(comments,comment_ratings)
                 comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
@@ -330,13 +333,163 @@ def chapter_viewer(request,pk):
     else:    
         pass
 
+def oneshot_viewer_post(request,oneshot):
+    reload = False
+    if request.user.is_authenticated:
+        if request.POST.get('like', False) is not False:
+            rating = OneShotRating.objects.filter(oneshot=oneshot, user=request.user).first()
+            if rating is None:
+                rating = OneShotRating.objects.create(oneshot=oneshot, user=request.user, rating=1)
+                rating.save()
+            else:
+                if rating.rating == 1:
+                    rating.delete()
+                else:
+                    rating.rating = 1
+                    rating.save()
+
+        elif request.POST.get('dislike', False) is not False:
+            rating = OneShotRating.objects.filter(oneshot=oneshot, user=request.user).first()
+            if rating is None:
+                rating = OneShotRating.objects.create(oneshot=oneshot, user=request.user, rating=0)
+                rating.save()
+            else:
+                if rating.rating == 0:
+                    rating.delete()
+                else:
+                    rating.rating = 0
+                    rating.save()
+
+        elif request.POST.get('award', False) is not False:
+            award = Award.objects.filter(name=request.POST.get('award')).first()
+            user_balance = request.user.profile.coins
+            user_balance = user_balance - award.price
+            
+            if user_balance >= 0: 
+                oneshot_award = OneShotAward.objects.create(award=award, user=request.user, oneshot=oneshot)
+                oneshot_award.save()
+                request.user.profile.coins = user_balance
+                request.user.save() 
+                creator = oneshot.manga.creator
+                creator.user.profile.coins += award.coins_reward
+                creator.user.profile.save()
+                money = creator.earned_money
+                creator.earned_money = money + award.fiat_reward
+                creator.save()
+            reload = True
+        
+        elif request.POST.get('report',False) is not False:
+            report_form = ReportForm(request.POST)
+            if report_form.is_valid():
+                report = ReportOneShot.objects.create(oneshot=oneshot, user=request.user)
+                report.report = bleach.clean(report_form.cleaned_data['report'])
+                report.save()
+                report_form = ReportForm()
+            reload = True
+
+        elif request.POST.get('comment', False) is not False:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = OneShotComment.objects.create(oneshot=oneshot, user=request.user)
+                comment.comment = bleach.clean(comment_form.cleaned_data['comment'])
+                comment.save()
+                comment_form = CommentForm()
+            reload = True
+
+        elif request.POST.get('commentlike', False) is not False:
+            comment = OneShotComment.objects.filter(pk=int(request.POST.get('commentlike'))).first()
+            comment_rating = OneShotCommentRating.objects.filter(comment=comment, user=request.user).first()
+            if comment_rating is None:
+                comment_rating = OneShotCommentRating.objects.create(comment=comment, user=request.user, rating=True)
+                comment_rating.save()
+            else:
+                if comment_rating.rating == 1:
+                    comment_rating.delete()
+                else:
+                    comment_rating.rating = 1
+                    comment_rating.save()
+            comment.like = len(OneShotCommentRating.objects.filter(comment=comment,rating=True))
+            comment.dislike = len(OneShotCommentRating.objects.filter(comment=comment,rating=False))
+            comment.save()
+
+        elif request.POST.get('commentdislike', False) is not False:
+            comment = OneShotComment.objects.filter(pk=int(request.POST.get('commentdislike'))).first()
+            comment_rating = OneShotCommentRating.objects.filter(comment=comment, user=request.user).first()
+            if comment_rating is None:
+                comment_rating = OneShotCommentRating.objects.create(comment=comment, user=request.user, rating=False)
+                comment_rating.save()
+            else:
+                if comment_rating.rating == 0:
+                    comment_rating.delete()
+                else:
+                    comment_rating.rating = 0
+                    comment_rating.save()
+            comment.like = len(OneShotCommentRating.objects.filter(comment=comment,rating=True))
+            comment.dislike = len(OneShotCommentRating.objects.filter(comment=comment,rating=False))
+            comment.save()
+        else:
+            raise NotImplementedError
+    return reload
+
+def oneshot_viewer(request,pk):
+    template =loader.get_template('oneshot_viewer.html')
+    oneshot = OneShot.objects.filter(pk=pk).first()
+    oneshotpages = OneShotImages.objects.filter(oneshot=pk).order_by('no')
+    comment_form = CommentForm()
+    report_form = ReportForm()
+    awards = Award.objects.all().order_by('pk')
+    image_urls = []
+    for oneshotpage in oneshotpages:
+        image_urls.append(oneshotpage.image.url)
+    if request.method == 'GET':
+        rating = OneShotRating.objects.filter(oneshot=pk)
+        likes = OneShotRating.objects.filter(oneshot=pk, rating=True)
+        dislikes = OneShotRating.objects.filter(oneshot=pk, rating=False)
+        comments = OneShotComment.objects.filter(oneshot=pk)
+        comment_ratings = None
+        if request.user.is_authenticated:
+            user_rating = OneShotRating.objects.filter(oneshot=oneshot, user=request.user).first()
+            comment_ratings = OneShotCommentRating.objects.filter(comment__in=comments, user=request.user)
+        comment_infos = create_commentinfo_list(comments,comment_ratings)
+        comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
+        print(comment_infos, flush=True)
+        oneshot.views += 1
+        oneshot.save()
+        
+        if request.user.is_authenticated:
+            return HttpResponse(template.render({'oneshot': oneshot, 'oneshotpages': oneshotpages, 'json_oneshotpages': serializers.serialize('json', oneshotpages), 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'comment_form': comment_form, 'awards': awards, 'report_form':report_form},request))
+        else:
+            return HttpResponse(template.render({'oneshot': oneshot, 'oneshotpages': oneshotpages, 'json_oneshotpages': serializers.serialize('json', oneshotpages), 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+    elif request.method == 'POST':
+        reload = oneshot_viewer_post(request,oneshot)
+
+        rating = OneShotRating.objects.filter(oneshot=pk)
+        likes = OneShotRating.objects.filter(oneshot=pk, rating=True)
+        dislikes = OneShotRating.objects.filter(oneshot=pk, rating=False)
+        comments = OneShotComment.objects.filter(oneshot=pk)
+        comment_ratings = None
+        if request.user.is_authenticated:
+            if not reload:
+                return HttpResponse(status=204)
+            else:
+                user_rating = OneShotRating.objects.filter(oneshot=oneshot, user=request.user).first()
+                comment_ratings = OneShotCommentRating.objects.filter(comment__in=comments, user=request.user)
+                comment_infos = create_commentinfo_list(comments,comment_ratings)
+                comment_infos_json = create_commentinfojson_list(comments,comment_ratings)
+                print(comment_infos, flush=True)
+                return HttpResponse(template.render({'oneshot': oneshot, 'oneshotpages': oneshotpages, 'json_oneshotpages': serializers.serialize('json', oneshotpages), 'image_urls': image_urls, 'likes': len(likes), 'dislikes': len(dislikes), 'comment_infos': comment_infos, 'comment_infos_json': comment_infos_json, 'user_rating': user_rating, 'comment_form': comment_form,  'awards': awards, 'report_form':report_form},request))
+        else:
+            print("redirect",flush=True)
+            return HttpResponseRedirect('/accounts/login')
+    else:    
+        pass
 
 ''' All Genre related views '''
 def genre(request):
     template = loader.get_template('genre.html')
     
     if request.method == 'GET':
-        mangas = Mangaseries.objects.all()
+        mangas = MangaSeries.objects.all()
         action_mangas = []
         drama_mangas = []
         comedy_mangas = []
@@ -419,6 +572,57 @@ def genre(request):
                 latest_chapter = Chapter.objects.filter(manga=manga,no=chapters).first()
                 informative_mangas.append(MangaInfo(manga,latest_chapter))
 
+        oneshots = OneShot.objects.all().order_by('-published')
+        action_oneshots = []
+        drama_oneshots = []
+        comedy_oneshots = []
+        fantasy_oneshots = []
+        slice_of_life_oneshots = []
+        romance_oneshots = []
+        superhero_oneshots = []
+        sci_fi_oneshots = []
+        thriller_oneshots = []
+        supernatural_oneshots = []
+        mystery_oneshots = []
+        sports_oneshots = []
+        historical_oneshots = []
+        heartwarming_oneshots = []
+        horror_oneshots = []
+        informative_oneshots = []
+        for oneshot in oneshots:
+            if oneshot.primary_Genre == 'Action' or oneshot.secondary_Genre == 'Action':
+                action_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Drama' or oneshot.secondary_Genre == 'Drama':
+                drama_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Comedy' or oneshot.secondary_Genre == 'Comedy':
+                comedy_oneshots.append(oneshot)    
+            if oneshot.primary_Genre == 'Fantasy' or oneshot.secondary_Genre == 'Fantasy':
+                fantasy_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Slice of Life' or oneshot.secondary_Genre == 'Slice of Life':
+                slice_of_life_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Romance' or oneshot.secondary_Genre == 'Romance':
+                romance_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Superhero' or oneshot.secondary_Genre == 'Superhero':
+                superhero_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Sci-Fi' or oneshot.secondary_Genre == 'Sci-Fi':
+                sci_fi_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Thriller' or oneshot.secondary_Genre == 'Thriller':
+                thriller_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Supernatural' or oneshot.secondary_Genre == 'Supernatural':
+                supernatural_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Mystery' or oneshot.secondary_Genre == 'Mystery':
+                mystery_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Sports' or oneshot.secondary_Genre == 'Sports':
+                sports_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Historical' or oneshot.secondary_Genre == 'Historical':
+                historical_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Heartwarming' or oneshot.secondary_Genre == 'Heartwarming':
+                heartwarming_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Horror' or oneshot.secondary_Genre == 'Horror':
+                horror_oneshots.append(oneshot)
+            if oneshot.primary_Genre == 'Informative' or oneshot.secondary_Genre == 'Informative':
+                informative_oneshots.append(oneshot)
+
         mergeSort_by_latest_upload(action_mangas)
         mergeSort_by_latest_upload(drama_mangas)
         mergeSort_by_latest_upload(comedy_mangas)
@@ -435,7 +639,7 @@ def genre(request):
         mergeSort_by_latest_upload(heartwarming_mangas)
         mergeSort_by_latest_upload(horror_mangas)
         mergeSort_by_latest_upload(informative_mangas) 
-        return HttpResponse(template.render({'action_mangas':action_mangas, 'drama_mangas':drama_mangas, 'comedy_mangas':comedy_mangas, 'fantasy_mangas':fantasy_mangas, 'slice_of_life_mangas':slice_of_life_mangas, 'romance_mangas':romance_mangas, 'superhero_mangas':superhero_mangas, 'sci_fi_mangas':sci_fi_mangas, 'thriller_mangas':thriller_mangas, 'supernatural_mangas':supernatural_mangas, 'mystery_mangas':mystery_mangas, 'sports_mangas':sports_mangas, 'historical_mangas':historical_mangas,'heartwarming_mangas':heartwarming_mangas, 'horror_mangas':horror_mangas, 'informative_mangas':informative_mangas,}, request))
+        return HttpResponse(template.render({'action_mangas':action_mangas, 'drama_mangas':drama_mangas, 'comedy_mangas':comedy_mangas, 'fantasy_mangas':fantasy_mangas, 'slice_of_life_mangas':slice_of_life_mangas, 'romance_mangas':romance_mangas, 'superhero_mangas':superhero_mangas, 'sci_fi_mangas':sci_fi_mangas, 'thriller_mangas':thriller_mangas, 'supernatural_mangas':supernatural_mangas, 'mystery_mangas':mystery_mangas, 'sports_mangas':sports_mangas, 'historical_mangas':historical_mangas,'heartwarming_mangas':heartwarming_mangas, 'horror_mangas':horror_mangas, 'informative_mangas':informative_mangas, 'action_oneshots':action_oneshots, 'drama_oneshots':drama_oneshots, 'comedy_oneshots':comedy_oneshots, 'fantasy_oneshots':fantasy_oneshots, 'slice_of_life_oneshots':slice_of_life_oneshots, 'romance_oneshots':romance_oneshots, 'superhero_oneshots':superhero_oneshots, 'sci_fi_oneshots':sci_fi_oneshots, 'thriller_oneshots':thriller_oneshots, 'supernatural_oneshots':supernatural_oneshots, 'mystery_oneshots':mystery_oneshots, 'sports_oneshots':sports_oneshots, 'historical_oneshots':historical_oneshots,'heartwarming_oneshots':heartwarming_oneshots, 'horror_oneshots':horror_oneshots, 'informative_oneshots':informative_oneshots}, request))
     return HttpResponse(template.render({}, request))
 
 def action(request):

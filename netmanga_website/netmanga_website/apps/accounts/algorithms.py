@@ -1,4 +1,4 @@
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating
+from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, Subscriber, ChapterRating, ChapterComment, ChapterCommentRating
 
 class MangaInfo:
     def __init__(self,manga,latest_chapter):
@@ -49,7 +49,7 @@ class Tuple:
             print('None')
 
 def sort_view(creator):
-    mangaseries = Mangaseries.objects.filter(creator=creator)
+    mangaseries = MangaSeries.objects.filter(creator=creator)
     sorted_list = []
     for manga in mangaseries:
         chapters = Chapter.objects.filter(manga=manga)

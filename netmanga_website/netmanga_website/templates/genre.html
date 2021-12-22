@@ -11,27 +11,62 @@
             <h1>
                 --Action--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in action_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="action-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="action-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="action-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="action-myTabContent">
+                <div class="tab-pane fade show active" id="action-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in action_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="action-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in action_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -43,27 +78,62 @@
             <h1>
                 --Drama--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in drama_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="drama-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="drama-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="drama-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="drama-myTabContent">
+                <div class="tab-pane fade show active" id="drama-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in drama_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="drama-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in drama_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -75,27 +145,62 @@
             <h1>
                 --Comedy--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in comedy_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="comedy-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="comedy-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="comedy-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="comedy-myTabContent">
+                <div class="tab-pane fade show active" id="comedy-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in comedy_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="comedy-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in comedy_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -107,27 +212,62 @@
             <h1>
                 --Fantasy--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in fantasy_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="fantasy-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="fantasy-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="fantasy-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="fantasy-myTabContent">
+                <div class="tab-pane fade show active" id="fantasy-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in fantasy_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="fantasy-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in fantasy_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+            </div>
+        </div>
         </div>
     </div>
 </div>
@@ -139,27 +279,62 @@
             <h1>
                 --Slice of Life--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in slice_of_life_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="slice-of-life-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="slice-of-life-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="slice-of-life-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="slice-of-life-myTabContent">
+                <div class="tab-pane fade show active" id="slice-of-life-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in slice_of_life_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="slice-of-life-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in slice_of_life_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -171,27 +346,62 @@
             <h1>
                 --Romance--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in romance_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="romance-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="romance-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="romance-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="romance-myTabContent">
+                <div class="tab-pane fade show active" id="romance-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in romance_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="romance-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in romance_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -203,27 +413,62 @@
             <h1>
                 --Superhero--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in superhero_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="superhero-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="superhero-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="superhero-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="superhero-myTabContent">
+                <div class="tab-pane fade show active" id="superhero-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in superhero_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="superhero-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in superhero_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -235,27 +480,62 @@
             <h1>
                 --Sci-Fi--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in sci_fi_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="sci-fi-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="sci-fi-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="sci-fi-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="sci-fi-myTabContent">
+                <div class="tab-pane fade show active" id="sci-fi-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in sci_fi_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="sci-fi-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in sci_fi_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -267,27 +547,62 @@
             <h1>
                 --Thriller--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in thriller_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="thriller-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="thriller-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="thriller-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="thriller-myTabContent">
+                <div class="tab-pane fade show active" id="thriller-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in thriller_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="thriller-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in thriller_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -299,27 +614,62 @@
             <h1>
                 --Supernatural--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in supernatural_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="supernatural-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="supernatural-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="supernatural-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="supernatural-myTabContent">
+                <div class="tab-pane fade show active" id="supernatural-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in supernatural_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="supernatural-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in supernatural_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -331,27 +681,62 @@
             <h1>
                 --Mystery--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in mystery_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="mystery-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="mystery-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="mystery-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="mystery-myTabContent">
+                <div class="tab-pane fade show active" id="mystery-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in mystery_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="mystery-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in mystery_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -363,27 +748,62 @@
             <h1>
                 --Sports--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in sports_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="sports-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="sports-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="sports-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="sports-myTabContent">
+                <div class="tab-pane fade show active" id="sports-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in sports_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="sports-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in sports_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -395,27 +815,62 @@
             <h1>
                 --Historical--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in historical_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="historical-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="historical-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="historical-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="historical-myTabContent">
+                <div class="tab-pane fade show active" id="historical-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in historical_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="historical-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in historical_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -427,27 +882,62 @@
             <h1>
                 --Heartwarming--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in heartwarming_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="heartwarming-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="heartwarming-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="heartwarming-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="heartwarming-myTabContent">
+                <div class="tab-pane fade show active" id="heartwarming-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in heartwarming_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="heartwarming-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in heartwarming_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -459,27 +949,62 @@
             <h1>
                 --Horror--
             </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in horror_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
+            <ul class="nav nav-tabs genre-tabs" id="horror-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="horror-mangaseries-tab" href="#mangaseries">Manga Series</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="horror-oneshot-tab" href="#oneshot">One-Shots</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="horror-myTabContent">
+                <div class="tab-pane fade show active" id="horror-mangaseries">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for manga in horror_mangas %}
+                            {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{manga.manga.title}}</h5>
+                                        <small>@{{manga.manga.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
                             </div>
-                        
-                        </a>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
                 </div>
-            </section>
+                <div class="tab-pane fade" id="horror-oneshot">
+                    <section class="manga-section loaded">
+                        <div class="manga-list">
+                            {% for oneshot in horror_oneshots %}
+                            {% if forloop.counter <=  6%}
+                                <div class="manga-card">
+                                    <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                        <div class="background-color"></div>
+                                        <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                    
+                                        <div class="overlay">
+                                            <!--<a href="" class="title">{{manga.title}}</a>-->
+                                            <h5  class="title">{{oneshot.title}}</h5>
+                                            <small>@{{oneshot.creator.user.username}}</small>
+                                        </div>
+                                    
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -487,31 +1012,64 @@
 <!--Informative-->
 <div class="main-content home-section">
     <div class="chart-view">
-        <div>
-            <h1>
-                --Informative--
-            </h1>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in informative_mangas %}
-                    {% if forloop.counter <=  6%}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
-                            </div>
-                        
-                        </a>
+        <h1>
+            --Informative--
+        </h1>
+        <ul class="nav nav-tabs genre-tabs" id="informative-myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="informative-mangaseries-tab" href="#mangaseries">Manga Series</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="informative-oneshot-tab" href="#oneshot">One-Shots</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="informative-mangaseries">
+                <section class="manga-section loaded">
+                    <div class="manga-list">
+                        {% for manga in informative_mangas %}
+                        {% if forloop.counter <=  6%}
+                        <div class="manga-card">
+                            <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                <div class="background-color"></div>
+                                <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                            
+                                <div class="overlay">
+                                    <!--<a href="" class="title">{{manga.title}}</a>-->
+                                    <h5  class="title">{{manga.manga.title}}</h5>
+                                    <small>@{{manga.manga.creator.user.username}}</small>
+                                </div>
+                            
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </section>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="informative-oneshot">
+                <section class="manga-section loaded">
+                    <div class="manga-list">
+                        {% for oneshot in informative_oneshots %}
+                        {% if forloop.counter <=  6%}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{oneshot.title}}</h5>
+                                        <small>@{{oneshot.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>

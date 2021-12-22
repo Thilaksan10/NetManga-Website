@@ -1,12 +1,12 @@
 from django import forms
 
-from ..accounts.models import Comment, Mangaseries, Award, Profile, ReportChapter
+from ..accounts.models import ChapterComment, MangaSeries, Award, Profile, ReportChapter
 
 class CommentForm(forms.ModelForm):
     comment = forms.CharField(required=True, widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder': 'Enter Comment'}))
 
     class Meta:
-        model = Comment
+        model = ChapterComment
         fields = ('comment',)
 
 class EditPlotForm(forms.ModelForm):
@@ -22,7 +22,7 @@ class EditPlotForm(forms.ModelForm):
         )
     )
     class Meta:
-        model = Mangaseries
+        model = MangaSeries
         fields = ('plot',)
 
 class ReportForm(forms.ModelForm):

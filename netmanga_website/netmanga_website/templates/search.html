@@ -55,6 +55,53 @@
                         </div>
                     </a>
                     {% endfor %}
+                    {% for oneshot in oneshots %}
+                    <a href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}" style="text-decoration: none;">
+                        <div class="chapter-card">
+                                
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <div style="text-decoration: none;">
+                                    <img class="chapter-image loaded" src="{{ oneshot.cover_picture.url }}">
+                                </div>
+                            </div>
+                            <div class="manga-data">
+                                <div style="text-decoration: none;">
+                                    <div class="scroller vb vb-invisible">
+                                        <div class="scroller-wrap vb-content">
+                                            <div class="info">
+                                                <div class="chapter-info">
+                                                    <div>
+                                                        <div>
+                                                            <div class="manga-title">
+                                                                {{oneshot.title}}
+                                                            </div>
+                                                            <div class="latest-chapter">
+                                                                <h6>Uploaded on: {{oneshot.published | date:"d.m.Y"}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="performance-wrap">
+                                                <div class="chapter-views-view">
+                                                    {{oneshot.views}} View{{oneshot.views|pluralize:",s"}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="card-footer">
+                                    <div class="genres">
+                                        <div class="genre">{{oneshot.primary_Genre}}</div>
+                                        {% if oneshot.primary_Genre != oneshot.secondary_Genre %}
+                                        <div class="genre">{{oneshot.secondary_Genre}}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
                     {% for chapter_info in chapter_infos %}
                     <a href="{% url 'public:chapter_viewer' pk=chapter_info.chapter.pk %}" style="text-decoration: none;">
                         <div class="chapter-card">

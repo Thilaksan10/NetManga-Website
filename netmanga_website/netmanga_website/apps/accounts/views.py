@@ -16,9 +16,9 @@ import datetime
 import json
 import bleach
 
-from .forms import SignUpForm, LoginForm, CreatorForm, MangaForm, ChapterForm, EditProfileForm, EditMangaForm, WithdrawForm
+from .forms import SignUpForm, LoginForm, CreatorForm, MangaForm, ChapterForm, EditProfileForm, EditMangaForm, WithdrawForm, OneShotForm, EditOneShotForm
 from django.contrib.auth.models import User
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder
+from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder, OneShot, OneShotImages
 
 
 
@@ -91,7 +91,7 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
         template=loader.get_template('accounts/analytics.html')
         existing_creator = Creator.objects.filter(user=request.user).first()
         if existing_creator is not None:
-            mangas = Mangaseries.objects.filter(creator=existing_creator)
+            mangas = MangaSeries.objects.filter(creator=existing_creator)
             total_views = 0
             total_subscriptions = 0
             received_awards = 0
@@ -178,7 +178,7 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
         template=loader.get_template('accounts/analytics.html')
         existing_creator = Creator.objects.filter(user=request.user).first()
         if existing_creator is not None:
-            mangas = Mangaseries.objects.filter(creator=existing_creator)
+            mangas = MangaSeries.objects.filter(creator=existing_creator)
             total_views = 0
             total_subscriptions = 0
             received_awards = 0
@@ -284,7 +284,8 @@ class UploadView(LoginRequiredMixin,TemplateView):
         template=loader.get_template('accounts/upload.html')
         existing_creator = Creator.objects.filter(user=request.user).first()
         if existing_creator is not None:
-            mangaseries = Mangaseries.objects.filter( creator=existing_creator)
+            mangaseries = MangaSeries.objects.filter( creator=existing_creator)
+            oneshots = OneShot.objects.filter(creator=existing_creator).order_by('published')
             manga_infos = []
             for manga in mangaseries:
                 chapters = len(Chapter.objects.filter(manga=manga))
@@ -292,8 +293,8 @@ class UploadView(LoginRequiredMixin,TemplateView):
                 print('lenght: ' + str(chapters), flush=True)
                 print('latest Chapter: ' + str(latest_chapter),flush=True)
                 manga_infos.append(MangaInfo(manga,latest_chapter))
-                mergeSort_by_latest_upload(manga_infos)
-            return HttpResponse(template.render({'manga_infos': manga_infos,'coinoffers':coinoffers}, request))
+            mergeSort_by_latest_upload(manga_infos)
+            return HttpResponse(template.render({'manga_infos': manga_infos,'oneshots': oneshots,'coinoffers':coinoffers}, request))
         else:
             return HttpResponseRedirect('/accounts/profile')
 
@@ -345,7 +346,7 @@ class NewMangaFormView(LoginRequiredMixin,TemplateView):
             if(primary_Genre == 'Select' or secondary_Genre == 'Select'):
                 print('invalid_genre', flush=True)
                 return HttpResponse(template.render({'form': form, 'success': False, 'invalid_genre': True}, request))
-            mangaseries = Mangaseries.objects.create(creator=creator,title=title,cover_picture=cover_picture,plot=plot,primary_Genre=primary_Genre,secondary_Genre=secondary_Genre)
+            mangaseries = MangaSeries.objects.create(creator=creator,title=title,cover_picture=cover_picture,plot=plot,primary_Genre=primary_Genre,secondary_Genre=secondary_Genre)
             pk = mangaseries.pk
             mangaseries.save()
             print(mangaseries, flush=True) 
@@ -367,7 +368,7 @@ class NewChapterFormView(LoginRequiredMixin,TemplateView):
 
     def post(self,request,pk,*args,**kwargs):
         images = request.FILES.getlist('images')
-        mangaseries = Mangaseries.objects.filter(pk=pk).first()
+        mangaseries = MangaSeries.objects.filter(pk=pk).first()
         chapterform=ChapterForm(request.POST)
         template = loader.get_template('accounts/new_chapter_form.html')   
         if chapterform.is_valid():
@@ -378,7 +379,7 @@ class NewChapterFormView(LoginRequiredMixin,TemplateView):
             no = 1
             for image in images:
                 print(image, flush=True)
-                chapterimage = Chapterimages.objects.create(chapter=chapter,image=image,no=no)
+                chapterimage = ChapterImages.objects.create(chapter=chapter,image=image,no=no)
                 no += 1
 
             return HttpResponseRedirect("/accounts/profile")
@@ -390,11 +391,51 @@ class NewChapterFormView(LoginRequiredMixin,TemplateView):
         chapters = Chapter.objects.filter(manga=mangaseries)
         return len(chapters)        
 
+class NewOneShotFormView(LoginRequiredMixin,TemplateView):
+    template_name = 'accounts/new_oneshot_form.html'
+    def get(self, request, *args, **kwargs):
+        existing_creator = Creator.objects.filter(user=request.user).first()
+        if existing_creator is not None:
+            oneshotform = OneShotForm()
+            template = loader.get_template('accounts/new_oneshot_form.html')
+            return HttpResponse(template.render({'oneshotform': oneshotform}, request))
+        else:
+            return HttpResponseRedirect('/accounts/profile')
+
+    def post(self, request, *args, **kwargs):
+        oneshotform = OneShotForm(request.POST,request.FILES or None)
+        images = request.FILES.getlist('images')
+        print(request.POST, flush=True)
+        template = loader.get_template('accounts/new_oneshot_form.html')
+        if oneshotform.is_valid():
+            creator = Creator.objects.filter(user=request.user).first()
+            title = bleach.clean(oneshotform.cleaned_data['title'])
+            cover_picture = oneshotform.cleaned_data['cover_picture']
+            plot = bleach.clean(oneshotform.cleaned_data['plot'])
+            primary_Genre = bleach.clean(oneshotform.cleaned_data['primary_Genre'])
+            secondary_Genre = bleach.clean(oneshotform.cleaned_data['secondary_Genre'])
+            if(primary_Genre == 'Select' or secondary_Genre == 'Select'):
+                print('invalid_genre', flush=True)
+                return HttpResponse(template.render({'oneshotform': oneshotform, 'success': False, 'invalid_genre': True}, request))
+            oneshot = OneShot.objects.create(creator=creator,title=title,cover_picture=cover_picture,plot=plot,primary_Genre=primary_Genre,secondary_Genre=secondary_Genre)
+            oneshot.save()
+            print(oneshot, flush=True) 
+            no = 1
+            for image in images:
+                print(image, flush=True)
+                oneshotimage = OneShotImages.objects.create(oneshot=oneshot,image=image,no=no)
+                no += 1
+
+            return HttpResponseRedirect("/accounts/profile")
+        else:
+            print('Form invalid', flush = True)
+            return HttpResponse(template.render({'oneshotform': oneshotform, 'success': False}, request))
+
 class EditMangaFormView(LoginRequiredMixin,TemplateView):
     template_name = 'accounts/edit_manga_form.html'
     def get(self, request, pk, *args, **kwargs):
         existing_creator = Creator.objects.filter(user=request.user).first()
-        manga = Mangaseries.objects.filter(pk=pk).first() 
+        manga = MangaSeries.objects.filter(pk=pk).first() 
         cover_picture = manga.cover_picture
         print(manga , flush=True)
         if existing_creator is not None and manga.creator == existing_creator:
@@ -406,14 +447,18 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
 
     def post(self, request,pk, *args, **kwargs):
         template = loader.get_template('accounts/edit_manga_form.html')
-        manga = Mangaseries.objects.filter(pk=pk).first()
+        manga = MangaSeries.objects.filter(pk=pk).first()
+        cover_picture = manga.cover_picture
         if request.POST.get('title') == manga.title:
             post = request.POST.copy()
             post['title']=''
-            request.POST = post
-        form = EditMangaForm(request.POST,request.FILES or None)
+        form = EditMangaForm(post,request.FILES or None)
         if form.is_valid():
             creator = Creator.objects.filter(user=request.user).first()
+            if(bleach.clean(form.cleaned_data['primary_Genre']) == 'Select' or  bleach.clean(form.cleaned_data['secondary_Genre']) == 'Select'):
+                print('invalid_genre', flush=True)
+                form = EditMangaForm(request.POST,request.FILES or None)
+                return HttpResponse(template.render({'form': form, 'cover_picture': cover_picture, 'success': False, 'invalid_genre': True}, request))
             if form.cleaned_data['title'] != '': 
                 manga.title = form.cleaned_data['title']
             if form.cleaned_data['cover_picture'] != None:
@@ -421,23 +466,23 @@ class EditMangaFormView(LoginRequiredMixin,TemplateView):
             manga.plot = bleach.clean(form.cleaned_data['plot'])
             manga.primary_Genre = bleach.clean(form.cleaned_data['primary_Genre'])
             manga.secondary_Genre = bleach.clean(form.cleaned_data['secondary_Genre'])
-           
             manga.save()
             return HttpResponseRedirect('/accounts/upload')
         else:
             print('Form invalid', flush = True)
-            return HttpResponse(template.render({'form': form, 'success': False}, request))
+            form = EditMangaForm(request.POST,request.FILES or None)
+            return HttpResponse(template.render({'form': form, 'cover_picture': cover_picture, 'success': False}, request))
 
-    
 class EditChapterFormView(LoginRequiredMixin,TemplateView):
     template_name = 'accounts/edit_chapter_form.html'
     def get(self, request, pk, *args, **kwargs):
         existing_creator = Creator.objects.filter(user=request.user).first()
         chapter = Chapter.objects.filter(pk=pk).first()
+        chapterimages = ChapterImages.objects.filter(chapter=chapter).order_by('no')
         if existing_creator is not None and chapter.manga.creator == existing_creator:
             chapterform=ChapterForm(initial={"title":chapter.title})
             template = loader.get_template('accounts/edit_chapter_form.html')
-            return HttpResponse(template.render({'chapterform': chapterform}, request))
+            return HttpResponse(template.render({'chapterform': chapterform, 'chapterimages': chapterimages}, request))
         else:
             return HttpResponseRedirect('/accounts/profile')
 
@@ -446,22 +491,78 @@ class EditChapterFormView(LoginRequiredMixin,TemplateView):
         images = request.FILES.getlist('images')
         chapterform=ChapterForm(request.POST)
         template = loader.get_template('accounts/edit_chapter_form.html')   
+        chapter = Chapter.objects.filter(pk=pk).first()
         if chapterform.is_valid():
-            chapter = Chapter.objects.filter(pk=pk).first()
             chapter.title = bleach.clean(chapterform.cleaned_data['title'])
             chapter.save()
             if images:
                 no = 1
-                chapterimages = Chapterimages.objects.filter(chapter=chapter).delete()
+                chapterimages = ChapterImages.objects.filter(chapter=chapter).delete()
                 for image in images:
                     print(image, flush=True)
-                    chapterimage = Chapterimages.objects.create(chapter=chapter,image=image,no=no,views=chapter.views)
+                    chapterimage = ChapterImages.objects.create(chapter=chapter,image=image,no=no,views=chapter.views)
                     no += 1
 
             return HttpResponseRedirect("/accounts/profile")
         else:
+            chapterimages = ChapterImages.objects.filter(chapter=chapter).order_by('no')
             print('Form invalid', flush = True)
-            return HttpResponse(template.render({'chapterform': chapterform, 'success': False}, request))
+            return HttpResponse(template.render({'chapterform': chapterform, 'chapterimages': chapterimages, 'success': False}, request))
+
+class EditOneShotFormView(LoginRequiredMixin,TemplateView):
+    template_name = 'accounts/edit_oneshot_form.html'
+    def get(self, request, pk, *args, **kwargs):
+        existing_creator = Creator.objects.filter(user=request.user).first()
+        oneshot = OneShot.objects.filter(pk=pk).first() 
+        cover_picture = oneshot.cover_picture
+        oneshotimages = OneShotImages.objects.filter(oneshot=oneshot).order_by('no')
+        print(oneshot , flush=True)
+        if existing_creator is not None and oneshot.creator == existing_creator:
+            oneshotform = EditOneShotForm(initial={'title':oneshot.title, 'primary_Genre': oneshot.primary_Genre, 'secondary_Genre': oneshot.secondary_Genre, 'plot': oneshot.plot})
+            print(oneshotform, flush=True)
+            template = loader.get_template('accounts/edit_oneshot_form.html')
+            return HttpResponse(template.render({'oneshotform': oneshotform, 'cover_picture': cover_picture, "oneshotimages": oneshotimages}, request))
+        else:
+            return HttpResponseRedirect('/accounts/profile')
+
+    def post(self, request,pk, *args, **kwargs):
+        template = loader.get_template('accounts/edit_oneshot_form.html')
+        oneshot = OneShot.objects.filter(pk=pk).first()
+        cover_picture = oneshot.cover_picture
+        images = request.FILES.getlist('images')
+        oneshotimages = OneShotImages.objects.filter(oneshot=oneshot).order_by('no')
+        if request.POST.get('title') == oneshot.title:
+            post = request.POST.copy()
+            post['title']=''
+        oneshotform = EditOneShotForm(post,request.FILES or None)
+        if oneshotform.is_valid():
+            creator = Creator.objects.filter(user=request.user).first()
+            if(bleach.clean(oneshotform.cleaned_data['primary_Genre']) == 'Select' or  bleach.clean(oneshotform.cleaned_data['secondary_Genre']) == 'Select'):
+                print('invalid_genre', flush=True)
+                oneshotform = EditOneShotForm(request.POST,request.FILES or None)
+                return HttpResponse(template.render({'oneshotform': oneshotform, 'cover_picture': cover_picture, "oneshotimages": oneshotimages, 'success': False, 'invalid_genre': True}, request))
+            if oneshotform.cleaned_data['title'] != '': 
+                oneshot.title = oneshotform.cleaned_data['title']
+            if oneshotform.cleaned_data['cover_picture'] != None:
+                oneshot.cover_picture = oneshotform.cleaned_data['cover_picture']
+            oneshot.plot = bleach.clean(oneshotform.cleaned_data['plot'])
+            oneshot.primary_Genre = bleach.clean(oneshotform.cleaned_data['primary_Genre'])
+            oneshot.secondary_Genre = bleach.clean(oneshotform.cleaned_data['secondary_Genre'])
+           
+            oneshot.save()
+            if images:
+                no = 1
+                oneshotimages = OneShotImages.objects.filter(oneshot=oneshot).delete()
+                for image in images:
+                    print(image, flush=True)
+                    oneshotimage = OneShotImages.objects.create(oneshot=oneshot,image=image,no=no)
+                    no += 1
+
+            return HttpResponseRedirect('/accounts/upload')
+        else:
+            print('Form invalid', flush = True)
+            oneshotform = EditOneShotForm(request.POST,request.FILES or None)
+            return HttpResponse(template.render({'oneshotform': oneshotform, 'cover_picture': cover_picture, "oneshotimages": oneshotimages, 'success': False}, request))
 
 class BuyCoinsView(LoginRequiredMixin,TemplateView):
     template_name = 'accounts/buy_coins.html'

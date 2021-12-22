@@ -7,18 +7,18 @@
 <br />
 <div class="row signup-mask">
     <div class="col-lg-10 mx-auto">
-        <h2>Edit Manga Series</h2>
+        <h2>Edit One-Shot</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {% if form.non_field_errors %}
+            {% if oneshotform.non_field_errors %}
                 <div class="alert alert-danger" role="alert">
-                    {{ form.non_field_errors }}
+                    {{ oneshotform.non_field_errors }}
                 </div>
             {% endif %}
 
             <div class="control-group">
-                {% for field in form %}
-                    {% if form.cover_picture == field %}
+                {% for field in oneshotform %}
+                    {% if oneshotform.cover_picture == field %}
                         <div class="thumb_wrap">
                             <div class="title_wrap">
                                 <h4 class="publish_title">Cover Picture</h4>
@@ -44,7 +44,7 @@
                                 </span>
                             </p>
                         </div>
-                    {% elif form.primary_Genre == field %}
+                    {% elif oneshotform.primary_Genre == field %}
                         <div class="publish_form">
                             <h6 class="publish_title">Primary Genre</h6>
                             <div class="publish_form_select">
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>                  
-                    {% elif form.secondary_Genre == field %}
+                    {% elif oneshotform.secondary_Genre == field %}
                         <div class="publish_form2">
                             <h6 class="publish_title">Secondary Genre</h6>
                             <div class="publish_form_select">
@@ -71,13 +71,55 @@
                     <div id="text-input" class="form-group">
                         {{ field }}
                         {% for error in field.errors %}
-                            {% if error != 'Mangaseries with this Title already exists.' %}
+                            {% if error != 'One shot with this Title already exists.' %}
                                 <p class="help-block text-danger">{{ error }}</p>
                             {% endif %}
                         {% endfor %}
                     </div>
                     {% endif %}
                 {% endfor %}
+                <div class="thumb_wrap">
+                    <div class="title_wrap">
+                        <h4 class="publish_title">Upload One-Shot pages</h4>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="file-size-alert">
+                        <p class="alert-text"></p>
+                    </div>
+                    <div class="alert-danger" role="alert" id="image-count-alert">
+                        <p class="alert-text"></p>
+                    </div>
+                    <div id="mangapagesbrowsebutton" class="mangapagesbrowsebutton">
+                        <div class="mangapages-browse-box">
+                            <input name="images" type="file" multiple id="id_manga_pages" class="browse-file-input form-control" accept="image/*">
+                        </div>
+                        <div class="mangapages-browse-button mangapages-browse-applied" id="mangaPagesBrowseButton">
+                            <div class="after">
+                                <div class="manga-pages-box">
+                                    <i class="fa fa-arrow-circle-up"></i>
+                                    <p class="placeholder_message">
+                                        Select all images to upload
+                                        or drag the image files here.
+                                    </p>
+                                </div>   
+                                <i class="fa fa-arrow-circle-up"></i>
+                                <p class="placeholder_message">
+                                    Select all images to upload
+                                    or drag the image files here.
+                                </p>
+                                {% for oneshotimage in oneshotimages %}
+                                    <img class="uploaded-manga-pages" src={{oneshotimage.image.url}} alt="Warum?">
+                                {% endfor %} 
+                            </div>
+                        </div>
+                    </div>
+                    <p class="publish_thumb_info">
+                        <span class="text">
+                            For the best user experience and the best image resolution upload images with the format 450x720 px or higher with the same proportion. 
+                            You can upload up to 300 images with the total files size of 50MB. Make sure you order the pages by its name before uploading. 
+                            Also make sure, that the images are named with english letters.
+                        </span>
+                    </p>
+                </div>
             </div>
             <br />
             <br />

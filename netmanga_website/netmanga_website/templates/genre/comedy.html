@@ -6,26 +6,57 @@
 {% include 'genrenav.html' %}
 <div class="main-content">
     <div class="chart-view">
-        <div>
-            <section class="manga-section loaded">
-                <div class="manga-list">
-                    {% for manga in mangas %}
-                    <div class="manga-card">
-                        <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
-                            <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
-                        
-                            <div class="overlay">
-                                <!--<a href="" class="title">{{manga.manga.title}}</a>-->
-                                <h5  class="title">{{manga.manga.title}}</h5>
-                                <small>@{{manga.manga.creator.user.username}}</small>
-                            </div>
-                        
-                        </a>
+        <ul class="nav nav-tabs genre-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="mangaseries-tab" href="#mangaseries">Manga Series</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="oneshot-tab" href="#oneshot">One-Shots</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="mangaseries">
+                <section class="manga-section loaded">
+                    <div class="manga-list">
+                        {% for manga in mangas %}
+                        <div class="manga-card">
+                            <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
+                                <div class="background-color"></div>
+                                <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                            
+                                <div class="overlay">
+                                    <!--<a href="" class="title">{{manga.manga.title}}</a>-->
+                                    <h5  class="title">{{manga.manga.title}}</h5>
+                                    <small>@{{manga.manga.creator.user.username}}</small>
+                                </div>
+                            
+                            </a>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
-            </section>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="oneshot">
+                <section class="manga-section loaded">
+                    <div class="manga-list">
+                        {% for oneshot in oneshots %}
+                            <div class="manga-card">
+                                <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
+                                    <div class="background-color"></div>
+                                    <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                                
+                                    <div class="overlay">
+                                        <!--<a href="" class="title">{{manga.title}}</a>-->
+                                        <h5  class="title">{{oneshot.title}}</h5>
+                                        <small>@{{oneshot.creator.user.username}}</small>
+                                    </div>
+                                
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>

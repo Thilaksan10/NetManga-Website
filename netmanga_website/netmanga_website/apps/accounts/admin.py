@@ -1,19 +1,26 @@
 from django.contrib import admin
 
-from .models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Rating, Subscriber, Comment, CommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder, WithdrawOrder
+from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, Subscriber, ChapterComment, ChapterCommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder, WithdrawOrder, OneShot, OneShotImages, OneShotComment, OneShotCommentRating, OneShotRating, OneShotAward, ReportOneShot
 
 admin.site.register(Profile)
 admin.site.register(Creator)
-admin.site.register(Mangaseries)
+admin.site.register(MangaSeries)
 admin.site.register(Chapter)
-admin.site.register(Chapterimages)
-admin.site.register(Rating)
+admin.site.register(ChapterImages)
+admin.site.register(ChapterRating)
 admin.site.register(Subscriber)
-admin.site.register(Comment)
-admin.site.register(CommentRating)
+admin.site.register(ChapterComment)
+admin.site.register(ChapterCommentRating)
 admin.site.register(CoinOffer)
 admin.site.register(Award)
 admin.site.register(ChapterAward)
 admin.site.register(ReportChapter)
 admin.site.register(CoinPurchaseOrder)
 admin.site.register(WithdrawOrder)
+admin.site.register(OneShot)
+admin.site.register(OneShotImages)
+admin.site.register(OneShotRating)
+admin.site.register(OneShotComment)
+admin.site.register(OneShotCommentRating)
+admin.site.register(OneShotAward)
+admin.site.register(ReportOneShot)

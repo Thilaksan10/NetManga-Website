@@ -37,5 +37,6 @@ urlpatterns = [
 
     path('chapterlist/<str:pk>', views.chapterlist, name='chapterlist'),
     path('chapter_viewer/<str:pk>', views.chapter_viewer, name='chapter_viewer'),
+    path('oneshot_viewer/<str:pk>', views.oneshot_viewer, name='oneshot_viewer'),
     path('search',views.search, name='search'),
 ]

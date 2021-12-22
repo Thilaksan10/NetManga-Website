@@ -147,7 +147,7 @@ class Migration(migrations.Migration):
             name='Chapterimages',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(blank=True, max_length=1000, upload_to=netmanga_website.apps.accounts.models.get_image_filename)),
+                ('image', models.ImageField(blank=True, max_length=1000, upload_to=netmanga_website.apps.accounts.models.get_chapter_image_filename)),
                 ('no', models.IntegerField(null=True)),
                 ('views', models.IntegerField(default=0)),
                 ('chapter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.chapter')),

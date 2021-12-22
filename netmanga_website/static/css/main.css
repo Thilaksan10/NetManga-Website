@@ -123,6 +123,14 @@ textarea {
   border-top: 1px solid #e5e5e5;
 }
 
+.nav-tabs .nav-item .nav-link{
+  color: #ea0a8e;
+}
+
+.nav-tabs.genre-tabs {
+  margin-bottom: 50px;
+}
+
 .manga-data{
   display: grid;
   grid-template-columns: 100%;
@@ -990,7 +998,21 @@ a.btn.btn-subscribed {
   margin-top: 200px;
   position: relative;
   z-index: 60;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
+}
+
+.main-content.home-section {
+  margin-top: 100px;
+  position: relative;
+  z-index: 60;
+  margin-bottom: 100px;
+}
+
+.main-content.profile-section {
+  margin-top: 100px;
+  position: relative;
+  z-index: 60;
+  margin-bottom: 100px;
 }
 
 .chart-view div .section {

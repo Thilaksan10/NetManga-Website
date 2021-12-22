@@ -1,4 +1,4 @@
-from ..accounts.models import Profile, Creator, Mangaseries, Chapter, Chapterimages, Subscriber, Rating, Comment, CommentRating
+from ..accounts.models import Profile, Creator, MangaSeries, Chapter, ChapterImages, Subscriber, ChapterRating, ChapterComment, ChapterCommentRating
 
 class Tuple:
     def __init__(self,manga):
@@ -15,13 +15,13 @@ class Tuple:
             print('None')
 
 def sort_view():
-    mangaseries = Mangaseries.objects.all()
+    mangaseries = MangaSeries.objects.all()
     sorted_list = []
     for manga in mangaseries:
         chapters = Chapter.objects.filter(manga=manga)
         view_tuple = Tuple(manga)
         for chapter in chapters:
-            images = Chapterimages.objects.filter(chapter=chapter)
+            images = ChapterImages.objects.filter(chapter=chapter)
             view_tuple.add_views(calculate_views(chapter,images))
             
         sorted_list.append(view_tuple)
@@ -29,13 +29,13 @@ def sort_view():
     return sorted_list
 
 def sort_view_of_genre(genre):
-    mangaseries = Mangaseries.objects.filter(primary_Genre=genre) | Mangaseries.objects.filter(secondary_Genre=genre)
+    mangaseries = MangaSeries.objects.filter(primary_Genre=genre) | MangaSeries.objects.filter(secondary_Genre=genre)
     sorted_list = []
     for manga in mangaseries:
         chapters = Chapter.objects.filter(manga=manga)
         view_tuple = Tuple(manga)
         for chapter in chapters:
-            images = Chapterimages.objects.filter(chapter=chapter)
+            images = ChapterImages.objects.filter(chapter=chapter)
             view_tuple.add_views(calculate_views(chapter,images))
             
         sorted_list.append(view_tuple)

@@ -15,6 +15,7 @@
 </header>-->
 <!--Recommended Section-->
 {% url 'accounts:new_manga_form' as new_manga_form_url %}
+{% url 'accounts:new_oneshot_form' as new_oneshot_form_url %}
 <!--
 <div class="section">
     <div class="container">
@@ -54,67 +55,136 @@
 </div>
 -->
 
-<div class="chapterlist-content">
+<div class="chapterlist-content">       
     <div class="chapter-view">
-        <div>
-            <section class="section placeholder loading loaded">
-                <div class="manga-info upload-list">
-                    <h6 class="total-mangas" style="float: left;">{{manga_infos|length}} Manga{{manga_infos|length|pluralize:",s"}}</h6>
-                    <a href="{{ new_manga_form_url }}" class="btn btn-subscribe" style="float:right">
-                        <i class="fa fa-upload" style="font-size: 18px;"></i>
-                        New Manga 
-                    </a>
-                </div>
-                
-                <div class="chapterlist">
-                    {% for manga_info in manga_infos %}
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="mangaseries-tab" href="#mangaseries">Manga Series</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="oneshot-tab" href="#oneshot">One-Shots</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="mangaseries">
+                <section class="section placeholder loading loaded">
+                    <div class="manga-info upload-list">
+                        <h6 class="total-mangas" style="float: left;">{{manga_infos|length}} Manga{{manga_infos|length|pluralize:",s"}}</h6>
+                        <a href="{{new_manga_form_url}}" id="upload_manga" class="btn btn-subscribe" style="float:right">
+                            <i class="fa fa-upload" style="font-size: 18px;"></i>
+                            New Manga Series 
+                        </a>
+                    </div>
                     
-                    <div class="chapter-card">
+                    <div class="chapterlist">
+                        {% for manga_info in manga_infos %}
                         
-                        <div class="chapter-cover" rel="noopener noreferrer">
-                            <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
-                                <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}">
-                            </a>
-                        </div>
-                        <div class="manga-data">
-                            <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
-                                <div class="scroller vb vb-invisible">
-                                    <div class="scroller-wrap vb-content">
-                                        <div class="info">
-                                            <div class="chapter-info">
-                                                <div>
+                        <div class="chapter-card">
+                            
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
+                                    <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}">
+                                </a>
+                            </div>
+                            <div class="manga-data">
+                                <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
+                                    <div class="scroller vb vb-invisible">
+                                        <div class="scroller-wrap vb-content">
+                                            <div class="info">
+                                                <div class="chapter-info">
                                                     <div>
-                                                        <div class="manga-title">
-                                                            {{manga_info.manga.title}}
-                                                        </div>
-                                                        <div class="latest-chapter">
-                                                            <h6>{{manga_info.latest_chapter.no}} Chapter{{manga_info.latest_chapter.no|pluralize:",s"}}</h6>
-                                                            <h6>Latest upload on: {{manga_info.latest_chapter.published | date:"d.m.Y"}}</h6>
+                                                        <div>
+                                                            <div class="manga-title">
+                                                                {{manga_info.manga.title}}
+                                                            </div>
+                                                            <div class="latest-chapter">
+                                                                <h6>{{manga_info.latest_chapter.no}} Chapter{{manga_info.latest_chapter.no|pluralize:",s"}}</h6>
+                                                                <h6>Latest upload on: {{manga_info.latest_chapter.published | date:"d.m.Y"}}</h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div> 
-                            </a>
-                            <div class="card-footer">
-                                <div class="genres">
-                                    <div class="genre">{{manga_info.manga.primary_Genre}}</div>
-                                    {% if manga_info.manga.primary_Genre != manga_info.manga.secondary_Genre %}
-                                    <div class="genre">{{manga_info.manga.secondary_Genre}}</div>
-                                    {% endif %}
-                                </div>
-                                <a class="btn-edit-manga" href="{% url 'accounts:edit_manga_form' pk=manga_info.manga.pk %}">
-                                    <i class="fa fa-cog"></i>
+                                    </div> 
                                 </a>
+                                <div class="card-footer">
+                                    <div class="genres">
+                                        <div class="genre">{{manga_info.manga.primary_Genre}}</div>
+                                        {% if manga_info.manga.primary_Genre != manga_info.manga.secondary_Genre %}
+                                        <div class="genre">{{manga_info.manga.secondary_Genre}}</div>
+                                        {% endif %}
+                                    </div>
+                                    <a class="btn-edit-manga" href="{% url 'accounts:edit_manga_form' pk=manga_info.manga.pk %}">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <div class="tab-pane fade" id="oneshot">
+                <section class="section placeholder loading loaded">
+                    <div class="manga-info upload-list">
+                        <h6 class="total-mangas" style="float: left;">{{oneshots|length}} One-Shot{{oneshots|length|pluralize:",s"}}</h6>
+                        <a href="{{new_oneshot_form_url}}" id="upload_manga" class="btn btn-subscribe" style="float:right">
+                            <i class="fa fa-upload" style="font-size: 18px;"></i>
+                            New One-Shot
+                        </a>
                     </div>
                     
-                    {% endfor %}
-                </div>
-            </section>
+                    <div class="chapterlist">
+                        {% for oneshot in oneshots %}
+                        
+                        <div class="chapter-card">
+                            
+                            <div class="chapter-cover" rel="noopener noreferrer">
+                                <div style="text-decoration: none;">
+                                    <img class="chapter-image loaded" src="{{ oneshot.cover_picture.url }}">
+                                </div>
+                            </div>
+                            <div class="manga-data">
+                                <div style="text-decoration: none;">
+                                    <div class="scroller vb vb-invisible">
+                                        <div class="scroller-wrap vb-content">
+                                            <div class="info">
+                                                <div class="chapter-info">
+                                                    <div>
+                                                        <div>
+                                                            <div class="manga-title">
+                                                                {{oneshot.title}}
+                                                            </div>
+                                                            <div class="latest-chapter">
+                                                                <h6>Uploaded on: {{oneshot.published | date:"d.m.Y"}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="card-footer">
+                                    <div class="genres">
+                                        <div class="genre">{{oneshot.primary_Genre}}</div>
+                                        {% if oneshot.primary_Genre != oneshot.secondary_Genre %}
+                                        <div class="genre">{{oneshot.secondary_Genre}}</div>
+                                        {% endif %}
+                                    </div>
+                                    <a class="btn-edit-manga" href="{% url 'accounts:edit_oneshot_form' pk=oneshot.pk %}">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </div>
