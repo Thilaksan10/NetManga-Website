@@ -4,56 +4,8 @@
 {% block title %} Upload - NetManga {% endblock %}
 
 {% block content %}
-<!--
-<header class="masthead bg-primary text-white text-center">
-    <div class="container d-flex align-items-center flex-column">-->
-        <!-- Masthead Heading-->
-        <!--<h1 class="masthead-heading text-uppercase mb-0">PUBLISH YOUR MANGA</h1>-->
-        <!-- Masthead Subheading-->
-        <!--<p class="masthead-subheading font-weight-light mb-0">Be Creative</p>
-    </div>
-</header>-->
-<!--Recommended Section-->
 {% url 'accounts:new_manga_form' as new_manga_form_url %}
 {% url 'accounts:new_oneshot_form' as new_oneshot_form_url %}
-<!--
-<div class="section">
-    <div class="container">
-        <ul class="upload">
-            <li class="upload-item">
-                <div class="upload-item-img">
-                    <img src="/static/img/17350.jpg" width=95 height=136>
-                </div>
-                <div class="upload-item-title">
-                    <h4>Start a new Manga Series</h4>
-                    <p>Chapter 0</p>    
-                </div>
-                <div class="upload-item-link">
-                    <a href="{{ new_manga_form_url }}">
-                        <h1>+</h1>
-                    </a>
-                </div>
-            </li>
-            {% for manga in mangaseries %}
-            <li class="upload-item">
-                <div class="upload-item-img">
-                    <img src="{{ manga.cover_picture.url }}" width=95 height=136>
-                </div>
-                <div class="upload-item-title">
-                    <h4>{{ manga.title }}</h4>
-                    <p>Chapter 0</p>    
-                </div>
-                <div class="upload-item-link">
-                    <a href="{% url 'accounts:new_chapter_form' pk=manga.pk %}">
-                        <h1>+</h1>
-                    </a>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
--->
 
 <div class="chapterlist-content">       
     <div class="chapter-view">
@@ -83,7 +35,7 @@
                             
                             <div class="chapter-cover" rel="noopener noreferrer">
                                 <a href="{% url 'accounts:new_chapter_form' pk=manga_info.manga.pk %}" style="text-decoration: none;">
-                                    <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}">
+                                    <img class="chapter-image loaded" src="{{ manga_info.manga.cover_picture.url }}" alt="{{manga_info.manga-title}} Cover Picture">
                                 </a>
                             </div>
                             <div class="manga-data">
@@ -143,7 +95,7 @@
                             
                             <div class="chapter-cover" rel="noopener noreferrer">
                                 <div style="text-decoration: none;">
-                                    <img class="chapter-image loaded" src="{{ oneshot.cover_picture.url }}">
+                                    <img class="chapter-image loaded" src="{{ oneshot.cover_picture.url }}" alt="{{ oneshot.title }} Cover Picture">
                                 </div>
                             </div>
                             <div class="manga-data">

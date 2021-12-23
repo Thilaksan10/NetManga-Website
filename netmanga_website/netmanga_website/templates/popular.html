@@ -13,7 +13,7 @@
                     <div class="manga-card">
                         <a class="cover" rel="noopener noreferrer" href="{% url 'public:chapterlist' pk=manga.manga.pk %}">
                             <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}">
+                            <img class="manga-image loaded" src="{{manga.manga.cover_picture.url}}" alt="{{manga.manga.title}} Cover Picture">
                         
                             <div class="overlay">
                                 <!--<a href="" class="title">{{manga.title}}</a>-->
@@ -40,7 +40,7 @@
                     <div class="manga-card">
                         <a class="cover" rel="noopener noreferrer" href="{% url 'public:oneshot_viewer' pk=oneshot.pk %}">
                             <div class="background-color"></div>
-                            <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}">
+                            <img class="manga-image loaded" src="{{oneshot.cover_picture.url}}" alt="{{oneshot.title}} Cover Picture">
                         
                             <div class="overlay">
                                 <!--<a href="" class="title">{{manga.title}}</a>-->

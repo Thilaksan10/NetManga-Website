@@ -7,7 +7,7 @@
 <div class="coins-header-section">
     <div class="coins-header-section-info">
         <h1 class="coins-header-section-banner">
-            <img src="{% static 'img/NetManga_Coins_Banner.png' %}">
+            <img src="{% static 'img/NetManga_Coins_Banner.png' %}" alt="NetManga Coins Banner">
         </h1>
         <p class="coins-header-section-paragraph">
             Coins are a virtual good you can use to award chapters. Support NetManga and encourage your favorite Creators to keep making NetManga better.
@@ -25,7 +25,7 @@
         {% for award in awards %}
         <div class="coins-middle-section-awards-type">
             <div class="coins-middle-section-awards-type-img-box">
-                <img src="{{award.image.url}}">
+                <img src="{{award.image.url}}" alt="{{award.name}}">
             </div>
             <div class="coins-middle-section-awards-type-info">
                 <h3 class="coins-middle-section-awards-type-info-title">{{award.name}}</h3>
@@ -33,12 +33,12 @@
                     {% if award.fiat_reward > 0 and award.coins_reward > 0 %}
                     Shows a {{award.name}} on the chapter, gives the creator {{award.fiat_reward|floatformat:2}}€ and
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.coins_reward}}
                     </span>
                     Coins. You'll need 
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.price}}
                     </span>
                     Coins.
@@ -46,26 +46,26 @@
                     Shows a {{award.name}} on the chapter and gives the creator {{award.fiat_reward|floatformat:2}}€.
                     You'll need 
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.price}}
                     </span>
                     Coins.
                     {% elif award.fiat_reward == 0 and award.coins_reward > 0 %}
                     Shows a {{award.name}} on the chapter and gives the creator 
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.coins_reward}}
                     </span>
                     Coins. You'll need 
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.price}}
                     </span>
                     Coins.
                     {% else %}
                     Shows a {{award.name}} on the chapter. You'll need 
                     <span>
-                        <img src="{% static 'img/netmanga_coin.png' %}">
+                        <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                         {{award.price}}
                     </span>
                     Coins.
@@ -81,14 +81,14 @@
         {% for offer in coinoffers %}
         <a class="coinoffer-card" href="{% url 'accounts:buy_coins' pk=offer.pk %}">
             <div class="coinoffer-img-box">
-                <img src="{% static 'img/netmanga_badge.png' %}" alt="" class="coinoffer-img loaded">
+                <img src="{% static 'img/netmanga_badge.png' %}" alt="NetManga Badge" class="coinoffer-img loaded">
             </div>
             <div class="coinoffer-label-box">
                 <div class="coinoffer-hidden-box">
                     <div class="coinoffer-label-content-box">
                         <div class="coinoffer-label-body">
                             <h6 class="coinoffer-label-body-amount">
-                                <img src="{% static 'img/netmanga_coin.png' %}" alt="">
+                                <img src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin">
                                 {{offer.amount}} Coins
                             </h6>
                             {%if offer.bonus != 0 %}
@@ -146,7 +146,7 @@
 <div class="bg-payment-modal" >
     <div class="modal-payment-content">
         <div class="payment-info">
-            <img class="coin-img" src="{% static 'img/netmanga_coin.png' %}" width="20" height="20">
+            <img class="coin-img" src="{% static 'img/netmanga_coin.png' %}" alt="NetManga Coin" width="20" height="20">
             <div class="coins-amount-info">{{coinoffer.amount}} Coins</div>
             <div class="coins-user-info">You are purchasing Coins for the user, {{user.username}}</div>
             <div class="payment-close">+</div>
@@ -185,7 +185,7 @@
             <div class="payment-balance">
                 Coin balance: 
                 <span> 
-                    <img src="{% static 'img/netmanga_coin.png' %}" width="15" height="15" alt="">
+                    <img src="{% static 'img/netmanga_coin.png' %}" width="15" height="15" alt="NetManga Coin">
                 </span>
                 {{user.profile.coins}}
             </div>
