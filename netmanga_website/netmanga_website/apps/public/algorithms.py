@@ -83,7 +83,7 @@ def mergeSort_by_total_views(list):
             k+=1
 
 def printList(list):
-    for i in range(len(arr)):
+    for i in range(len(list)):
         print(list[i], end=" ", flush=True)
     print()  
 

@@ -16,3 +16,4 @@ boto3==1.17
 django-log-request-id==1.6.0
 django-csp==3.6
 django-permissions-policy==4.2
+fontawesome-free==5.15

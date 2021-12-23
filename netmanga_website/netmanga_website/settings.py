@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'netmanga_website.apps.help',
     'netmanga_website.apps.public',
     'storages',
+    'fontawesome-free'
 ]
 
 #Comment out 'whitenoise.middleware.WhiteNoiseMiddleware', during Development

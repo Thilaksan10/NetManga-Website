@@ -3317,9 +3317,61 @@ li.subscribe-button {
   border-top: 1px solid #e5e5e5;
 }
 
+.social-media-container{
+  display:flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.social-media-link-box {
+  flex: 0 1 35px;
+  margin: 0 0px 20px;
+}
+
 .social-media-link{
-  font-size: 35px;
+  font-size: 30px;
   padding-inline: 15px;
+}
+
+.fa-instagram{
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  -webkit-background-clip: text;
+          /* Also define standard property for compatibility */
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-instagram:hover{
+  /*background: radial-gradient(circle at 30% 107%, #285AEB 10%, #d6249f 40%, #fd5949 55%, #fdf497 95%, #fdf497 100%);*/
+  background: radial-gradient(circle at 30% 107%, #f0dc00 0%, #f0dc00 5%, #e71300 45%, #af0078 60%, #002aa7 90%);
+  -webkit-background-clip: text;
+          /* Also define standard property for compatibility */
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-twitter{
+  color: rgb(29, 155, 240);
+}
+
+.fa-twitter:hover{
+  color: rgb(0, 129, 194);
+}
+
+.fa-youtube{
+  color: #ff0000;
+}
+
+.fa-youtube:hover{
+  color: #d30101
+}
+
+.fa-tiktok{
+  color: #212121;
+}
+
+.fa-tiktok:hover{
+  color: #777777;
 }
 
 .footer-logo {
@@ -4976,6 +5028,10 @@ p a:hover {
 .withdraw-card .withdraw-status {
   padding-top: 17.5px;
   padding-left: 17.5px;
+}
+
+.withdraw-card .withdraw-status .fa-hourglass-half{
+  padding-left: 7px;
 }
 
 .withdraw-card .withdraw-info {
