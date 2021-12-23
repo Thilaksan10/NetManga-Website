@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} NETMANGA - {{manga.title}} {% endblock %}
+{% block title %} {{manga.title}} - NetManga {% endblock %}
 
 {% block content %}
 {% if request.user == manga.creator.user %}

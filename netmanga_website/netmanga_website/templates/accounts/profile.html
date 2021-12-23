@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Profile :: NETMANGA {% endblock %}
+{% block title %} {{profile.user.username}} - NetManga {% endblock %}
 
 {% block content %}
 {% url 'accounts:creator_terms' as creator_terms_url %}
