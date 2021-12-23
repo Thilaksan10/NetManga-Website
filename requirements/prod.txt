@@ -1,4 +1,4 @@
-Django==3.1.13
+Django==3.1.14
 wheel==0.36.2
 setuptools==53.0.0
 packaging==20.9
