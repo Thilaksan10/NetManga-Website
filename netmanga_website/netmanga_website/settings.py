@@ -69,7 +69,7 @@ if(DEV == False):
     #Comment out Redirect when working on heroku free dynos
     #Redirect
     #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    #SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = True
     PREPEND_WWW = True
 
     #Cookies
