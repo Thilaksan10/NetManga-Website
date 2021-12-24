@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from decimal import Decimal
+from django.urls import reverse
 
 from .choices import GENRE_CHOICES, STATUS_CHOICES
 
@@ -20,6 +21,9 @@ class Profile(models.Model):
     birth_date = models.DateField(blank=True, null=True)
     advertise = models.BooleanField(default=False)
     coins = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('accounts:show_profile', args=[self.id])
 
 @receiver(post_save,sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
@@ -51,6 +55,9 @@ class MangaSeries(models.Model):
     primary_Genre = models.CharField(max_length=18,choices=GENRE_CHOICES, blank=True, null=True)
     secondary_Genre = models.CharField(max_length=18,choices=GENRE_CHOICES, blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('public:chapterlist', args=[self.id])
+
 class Chapter(models.Model):
     manga = models.ForeignKey(MangaSeries, on_delete=models.CASCADE)
     
@@ -58,6 +65,9 @@ class Chapter(models.Model):
     title = models.CharField(max_length=100)
     no = models.IntegerField(null=True)
     views = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('public:chapter_viewer', args=[self.id])
 
 class Subscriber(models.Model):
     manga = models.ForeignKey(MangaSeries, on_delete=models.CASCADE)
@@ -104,6 +114,9 @@ class OneShot(models.Model):
     secondary_Genre = models.CharField(max_length=18,choices=GENRE_CHOICES, blank=True, null=True)
     published = models.DateField(default=timezone.now)
     views = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('public:oneshot_viewer', args=[self.id])
 
 def get_oneshot_image_filename(instance, filename):
     title = instance.oneshot.title

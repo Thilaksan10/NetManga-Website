@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'netmanga_website.apps.accounts',
     'netmanga_website.apps.help',
     'netmanga_website.apps.public',
     'storages',
     'fontawesome-free'
 ]
+
 
 #Comment out 'whitenoise.middleware.WhiteNoiseMiddleware', during Development
 MIDDLEWARE = [
