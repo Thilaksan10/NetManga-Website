@@ -18,7 +18,7 @@ import bleach
 
 from .forms import SignUpForm, LoginForm, CreatorForm, MangaForm, ChapterForm, EditProfileForm, EditMangaForm, WithdrawForm, OneShotForm, EditOneShotForm
 from django.contrib.auth.models import User
-from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder, OneShot, OneShotImages
+from .models import OneShotAward, Profile, Creator, MangaSeries, Chapter, ChapterImages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder, OneShot, OneShotImages
 
 
 
@@ -92,6 +92,7 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
         existing_creator = Creator.objects.filter(user=request.user).first()
         if existing_creator is not None:
             mangas = MangaSeries.objects.filter(creator=existing_creator)
+            oneshots = OneShot.objects.filter(creator=existing_creator)
             total_views = 0
             total_subscriptions = 0
             received_awards = 0
@@ -111,12 +112,15 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
                     received_awards += chapterawards
                     #print('Total Awards: ' + str(received_awards))
                     #print('Awards: ' + str(chapterawards), flush=True)
+            for oneshot in oneshots:
+                total_views += oneshot.views
+                received_awards += OneShotAward.objects.filter(oneshot = oneshot).count()
             days = []
             subscriptions = []
-            bronce_chapterawards = []
-            silver_chapterawards = []
-            gold_chapterawards = []
-            platinum_chapterawards = []
+            bronce_awards = []
+            silver_awards = []
+            gold_awards = []
+            platinum_awards = []
             revenue = []
             bronce_award = Award.objects.filter(name='Bronce Award').first()
             silver_award = Award.objects.filter(name='Silver Award').first()
@@ -125,28 +129,36 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
             for i in range(27):
                 days.insert(0,(date.today()-timedelta(days=i)).isoformat())
                 subscription = 0
-                bronce_chapteraward = 0
-                silver_chapteraward = 0
-                gold_chapteraward = 0
-                platinum_chapteraward = 0
+                bronce_manga_award = 0
+                silver_manga_award = 0
+                gold_manga_award = 0
+                platinum_manga_award = 0
                 for manga in mangas:
                     if i < 7:
                         chapters = Chapter.objects.filter(manga=manga)
                         
                         for chapter in chapters:
-                            bronce_chapteraward += ChapterAward.objects.filter(award=bronce_award,chapter=chapter,date=days[0]).count()
-                            silver_chapteraward += ChapterAward.objects.filter(award=silver_award,chapter=chapter,date=days[0]).count()
-                            gold_chapteraward += ChapterAward.objects.filter(award=gold_award,chapter=chapter,date=days[0]).count()
-                            platinum_chapteraward += ChapterAward.objects.filter(award=platinum_award,chapter=chapter,date=days[0]).count()
+                            bronce_manga_award += ChapterAward.objects.filter(award=bronce_award,chapter=chapter,date=days[0]).count()
+                            silver_manga_award += ChapterAward.objects.filter(award=silver_award,chapter=chapter,date=days[0]).count()
+                            gold_manga_award += ChapterAward.objects.filter(award=gold_award,chapter=chapter,date=days[0]).count()
+                            platinum_manga_award += ChapterAward.objects.filter(award=platinum_award,chapter=chapter,date=days[0]).count()
                     
                     subscription += Subscriber.objects.filter(manga=manga,date=days[0]).count()
                 subscriptions.insert(0,subscription)
+
+                for oneshot in oneshots:
+                    if i < 7:
+                        bronce_manga_award += OneShotAward.objects.filter(award=bronce_award,oneshot=oneshot,date=days[0]).count()
+                        silver_manga_award += OneShotAward.objects.filter(award=silver_award,oneshot=oneshot,date=days[0]).count()
+                        gold_manga_award += OneShotAward.objects.filter(award=gold_award,oneshot=oneshot,date=days[0]).count()
+                        platinum_manga_award += OneShotAward.objects.filter(award=platinum_award,oneshot=oneshot,date=days[0]).count()
+
                 if i<7:
-                    bronce_chapterawards.insert(0,bronce_chapteraward)
-                    silver_chapterawards.insert(0,silver_chapteraward)
-                    gold_chapterawards.insert(0,gold_chapteraward)
-                    platinum_chapterawards.insert(0,platinum_chapteraward)
-                    revenue.insert(0,bronce_chapterawards[0]*bronce_award.fiat_reward+silver_chapterawards[0]*silver_award.fiat_reward+gold_chapterawards[0]*gold_award.fiat_reward+platinum_chapterawards[0]*platinum_award.fiat_reward)
+                    bronce_awards.insert(0,bronce_manga_award)
+                    silver_awards.insert(0,silver_manga_award)
+                    gold_awards.insert(0,gold_manga_award)
+                    platinum_awards.insert(0,platinum_manga_award)
+                    revenue.insert(0,float(bronce_awards[0]*bronce_award.fiat_reward+silver_awards[0]*silver_award.fiat_reward+gold_awards[0]*gold_award.fiat_reward+platinum_awards[0]*platinum_award.fiat_reward))
 
                 
             daily_subscriptions_data = {
@@ -156,10 +168,10 @@ class AnalyticsView(LoginRequiredMixin,TemplateView):
             daily_awards_data = {
                 'labels':days[-7:],
                 'data': [{
-                    'bronce':bronce_chapterawards,
-                    'silver':silver_chapterawards,
-                    'gold':gold_chapterawards,
-                    'platinum':platinum_chapterawards
+                    'bronce':bronce_awards,
+                    'silver':silver_awards,
+                    'gold':gold_awards,
+                    'platinum':platinum_awards
                 }]
             }
             

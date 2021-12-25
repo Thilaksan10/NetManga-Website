@@ -370,7 +370,7 @@ def oneshot_viewer_post(request,oneshot):
                 oneshot_award.save()
                 request.user.profile.coins = user_balance
                 request.user.save() 
-                creator = oneshot.manga.creator
+                creator = oneshot.creator
                 creator.user.profile.coins += award.coins_reward
                 creator.user.profile.save()
                 money = creator.earned_money
