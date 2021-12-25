@@ -2,6 +2,7 @@ FROM python:3.9-alpine
 
 ENV PATH="/scripts:${PATH}"
 
+RUN /usr/local/bin/python -m pip install --upgrade pip
 COPY ./requirements/prod.txt /requirements/prod.txt
 RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
 RUN apk add python3-dev musl-dev postgresql-dev jpeg-dev zlib-dev libjpeg pcre pcre-dev

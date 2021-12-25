@@ -1,5 +1,5 @@
 Django==3.1.14
-wheel==0.36.2
+wheel==0.37.1
 setuptools==53.0.0
 packaging==20.9
 pyparsing==2.4.7
@@ -16,4 +16,5 @@ boto3==1.17
 django-log-request-id==1.6.0
 django-csp==3.6
 django-permissions-policy==4.2
-fontawesome-free==5.15
+fontawesome-free==5.15.4
+django-compressor==3.1

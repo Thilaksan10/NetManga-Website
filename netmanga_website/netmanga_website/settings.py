@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'netmanga_website.apps.help',
     'netmanga_website.apps.public',
     'storages',
-    'fontawesome-free'
+    'fontawesome-free',
+    'compressor'
 ]
 
 
@@ -64,7 +65,6 @@ MIDDLEWARE = [
     'django_permissions_policy.PermissionsPolicyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
 
 #Security
 if(DEV == False):
@@ -207,6 +207,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
 if(DEV == False):
     #S3 BUCKETS CONFIG
 
@@ -247,6 +253,18 @@ else:
 
     MEDIA_ROOT = '/vol/web/media'
 
+# Django Compressor Settings
+
+COMPRESS_ENABLED = DEV
+COMPRESS_FILTERS = {
+        "css": [
+            'compressor.filters.css_default.CssAbsoluteFilter',  
+            'compressor.filters.cssmin.CSSMinFilter',
+        ],
+        'js': [
+            'compressor.filters.jsmin.JSMinFilter',
+        ]
+}
 
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
