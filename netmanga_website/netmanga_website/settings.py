@@ -255,7 +255,7 @@ else:
 
 # Django Compressor Settings
 
-COMPRESS_ENABLED = DEV
+COMPRESS_ENABLED = 1
 COMPRESS_FILTERS = {
         "css": [
             'compressor.filters.css_default.CssAbsoluteFilter',  
