@@ -1,0 +1,14 @@
+User-Agent: *
+
+Disallow: /admin/
+Disallow: /analytics
+Disallow: /upload
+Disallow: /new_manga_form
+Disallow: /edit_manga_form/
+Disallow: /new_oneshot_form
+Disallow: /edit_onehot_form/
+Disallow: /new_chapter_form/
+Disallow: /edit_chapter_form/
+
+
+Sitemap: https://www.netmanga.com/sitemap.xml

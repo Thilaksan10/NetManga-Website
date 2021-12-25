@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
+from django.views.generic.base import TemplateView
 
 from . import views
 from .apps.accounts.forms import ResetPasswordForm, ChangePasswordForm
@@ -42,6 +43,7 @@ urlpatterns = [
     path('accounts/', include('netmanga_website.apps.accounts.urls')),
     path('help/', include('netmanga_website.apps.help.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 
     # Django reset Password
     path('reset_password', auth_views.PasswordResetView.as_view(form_class=ResetPasswordForm, template_name='accounts/password_reset.html'), name='reset_password'),
