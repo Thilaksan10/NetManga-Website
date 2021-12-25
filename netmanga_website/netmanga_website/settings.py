@@ -266,6 +266,9 @@ COMPRESS_FILTERS = {
         ]
 }
 
+COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
+COMPRESS_URL = STATIC_URL
+
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'public:index'
 LOGOUT_REDIRECT_URL = 'public:index'
