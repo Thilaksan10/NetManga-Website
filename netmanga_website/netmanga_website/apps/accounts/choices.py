@@ -21,5 +21,5 @@ GENRE_CHOICES = (
 STATUS_CHOICES = (
     ('Pending','Pending'),
     ('Failed','Failed'),
-    ('Succeded','Succeded')
+    ('Succeeded','Succeeded')
 )

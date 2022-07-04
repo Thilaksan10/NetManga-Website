@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Process Withdrawals - NetManga {% endblock %}
+
+{% block content %}
+    <div class="withdraw-order-section">
+        <div class="withdraw-order-list" style="display: block">
+            <ul class="nav nav-tabs genre-tabs" id="withdrawal-myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pending-tab" href="#pending">Pending</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="failed-tab" href="#failed">Failed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="succeeded-tab" href="#succeeded">Succeeded</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="withdrawal-myTabContent">
+                <div class="tab-pane fade show active" id="pending">
+                    {% if pending_order_infos %}
+                        {% for withdraw_order_info in pending_order_infos %}
+                            {% if withdraw_order_info.date %}
+                                <div class="withdrawal-dates">
+                                    <span>{{withdraw_order_info.order.date_time |date:'d.m.Y'}}</span>
+                                </div>
+                            {% endif %}
+                            <a class="withdraw-card" style="height:95px; margin-top:10px; margin-bottom:10px;" href="{% url 'staff:process_withdrawal' pk=withdraw_order_info.order.pk %}">
+                                <div class="withdraw-status" style="padding-top: 26px;">
+                                    <i class="fa fa-hourglass-half" style="color: rgb(255, 194, 27);"></i>
+                                </div>
+                                <div class="withdraw-info">
+                                    <p class="withdraw-receiver">
+                                        Creator: {{withdraw_order_info.order.creator}}
+                                    </p>
+                                    <p class="withdraw-receiver">
+                                        To: {{withdraw_order_info.order.paypal}}
+                                    </p>
+                                    <p class="order-time">
+                                        {{withdraw_order_info.order.date_time |date:'H:i'}}
+                                    </p>
+                                </div>
+                                <div class="withdraw-amount">
+                                    {{withdraw_order_info.order.amount}}€
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-withdrawals">
+                            <h1>No Orders</h1>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="failed">
+                    {% if failed_order_infos %}
+                        {% for withdraw_order_info in failed_order_infos %}
+                            {% if withdraw_order_info.date %}
+                                <div class="withdrawal-dates">
+                                    <span>{{withdraw_order_info.order.date_time |date:'d.m.Y'}}</span>
+                                </div>
+                            {% endif %}
+                            <a class="withdraw-card" style="height:95px; margin-top:10px; margin-bottom:10px;" href="{% url 'staff:process_withdrawal' pk=withdraw_order_info.order.pk %}">
+                                <div class="withdraw-status" style="padding-top: 26px;">
+                                    <i class="fa fa-times-circle" style="color: rgb(255, 27, 27);"></i>
+                                </div>
+                                <div class="withdraw-info">
+                                    <p class="withdraw-receiver">
+                                        Creator: {{withdraw_order_info.order.creator}}
+                                    </p>
+                                    <p class="withdraw-receiver">
+                                        To: {{withdraw_order_info.order.paypal}}
+                                    </p>
+                                    <p class="order-time">
+                                        {{withdraw_order_info.order.date_time |date:'H:i'}}
+                                    </p>
+                                </div>
+                                <div class="withdraw-amount">
+                                    {{withdraw_order_info.order.amount}}€
+                                </div>
+                            </a>  
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-withdrawals">
+                            <h1>No Orders</h1>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="tab-pane fade" id="succeeded">
+                    {% if succeeded_order_infos %}
+                        {% for withdraw_order_info in succeeded_order_infos %}
+                            {% if withdraw_order_info.date %}
+                                <div class="withdrawal-dates">
+                                    <span>{{withdraw_order_info.order.date_time |date:'d.m.Y'}}</span>
+                                </div>
+                            {% endif %}
+                            <a class="withdraw-card" style="height:95px; margin-top:10px; margin-bottom:10px;" href="{% url 'staff:process_withdrawal' pk=withdraw_order_info.order.pk %}">
+                                <div class="withdraw-status" style="padding-top: 25px;">
+                                    <i class="fa fa-check-circle" style="color: rgb(0, 212, 64);"></i>
+                                </div>
+                                <div class="withdraw-info">
+                                    <p class="withdraw-receiver">
+                                        Creator: {{withdraw_order_info.order.creator}}
+                                    </p>
+                                    <p class="withdraw-receiver">
+                                        To: {{withdraw_order_info.order.paypal}}
+                                    </p>
+                                    <p class="order-time">
+                                        {{withdraw_order_info.order.date_time |date:'H:i'}}
+                                    </p>
+                                </div>
+                                <div class="withdraw-amount">
+                                    {{withdraw_order_info.order.amount}}€
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-withdrawals">
+                            <h1>No Orders</h1>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if withdraw_order %}
+    <div class="bg-modal" style="display:flex;">
+        <div class="modal-content withdraw">
+            <div class="close">+</div>
+            <div class="withdrawal-info">
+                <div>ID: {{withdraw_order.pk}}</div>
+                <div>Date: {{withdraw_order.date_time |date:'d.m.Y H:i'}}</div>
+                <div>Creator: {{withdraw_order.creator}}</div>
+                <div>First name: {{withdraw_order.creator.first_name}}</div>
+                <div>Last name: {{withdraw_order.creator.last_name}}</div>
+                <div>Creator E-mail: {{withdraw_order.creator.email}}</div>
+                <div>To: {{withdraw_order.paypal}}</div>
+                <div>{{withdraw_order.amount}}€</div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

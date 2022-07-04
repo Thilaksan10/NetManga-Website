@@ -433,11 +433,45 @@ if(action_mangaseries_tab && action_oneshot_tab){
     });
 }
 
+var pending_tab = document.getElementById('pending-tab')
+var failed_tab = document.getElementById('failed-tab')
+var succeeded_tab = document.getElementById('succeeded-tab')
+var pending_view = document.getElementById('pending')
+var failed_view = document.getElementById('failed')
+var succeeded_view = document.getElementById('succeeded')
+
+if(pending_tab && failed_tab && succeeded_tab){
+    pending_tab.addEventListener('click',function(){
+        pending_tab.className = "nav-link active"
+        pending_view.className = "tab-pane fade show active"
+        failed_tab.className = "nav-link"
+        failed_view.className = "tab-pane fade"
+        succeeded_tab.className = "nav-link"
+        succeeded_view.className = "tab-pane fade"
+    });
+    failed_tab.addEventListener('click',function(){
+        pending_tab.className = "nav-link"
+        pending_view.className = "tab-pane fade"
+        failed_tab.className = "nav-link active"
+        failed_view.className = "tab-pane fade show active"
+        succeeded_tab.className = "nav-link"
+        succeeded_view.className = "tab-pane fade"
+    });
+    succeeded_tab.addEventListener('click',function(){
+        pending_tab.className = "nav-link"
+        pending_view.className = "tab-pane fade"
+        failed_tab.className = "nav-link"
+        failed_view.className = "tab-pane fade"
+        succeeded_tab.className = "nav-link active"
+        succeeded_view.className = "tab-pane fade show active"
+    });
+}
+
 
 function hover(element1, element2, className){
     element1.addEventListener('mouseenter', e => element2.classList.add(className))
     element1.addEventListener('mouseleave', e => element2.classList.remove(className))
-  }
+}
 
 var coverPictureBrowseButton = document.getElementById('coverPictureBrowseButton')
 var coverPicture = document.getElementById('id_cover_picture')

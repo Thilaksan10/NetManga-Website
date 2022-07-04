@@ -42,6 +42,7 @@ urlpatterns = [
     path('', include('netmanga_website.apps.public.urls')),
     path('accounts/', include('netmanga_website.apps.accounts.urls')),
     path('help/', include('netmanga_website.apps.help.urls')),
+    path('staff/', include('netmanga_website.apps.staff.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
     path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 

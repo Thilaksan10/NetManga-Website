@@ -15,8 +15,7 @@ def help(request):
             form = ContactForm(initial={"username": request.user.username, "email": request.user.email})
         else:
             form = ContactForm()
-            #TODO Autofill Username and Email of logged in User in help
-            return HttpResponse(template.render({'form': form}, request))
+        return HttpResponse(template.render({'form': form}, request))
     elif request.method == 'POST':
         form = ContactForm(request.POST)
 

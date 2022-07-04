@@ -690,7 +690,6 @@ def log_in(request):
 
                 template = loader.get_template('accounts/login.html')
                 return HttpResponse(template.render({'form': form}, request))
-
     else: 
         raise NotImplementedError
     
