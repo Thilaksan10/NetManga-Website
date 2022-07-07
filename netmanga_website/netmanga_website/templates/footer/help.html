@@ -15,7 +15,7 @@
         {% endif %}
 
         <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-        <form id="contactForm" name="sentMessage" novalidate="novalidate" method="post">
+        <form id="contactForm" method="post">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
@@ -31,7 +31,7 @@
                     {% if user.is_authenticated %}
                         {{ field }}
                     {% else %}
-                    {{ field }}
+                        {{ field }}
                     {% endif %}
                     {% for error in field.errors %}
                     <p class="help-block text-danger">{{ error }}</p>

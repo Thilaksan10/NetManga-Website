@@ -1,9 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
-from django.contrib.auth.models import User
 from django.db.models import fields
 
-from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, WithdrawOrder, OneShot
+from .models import User, Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, WithdrawOrder, OneShot
 from .choices import GENRE_CHOICES
 
 class SignUpForm(UserCreationForm):

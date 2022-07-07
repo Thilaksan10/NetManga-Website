@@ -1,14 +1,18 @@
 from django.forms.widgets import NullBooleanSelect
+from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django import template
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, tokens
 from django.urls import reverse
 from django.forms import modelformset_factory
 from .algorithms import *
 from django.core import serializers
+from django.core.mail import send_mail, BadHeaderError
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.utils.html import strip_tags
 from datetime import date, timedelta
 from decimal import Decimal
 import datetime
@@ -16,9 +20,9 @@ import datetime
 import json
 import bleach
 
-from .forms import SignUpForm, LoginForm, CreatorForm, MangaForm, ChapterForm, EditProfileForm, EditMangaForm, WithdrawForm, OneShotForm, EditOneShotForm
-from django.contrib.auth.models import User
-from .models import OneShotAward, Profile, Creator, MangaSeries, Chapter, ChapterImages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder, OneShot, OneShotImages
+from .forms import SignUpForm, LoginForm, CreatorForm, MangaForm, ChapterForm, EditProfileForm, EditMangaForm, WithdrawForm, OneShotForm, EditOneShotForm, ResetPasswordForm
+
+from .models import User, OneShotAward, Profile, Creator, MangaSeries, Chapter, ChapterImages, CoinOffer, Award, CoinPurchaseOrder, ChapterAward, Subscriber, WithdrawOrder, OneShot, OneShotImages
 
 
 
@@ -695,3 +699,42 @@ def log_in(request):
     
     template = loader.get_template('accounts/login.html')
     return HttpResponse(template.render({'form': form, 'success': True}, request))
+
+def reset_password_request(request):
+    # render_to_string() -> loader.render_to_string()
+    # default_token_generator -> tokens.default_token_generator()
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User.objects.filter(email=email).first()
+            print(user, flush=True)
+            print(request.is_secure(), flush=True)
+            if user:
+                subject = 'Reset Password NetManga'
+                email_template_name = 'accounts/reset_password_mail.html'
+                if request.is_secure():
+                    protocol = 'https'
+                else:
+                    protocol = 'http'
+                parameters = {
+                    'email' : email,
+                    'user' : user,
+                    'domain' : f'{request.get_host()}',
+                    'site_name' : 'NetManga',
+                    'uid' : urlsafe_base64_encode((force_bytes(user.pk))),
+                    'token' : tokens.default_token_generator.make_token(user),
+                    'protocol' : protocol,
+                }
+                message = loader.render_to_string(email_template_name, parameters)
+                html_message = strip_tags(message)
+                try:
+                    send_mail(subject, html_message, '', [email], html_message=message, fail_silently=False)
+                except:
+                    return HttpResponse('Invalid Header')
+                return redirect('password_reset_done')
+
+    else:
+        form = ResetPasswordForm()
+    template = loader.get_template('accounts/password_reset.html')
+    return HttpResponse(template.render({'form': form}, request))

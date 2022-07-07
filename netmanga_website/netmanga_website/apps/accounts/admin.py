@@ -1,7 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as AbstractUserAdmin
 
-from .models import Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, Subscriber, ChapterComment, ChapterCommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder, WithdrawOrder, OneShot, OneShotImages, OneShotComment, OneShotCommentRating, OneShotRating, OneShotAward, ReportOneShot
+from .models import User, Profile, Creator, MangaSeries, Chapter, ChapterImages, ChapterRating, Subscriber, ChapterComment, ChapterCommentRating, CoinOffer, Award, ChapterAward, ReportChapter, CoinPurchaseOrder, WithdrawOrder, OneShot, OneShotImages, OneShotComment, OneShotCommentRating, OneShotRating, OneShotAward, ReportOneShot
 
+class UserAdmin(AbstractUserAdmin):
+    model = User
+
+admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 admin.site.register(Creator)
 admin.site.register(MangaSeries)

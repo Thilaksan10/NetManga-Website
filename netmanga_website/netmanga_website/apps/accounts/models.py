@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
@@ -10,6 +10,11 @@ from django.urls import reverse
 from .choices import GENRE_CHOICES, STATUS_CHOICES
 
 # Create your models here.
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    class Meta:
+        db_table = 'auth_user'
+
 class Profile(models.Model):
     #owner
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

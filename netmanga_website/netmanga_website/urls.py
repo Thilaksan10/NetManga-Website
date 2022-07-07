@@ -26,6 +26,7 @@ from .apps.accounts.forms import ResetPasswordForm, ChangePasswordForm
 from .apps.public.sitemaps import StaticViewSitemap
 from .apps.accounts.sitemaps import MangaSeriesSitemap, OneshotSitemap, ChapterSitemap, ProfileSitemap
 from .apps.help.sitemaps import HelpViewSitemap
+from .apps.accounts.views import reset_password_request
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -47,7 +48,8 @@ urlpatterns = [
     path("robots.txt",TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 
     # Django reset Password
-    path('reset_password', auth_views.PasswordResetView.as_view(form_class=ResetPasswordForm, template_name='accounts/password_reset.html'), name='reset_password'),
+    path('reset_password', reset_password_request, name='reset_password'),
+    # path('reset_password', auth_views.PasswordResetView.as_view(form_class=ResetPasswordForm, template_name='accounts/password_reset.html'), name='reset_password'),
     path('reset_password_done', auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(form_class=ChangePasswordForm, template_name='accounts/password_reset_confirm.html'), name='password_reset_confirm'),
     path('reset/done', auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'), name='password_reset_complete'),
