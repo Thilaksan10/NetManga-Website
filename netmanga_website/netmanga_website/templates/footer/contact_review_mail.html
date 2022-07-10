@@ -1,109 +1,184 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <style type="text/css">
-    body, p, div {
-      font-family: arial,helvetica,sans-serif;
-      font-size: 14px;
-    }
-    body {
-      color: #000000;
-    }
-    body a {
-      color: #1188E6;
-      text-decoration: none;
-    }
-    p { margin: 0; padding: 0; }
-    table.wrapper {
-      width:100% !important;
-      table-layout: fixed;
-      -webkit-font-smoothing: antialiased;
-      -webkit-text-size-adjust: 100%;
-      -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-    img.max-width {
-      max-width: 100% !important;
-    }
-    .column.of-2 {
-      width: 50%;
-    }
-    .column.of-3 {
-      width: 33.333%;
-    }
-    .column.of-4 {
-      width: 25%;
-    }
-    ul ul ul ul  {
-      list-style-type: disc !important;
-    }
-    ol ol {
-      list-style-type: lower-roman !important;
-    }
-    ol ol ol {
-      list-style-type: lower-latin !important;
-    }
-    ol ol ol ol {
-      list-style-type: decimal !important;
-    }
-    @media screen and (max-width:480px) {
-      .preheader .rightColumnContent,
-      .footer .rightColumnContent {
-        text-align: left !important;
+      body, p, div {
+        font-family: arial,helvetica,sans-serif;
+        font-size: 14px;
       }
-      .preheader .rightColumnContent div,
-      .preheader .rightColumnContent span,
-      .footer .rightColumnContent div,
-      .footer .rightColumnContent span {
-        text-align: left !important;
+      body {
+        color: #000000;
       }
-      .preheader .rightColumnContent,
-      .preheader .leftColumnContent {
-        font-size: 80% !important;
-        padding: 5px 0;
+      body a {
+        color: #1188E6;
+        text-decoration: none;
       }
-      table.wrapper-mobile {
-        width: 100% !important;
+      p { margin: 0; padding: 0; }
+      table.wrapper {
+        width:100% !important;
         table-layout: fixed;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
       }
       img.max-width {
-        height: auto !important;
         max-width: 100% !important;
       }
-      a.bulletproof-button {
-        display: block !important;
-        width: auto !important;
-        font-size: 80%;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+      .column.of-2 {
+        width: 50%;
       }
-      .columns {
-        width: 100% !important;
+      .column.of-3 {
+        width: 33.333%;
       }
-      .column {
-        display: block !important;
-        width: 100% !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+      .column.of-4 {
+        width: 25%;
       }
-      .social-icon-column {
-        display: inline-block !important;
+      ul ul ul ul  {
+        list-style-type: disc !important;
       }
-    }
-  </style>
-  <style>
-    @media screen and (max-width:480px) {
-      table\0 {
-        width: 480px !important;
+      ol ol {
+        list-style-type: lower-roman !important;
+      }
+      ol ol ol {
+        list-style-type: lower-latin !important;
+      }
+      ol ol ol ol {
+        list-style-type: decimal !important;
+      }
+      @media screen and (max-width:480px) {
+        .preheader .rightColumnContent,
+        .footer .rightColumnContent {
+          text-align: left !important;
         }
-    }
-  </style>
+        .preheader .rightColumnContent div,
+        .preheader .rightColumnContent span,
+        .footer .rightColumnContent div,
+        .footer .rightColumnContent span {
+          text-align: left !important;
+        }
+        .preheader .rightColumnContent,
+        .preheader .leftColumnContent {
+          font-size: 80% !important;
+          padding: 5px 0;
+        }
+        table.wrapper-mobile {
+          width: 100% !important;
+          table-layout: fixed;
+        }
+        img.max-width {
+          height: auto !important;
+          max-width: 100% !important;
+        }
+        a.bulletproof-button {
+          display: block !important;
+          width: auto !important;
+          font-size: 80%;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+        .columns {
+          width: 100% !important;
+        }
+        .column {
+          display: block !important;
+          width: 100% !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+        .social-icon-column {
+          display: inline-block !important;
+        }
+      }
+      
+      i {
+        font-size: 25px;
+        font-style: normal;
+      }
+      .social-media-container{
+        display:flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .social-media-link-box {
+        flex: 0 1 35px;
+        margin: 0 0px 20px;
+      }
+
+      .social-media-link{
+        font-size: 30px;
+        padding-inline: 15px;
+      }
+
+      .fa-facebook{
+        color: rgb(66, 103, 178);
+      }
+
+      .fa-facebook:hover{
+        color: rgb(40, 73, 140);
+      }
+
+      .fa-instagram{
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        -webkit-background-clip: text;
+                /* Also define standard property for compatibility */
+                background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .fa-instagram:hover{
+        /*background: radial-gradient(circle at 30% 107%, #285AEB 10%, #d6249f 40%, #fd5949 55%, #fdf497 95%, #fdf497 100%);*/
+        background: radial-gradient(circle at 30% 107%, #f0dc00 0%, #f0dc00 5%, #e71300 45%, #af0078 60%, #002aa7 90%);
+        -webkit-background-clip: text;
+                /* Also define standard property for compatibility */
+                background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .fa-twitter{
+        color: rgb(29, 155, 240);
+      }
+
+      .fa-twitter:hover{
+        color: rgb(0, 129, 194);
+      }
+
+      .fa-youtube{
+        color: #ff0000;
+      }
+
+      .fa-youtube:hover{
+        color: #d30101
+      }
+
+      .fa-tiktok{
+        color: #212121;
+      }
+
+      .fa-tiktok:hover{
+        color: #777777;
+      }
+    </style>
+    <style>
+      @media screen and (max-width:480px) {
+        table\0 {
+          width: 480px !important;
+          }
+      }
+    </style>
     <!--user entered Head Start--><!--End Head user entered-->
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/brands.min.css" integrity="sha512-OivR4OdSsE1onDm/i3J3Hpsm5GmOVvr9r49K3jJ0dnsxVzZgaOJ5MfxEAxCyGrzWozL9uJGKz6un3A7L+redIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <!--JavaScript| Seperate Popper and Bootstrap JS-->
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
     <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
@@ -143,61 +218,63 @@
                                   </tbody>
                                 </table>
                                 
-                                <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="755695de-d74b-4085-a659-aad1adc6f150" data-mc-module-version="2019-10-22">
-                                  <tbody>
-                                    <tr>
-                                      <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                        <div>
-                                          <div style="font-family: inherit; text-align: inherit">
-                                            <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
-                                              Thank you for submitting following issue. 
-                                            </span> 
-                                            <br>
-                                            <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
-                                              "{{issue.message}}"
-                                            </span> 
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
-                                             Your issue is processed under following id: {{ issue.id }}
-                                            </span> 
-                                            <br>
-                                            
-                                            <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255)">
-                                              We are currently reviewing your issue and trying to resolve it as fast as we can. We are sorry for the inconvinience.
-                                            </span>
-                                            &nbsp;
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                                
-                                <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="44e7233e-d758-4c7d-82e5-eafe409285b9" data-mc-module-version="2019-10-22">
-                                  <tbody>
-                                    <tr>
-                                      <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                        <div>
-                                          <div style="font-family: inherit; text-align: inherit">
-                                            <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
-                                              Thanks for using our site!
-                                            </span>
-                                            <br>
-                                            <br>
-                                            <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
-                                              Sincerely,
-                                            </span>
-                                            <br>
-                                            <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
-                                              The NetManga Team
-                                            </span> 
+                                <div style="border: 1px solid rgb(228, 228, 228); border-radius: 5px; padding: 0px 17px; margin-top: 10px;">
+                                  <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="755695de-d74b-4085-a659-aad1adc6f150" data-mc-module-version="2019-10-22">
+                                    <tbody>
+                                      <tr>
+                                        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+                                          <div>
+                                            <div style="font-family: inherit; text-align: inherit">
+                                              <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
+                                                Thank you for submitting following issue. 
+                                              </span> 
+                                              <br>
+                                              <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
+                                                "{{issue.message}}"
+                                              </span> 
+                                              <br>
+                                              <br>
+                                              <br>
+                                              <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255); float: none; display: inline">
+                                              Your issue is processed under following id: {{ issue.id }}
+                                              </span> 
+                                              <br>
+                                              
+                                              <span style="box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: initial; border-image-source: initial; border-image-slice: initial; border-image-width: initial; border-image-outset: initial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; color: #222222; white-space: normal; background-color: rgb(255, 255, 255)">
+                                                We are currently reviewing your issue and trying to resolve it as fast as we can. We are sorry for the inconvinience.
+                                              </span>
+                                              &nbsp;
                                           </div>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                  <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="44e7233e-d758-4c7d-82e5-eafe409285b9" data-mc-module-version="2019-10-22">
+                                    <tbody>
+                                      <tr>
+                                        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+                                          <div>
+                                            <div style="font-family: inherit; text-align: inherit">
+                                              <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
+                                                Thanks for using our site!
+                                              </span>
+                                              <br>
+                                              <br>
+                                              <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
+                                                Sincerely,
+                                              </span>
+                                              <br>
+                                              <span style="color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline">
+                                                The NetManga Team
+                                              </span> 
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
                                 
                                 <table class="module" role="module" data-type="spacer" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="9f1d62ab-4d06-4774-a5c4-762639a4bce7">
                                   <tbody>
@@ -232,28 +309,73 @@
                                 <table class="module" role="module" data-type="social" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="0d4b1411-504c-4ea4-b81b-6c85132ecbac">
                                   <tbody>
                                     <tr>
-                                      <td valign="top" style="padding:0px 0px 0px 0px; font-size:6px; line-height:10px; background-color:#fcfcfc;" align="center">
+                                      <td valign="top" style="padding:0px 0px 0px 0px; font-size:6px; line-height:10px;" align="center">
                                         <table align="center" style="-webkit-margin-start:auto;-webkit-margin-end:auto;">
                                           <tbody>
                                             <tr align="center">
                                               <td style="padding: 0px 5px;" class="social-icon-column">
-                                                <a role="social-icon-link" href="https://www.facebook.com/netmangaofficial/" target="_blank" alt="Facebook" title="Facebook" style="display:inline-block; background-color:#3B579D; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
-                                                  <img role="social-icon" alt="Facebook" title="Facebook" src="https://mc.sendgrid.com/assets/social/white/facebook.png" style="height:24px; width:24px;" height="24" width="24">
+                                                <a role="social-icon-link" href="https://www.facebook.com/netmangaofficial/" target="_blank" alt="Facebook" title="Facebook" style="display:inline-block; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
+                                                  <img role="social-icon" alt="Facebook" title="Facebook" src="http://cdn.mcauto-images-production.sendgrid.net/3db62350e9d08e86/ec525ab7-4ac8-4795-a298-0eafc3725a27/474x474.png" style="height:24px; width:24px;" height="24" width="24">
                                                 </a>
                                               </td>
+
                                               <td style="padding: 0px 5px;" class="social-icon-column">
-                                                <a role="social-icon-link" href="https://twitter.com/netmangaoffic" target="_blank" alt="Twitter" title="Twitter" style="display:inline-block; background-color:#7AC4F7; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
-                                                  <img role="social-icon" alt="Twitter" title="Twitter" src="https://mc.sendgrid.com/assets/social/white/twitter.png" style="height:24px; width:24px;" height="24" width="24">
+                                                <a role="social-icon-link" href="https://www.instagram.com/netmangaofficial/" target="_blank" alt="Instagram" title="Instagram" style="display:inline-block; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
+                                                  <img role="social-icon" alt="Instagram" title="Instagram" src="http://cdn.mcauto-images-production.sendgrid.net/3db62350e9d08e86/2aed87dd-37c2-4416-80d2-b98bbd704f84/2880x2874.png" style="height:21px; width:21px;" height="21" width="21">
                                                 </a>
                                               </td>
+
                                               <td style="padding: 0px 5px;" class="social-icon-column">
-                                                <a role="social-icon-link" href="https://www.instagram.com/netmangaofficial/" target="_blank" alt="Instagram" title="Instagram" style="display:inline-block; background-color:#7F4B30; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
-                                                  <img role="social-icon" alt="Instagram" title="Instagram" src="https://mc.sendgrid.com/assets/social/white/instagram.png" style="height:24px; width:24px;" height="24" width="24">
+                                                <a role="social-icon-link" href="https://twitter.com/netmangaoffic" target="_blank" alt="Twitter" title="Twitter" style="display:inline-block; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
+                                                  <img role="social-icon" alt="Twitter" title="Twitter" src="http://cdn.mcauto-images-production.sendgrid.net/3db62350e9d08e86/750f3bf6-8cb6-410f-8af6-39a54ba715f3/1350x1200.png" style="height:24px; width:24px;" height="24" width="24">
+                                                </a>
+                                              </td>
+                                              
+                                              <td style="padding: 0px 2px;" class="social-icon-column">
+                                                <a role="social-icon-link" href="https://www.youtube.com/channel/UCZYp6NMYo9WJxB5fpd4K0sw" target="_blank" alt="YouTube" title="YouTube style="display:inline-block; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
+                                                  <img role="social-icon" alt="YouTube" title="YouTube" src="http://cdn.mcauto-images-production.sendgrid.net/3db62350e9d08e86/089ee9a8-aa0b-4e81-b3ca-4b670cc2ba51/1600x1600.png" style="height:28px; width:28px;" height="28" width="28">
+                                                </a>
+                                              </td>
+
+                                              <td style="padding: 0px 5px;" class="social-icon-column">
+                                                <a role="social-icon-link" href="https://www.tiktok.com/@netmanga" target="_blank" alt="TikTok" title="TikTok" style="display:inline-block; height:24px; width:24px; border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;">
+                                                  <img role="social-icon" alt="TikTok" title="TikTok" src="http://cdn.mcauto-images-production.sendgrid.net/3db62350e9d08e86/df036c6b-e7e4-4b1a-ae1a-a739c2239e4c/474x474.png" style="height:20px; width:20px;" height="20" width="20">
                                                 </a>
                                               </td>
                                             </tr>
                                           </tbody>
                                         </table>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;" align="center">
+                                  <tbody>
+                                    <tr>
+                                      <td role="modules-container" style="padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor="#FFFFFF" width="100%" align="left">
+                                        <table class="module preheader preheader-hide" role="module" data-type="preheader" border="0" cellpadding="0" cellspacing="0" width="100%" style="display: none !important; mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">
+                                          <tbody>
+                                            <tr>
+                                              <td role="module-content">
+                                                <p></p>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <div data-role="module-unsubscribe" class="module" role="module" data-type="unsubscribe" style="color:#444444; font-size:12px; line-height:20px; padding:16px 16px 16px 16px; text-align:Center;" data-muid="4e838cf3-9892-4a6d-94d6-170e474d21e5">
+                                          <div class="Unsubscribe--addressLine">
+                                            <p class="Unsubscribe--senderName" style="font-size:12px; line-height:20px;">&#169; NetManga Gmbh</p>
+                                            <p style="font-size:12px; line-height:20px;">
+                                              <span class="Unsubscribe--senderAddress">Brückstraße 37</span>
+                                              , 
+                                              <span class="Unsubscribe--senderCity">Dortmund</span>
+                                              , 
+                                              <span class="Unsubscribe--senderState">North Rhine Westphalia</span> 
+                                              <span class="Unsubscribe--senderZip">44135</span>
+                                            </p>
+                                          </div>
+                                        </div>
                                       </td>
                                     </tr>
                                   </tbody>

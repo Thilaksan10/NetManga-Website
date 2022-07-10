@@ -3333,6 +3333,14 @@ li.subscribe-button {
   padding-inline: 15px;
 }
 
+.fa-facebook{
+  color: rgb(66, 103, 178);
+}
+
+.fa-facebook:hover{
+  color: rgb(40, 73, 140);
+}
+
 .fa-instagram{
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
   -webkit-background-clip: text;
