@@ -2974,6 +2974,11 @@ li.subscribe-button {
   float: right;
 }
 
+#comment a {
+  margin-top: 10px;
+  float: right;
+}
+
 .username {
   margin-left: 20px;
   padding-top: 15px;

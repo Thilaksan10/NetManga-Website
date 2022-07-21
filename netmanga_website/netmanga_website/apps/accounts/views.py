@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from django.forms.widgets import NullBooleanSelect
 from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
@@ -10,8 +11,8 @@ from django.forms import modelformset_factory
 from .algorithms import *
 from django.core import serializers
 from django.core.mail import send_mail, BadHeaderError
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.html import strip_tags
 from datetime import date, timedelta
 from decimal import Decimal
@@ -662,18 +663,61 @@ def sign_up(request):
             #print(user.profile.birth_date, flush=True)
             user.profile.birth_date = form.cleaned_data['birth_date']
             user.profile.advertise = form.cleaned_data['advertise_consent']
+            user.is_active = False
+            print(user.is_active, flush=True)
             #user.profile.third_party_advertise = form.cleaned_data['third_party_advertise_consent']
             #user.profile.analytics = form.cleaned_data['analytics_consent']
             user.save()
-            password = form.cleaned_data['password1']
-            user = authenticate(username=user.username, password=password)
-            login(request, user)
-            return HttpResponseRedirect('/')
+            # password = form.cleaned_data['password1']
+            # user = authenticate(username=user.username, password=password)
+            # login(request, user)
+            subject = 'Activate NetManga Account'
+            email_template_name = 'accounts/activate_account_mail.html'
+            if request.is_secure():
+                protocol = 'https'
+            else:
+                protocol = 'http'
+            parameters = {
+                'email' : user.email,
+                'user' : user,
+                'domain' : f'{request.get_host()}',
+                'site_name' : 'NetManga',
+                'uid' : urlsafe_base64_encode((force_bytes(user.pk))),
+                'token' : tokens.default_token_generator.make_token(user),
+                'protocol' : protocol,
+            }
+            message = loader.render_to_string(email_template_name, parameters)
+            html_message = strip_tags(message)
+            try:
+                send_mail(subject, html_message, '', [user.email], html_message=message, fail_silently=False)
+            except:
+                return HttpResponse('Invalid Header')
+
+            return HttpResponseRedirect('/accounts/registration_done')
     else:
         raise NotImplementedError
     
     template = loader.get_template('accounts/signup.html')
     return HttpResponse(template.render({'form': form}, request))
+
+def registration_done(request):
+    template = loader.get_template('accounts/registration_done.html')
+    return HttpResponse(template.render({}, request))
+
+def activate_account(request,uidb64,token):
+    # template = loader.get_template('accounts/login.html')
+    print(uidb64, flush=True)
+    user_pk = int(force_str(urlsafe_base64_decode(uidb64)))
+    print(user_pk, flush=True)
+    user = User.objects.filter(pk=user_pk).first()
+    print(user.username, flush=True)
+    print(user.is_active, flush=True)
+    user.is_active = True
+    user.save()
+    print(user.is_active)
+    print(token, flush=True)
+    return HttpResponseRedirect('/accounts/login')
+
 
 def log_in(request):
     if request.method == 'GET':
@@ -681,6 +725,7 @@ def log_in(request):
             return HttpResponseRedirect('/')
         form = LoginForm()
     elif request.method == 'POST':
+        redirect_to = request.GET.get('next', '')
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -688,12 +733,17 @@ def log_in(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(redirect_to)
             else:
-                error_message = 'Username or Password was incorrect' 
+                user = User.objects.filter(username=username).first()
+                print(user, flush=True)
+                if not user.is_active:
+                    error_message = 'This account has not been activated yet'
+                else: 
+                    error_message =  'Username or Password was incorrect'
 
                 template = loader.get_template('accounts/login.html')
-                return HttpResponse(template.render({'form': form}, request))
+                return HttpResponse(template.render({'form': form, 'error_message': error_message}, request))
     else: 
         raise NotImplementedError
     

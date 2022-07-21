@@ -61,10 +61,10 @@
                             <a class="dropdown-item" href="{{ analytics_url }}">Analytics</a>
                             <a class="dropdown-item" href="{{ upload_url }}">Upload Manga</a>
                             {% endif %}
-                            <a class="dropdown-item" href="{{ logout_url }}">Log Out</a>
+                            <a class="dropdown-item" href="{{ logout_url }}?next={% firstof request.path '/' %}">Log Out</a>
                         </div>
                         {% else %}
-                        <a class="btn btn-outline-login" href="{{ login_url }}">
+                        <a class="btn btn-outline-login" href="{{ login_url }}?next={% firstof request.path '/' %}">
                            Log In
                         </a>
                         {% endif %}

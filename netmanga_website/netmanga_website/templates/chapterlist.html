@@ -35,7 +35,11 @@
                         <h2 class="creator-username rounded-circle">{{manga.creator.user.username}}</h2>
                     </a>
                     
-                    {% if user == manga.creator.user %}
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}" class="btn btn-subscribe" style="float:right"> 
+                        Subscribe
+                    </a>
+                    {% elif user == manga.creator.user %}
                     <a href="{% url 'accounts:new_chapter_form' pk=manga.pk %}" class="btn btn-subscribe" style="float:right"> 
                         <i class="fa fa-upload" style="font-size: 18px;"></i>
                         Chapter

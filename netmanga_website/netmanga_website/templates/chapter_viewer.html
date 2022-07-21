@@ -127,6 +127,20 @@
                 
                 <li class="like-buttons">
                     <div>
+                        {% if not user.is_authenticated %}
+                        <div id="like">
+                            <a class="btn btn-like" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}">
+                                <i class="fa fa-thumbs-up"></i> 
+                                <small class="thumbs-up">{{likes}}</small>
+                            </a> 
+                        </div>
+                        <div id="dislike">
+                            <a class="btn btn-like" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}">
+                                <i class="fa fa-thumbs-down"></i> 
+                                <small class="thumbs-down">{{dislikes}}</small>
+                            </a>
+                        </div>
+                        {% else %}
                         <form id="like" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="like" value="1"/>
@@ -163,7 +177,6 @@
                             
                             {% endif %}
                         </form>
-                        {%  if user.is_authenticated %}
                         <script>
                             var likes = parseInt('{{likes}}')
                             var dislikes = parseInt('{{dislikes}}')
@@ -249,13 +262,13 @@
                                     <div class="dropdown-text">Report</div> 
                                 </a>
                                 {% else %}
-                                <a class="dropdown-item" id="give_award" href="{% url 'accounts:login' %}">
+                                <a class="dropdown-item" id="give_award" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}">
                                     <div class="dropdown-image">
                                         <i class="fa fa-gift"></i>
                                     </div> 
                                     <div class="dropdown-text">Awards</div> 
                                 </a>
-                                <a class="dropdown-item" id="report_chapter" href="{% url 'accounts:login' %}"> 
+                                <a class="dropdown-item" id="report_chapter" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}"> 
                                     <div class="dropdown-image">
                                         <i class="fa fa-flag"></i>
                                     </div> 
@@ -276,7 +289,13 @@
                         <h5 class="creator-name"  style="float: right;">{{ chapter.manga.creator.user.username }}</h5>
                     </a>
                 </li>
-                {% if chapter.manga.creator.user == user %}
+                {% if not user.is_authenticated %}
+                <li  style="float:right;">
+                    <a href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}" class="btn btn-subscribe">
+                        Subscribe
+                    </a>
+                </li>
+                {% elif chapter.manga.creator.user == user %}
                 <li  style="float:right;">
                     <a href="{% url 'accounts:edit_chapter_form' pk=chapter.pk %}" class="btn btn-subscribe">
                         Edit Chapter
@@ -435,16 +454,22 @@
                 {% if user.is_authenticated %}
                     <img class="comment-user rounded-circle uploaded" height=50 width=50 src="{{user.profile.profile_picture.url}}" alt="{{user.username}} Cover Picture">
                 {% else %}
-                    <img class="comment-user rounded-circle uploaded" height=50 width = 50 src="{% static 'img/no_profile_picture.png' %}" alt="No Profile Picture">
+                    <img class="comment-user rounded-circle uploaded" height=50 width=50 src="{% static 'img/no_profile_picture.png' %}" alt="No Profile Picture">
                 {% endif %}
                 <form id="comment" method="post">
                     {% csrf_token %}
                     {% for field in comment_form %}
                     {{field}}
                     {% endfor %}
+                    {% if user.is_authenticated %}
                     <button class=" btn btn-login">
                         Publish
                     </button>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}" class=" btn btn-login">
+                        Publish
+                    </a>
+                    {% endif %}
                 </form>
                 </br>
             </li>
@@ -454,6 +479,20 @@
                 <small class="username">{{ comment_info.comment.user.username  }}</small>
                 <p class= "comment">{{ comment_info.comment.comment }}</p>
                 <div class="row">
+                    {% if not user.is_authenticated %}
+                        <div id="commentlike" class="commentlike-{{forloop.counter}}">
+                            <a class="btn btn-like" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}">
+                                <i class="fa fa-thumbs-up"></i> 
+                                <small class="thumbs-up">{{comment_info.comment.like}}</small>
+                            </a> 
+                        </div>
+                        <div id="commentdislike" class="commentdislike-{{forloop.counter}}">
+                            <a class="btn btn-like" href="{% url 'accounts:login' %}?next={% firstof request.path '/' %}">
+                                <i class="fa fa-thumbs-down"></i> 
+                                <small class="thumbs-down">{{comment_info.comment.dislike}}</small>
+                            </a>
+                        </div>
+                    {% else %}
                     <form id="commentlike" class="commentlike-{{forloop.counter}}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="commentlike" value="{{comment_info.comment.pk}}"/>
@@ -487,6 +526,7 @@
                         <small class="thumbs">{{comment_info.comment.dislike}} </small>
                         {% endif %}  
                     </form>
+                    {% endif %}
                 </div>
             </li>
             {% if user.is_authenticated %}
