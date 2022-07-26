@@ -13,11 +13,13 @@ def process_withdraws(request):
     template = loader.get_template('staff/process_withdraws.html')
     if request.method == 'GET':
         if request.user.is_staff:
+            print(request.user.is_staff, flush=True) 
             withdraw_orders = WithdrawOrder.objects.all().order_by('date_time')
+            pending_order_infos = []
+            failed_order_infos = []
+            succeeded_order_infos = []
             if withdraw_orders:
-                pending_order_infos = []
-                failed_order_infos = []
-                succeeded_order_infos = []
+                
                 for i in range(0,len(withdraw_orders)):
                     #print(withdraw_orders[i].date_time.strftime('%d.%m.%y'), flush = True)
                     #print(withdraw_orders[i-1].date_time.strftime('%d.%m.%y'), flush = True)

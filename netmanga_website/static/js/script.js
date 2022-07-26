@@ -579,44 +579,47 @@ if(manga_pages_box){
     sticky(manga_pages_box);
 }
 
-document.querySelector(".page-card").addEventListener("touchstart", startTouch, false);
-document.querySelector(".page-card").addEventListener("touchmove", moveTouch, false);
+if(document.querySelector(".page-card")){
+    document.querySelector(".page-card").addEventListener("touchstart", startTouch, false);
+    document.querySelector(".page-card").addEventListener("touchmove", moveTouch, false);
 
-var initialX = null;
-var initialY = null;
-
-function startTouch(e) {
-    initialX = e.touches[0].clientX;
-    initialY = e.touches[0].clientY;
-};
-
-function moveTouch(e) {
-    if (initialX === null) {
-        return;
-    }
+    var initialX = null;
+    var initialY = null;
     
-    if (initialY === null) {
-        return;
-    }
+    function startTouch(e) {
+        initialX = e.touches[0].clientX;
+        initialY = e.touches[0].clientY;
+    };
     
-    var currentX = e.touches[0].clientX;
-    var currentY = e.touches[0].clientY;
-    
-    var diffX = initialX - currentX;
-    var diffY = initialY - currentY;
-    
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 0) {
-        // swiped left
-        document.getElementById('previous-page').click();
-        } else {
-        // swiped right
-        document.getElementById('next-page').click();
+    function moveTouch(e) {
+        if (initialX === null) {
+            return;
+        }
+        
+        if (initialY === null) {
+            return;
+        }
+        
+        var currentX = e.touches[0].clientX;
+        var currentY = e.touches[0].clientY;
+        
+        var diffX = initialX - currentX;
+        var diffY = initialY - currentY;
+        
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+            // swiped left
+            document.getElementById('previous-page').click();
+            } else {
+            // swiped right
+            document.getElementById('next-page').click();
+            } 
         } 
-    } 
-    
-    
-    initialX = null;
-    
-    e.preventDefault();
+        
+        
+        initialX = null;
+        
+        e.preventDefault();
+    }
 }
+
