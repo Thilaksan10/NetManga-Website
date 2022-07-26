@@ -13,7 +13,6 @@ def process_withdraws(request):
     template = loader.get_template('staff/process_withdraws.html')
     if request.method == 'GET':
         if request.user.is_staff:
-            print(request.user.is_staff, flush=True) 
             withdraw_orders = WithdrawOrder.objects.all().order_by('date_time')
             pending_order_infos = []
             failed_order_infos = []
