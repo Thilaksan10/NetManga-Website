@@ -1612,6 +1612,13 @@ h5.title:hover {
   text-decoration: none;
 }
 
+@media(min-width:768px){
+  .wi-100{
+    width: 100%!important;
+  }
+}
+
+
 .viewer-content {
   margin-top: 130px;
   position: relative;
@@ -2966,8 +2973,6 @@ li.subscribe-button {
 .comment-user {
   float: left;
 }
-
-
 
 #comment button {
   margin-top: 10px;
