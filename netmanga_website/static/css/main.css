@@ -1658,7 +1658,7 @@ h5.title:hover {
   border-radius: 3px;
   box-shadow: 0 4px 6px rgb(49 54 68 / 5%), 0 5px 20px rgb(49 54 68 / 8%);
   display: inline-grid;
-  grid-template-columns: 185px auto;
+  grid-template-columns: auto 0;
   height: 400px;
   width:250px;
   overflow: hidden;
@@ -1686,7 +1686,7 @@ h5.title:hover {
     border-radius: 3px;
     box-shadow: 0 4px 6px rgb(49 54 68 / 5%), 0 5px 20px rgb(49 54 68 / 8%);
     display: inline-grid;
-    grid-template-columns: 185px auto;
+    grid-template-columns: auto 0;
     height: 450px;
     width:281.25px;
     overflow: hidden;
@@ -1720,7 +1720,7 @@ h5.title:hover {
     border-radius: 3px;
     box-shadow: 0 4px 6px rgb(49 54 68 / 5%), 0 5px 20px rgb(49 54 68 / 8%);
     display: inline-grid;
-    grid-template-columns: 185px auto;
+    grid-template-columns: auto 0;
     height: 550px;
     width:343.75px;
     overflow: hidden;
@@ -1754,7 +1754,7 @@ h5.title:hover {
     border-radius: 3px;
     box-shadow: 0 4px 6px rgb(49 54 68 / 5%), 0 5px 20px rgb(49 54 68 / 8%);
     display: inline-grid;
-    grid-template-columns: 185px auto;
+    grid-template-columns: auto 0;
     height: 650px;
     width: 406.25px;
     overflow: hidden;
@@ -1788,7 +1788,7 @@ h5.title:hover {
     border-radius: 3px;
     box-shadow: 0 4px 6px rgb(49 54 68 / 5%), 0 5px 20px rgb(49 54 68 / 8%);
     display: inline-grid;
-    grid-template-columns: 185px auto;
+    grid-template-columns: auto 0;
     height: 720px;
     width: 450px;
     overflow: hidden;
