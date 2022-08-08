@@ -5104,3 +5104,33 @@ p a:hover {
   font-weight: 500;
   color: #e8e8e8;
 }
+
+.withdrawal-status-button {
+  text-align: center; 
+  padding-top: 15px;
+}
+
+.withdrawal-status-button form{
+  display: inline;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.withdrawal-status-button form button{
+  height: 50px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #ea0a8e;
+  border-color: #ea0a8e;
+  border: 2px solid transparent;
+  margin-top: 6px;
+  border-radius: 2rem;
+  transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out, border-color 0.35s ease-in-out;
+}
+
+.withdrawal-status-button form button:hover {
+  color: #ea0a8e;
+  background-color: transparent;
+  border-color: #ea0a8e;
+  border: 2px solid;
+}

@@ -93,7 +93,7 @@ def process_withdrawal(request, pk):
     pass
 
 def process_reports(request):
-    template = loader.get_template('footer/process_reports.html')
+    template = loader.get_template('staff/process_reports.html')
     if request.method == 'GET':
         if request.user.is_staff:
             return HttpResponse(template.render({}, request))

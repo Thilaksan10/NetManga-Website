@@ -128,14 +128,47 @@
         <div class="modal-content withdraw">
             <div class="close">+</div>
             <div class="withdrawal-info">
-                <div>ID: {{withdraw_order.pk}}</div>
-                <div>Date: {{withdraw_order.date_time |date:'d.m.Y H:i'}}</div>
-                <div>Creator: {{withdraw_order.creator}}</div>
-                <div>First name: {{withdraw_order.creator.first_name}}</div>
-                <div>Last name: {{withdraw_order.creator.last_name}}</div>
-                <div>Creator E-mail: {{withdraw_order.creator.email}}</div>
-                <div>To: {{withdraw_order.paypal}}</div>
-                <div>{{withdraw_order.amount}}€</div>
+                <h2>Withdrawal ID: {{withdraw_order.pk}}</h2>
+                <br>
+                <div style="font-size: 17px; font-weight: 600;">{{withdraw_order.date_time |date:'d.m.Y H:i'}}</div>
+                <br>
+                <div style="font-size: 17px; font-weight: 600;">Creator: {{withdraw_order.creator}}</div>
+                <div style="font-size: 17px; font-weight: 600;">E-mail: {{withdraw_order.creator.email}}</div>
+                <div style="font-size: 17px; font-weight: 600;">Name: {{withdraw_order.creator.first_name}} {{withdraw_order.creator.last_name}}</div>
+                <br>
+                <div style="font-size: 19px; font-weight: 600;">To: {{withdraw_order.paypal}}</div>
+                <div style="font-size: 25px; font-weight: 600;">{{withdraw_order.amount}}€</div>
+            </div>
+            <br>
+            <br>
+            <div class="withdrawal-status-button">
+                {% if withdraw_order.status == "Succeeded" or withdraw_order.status == "Failed" %}
+                    <form method="post">
+                        <input type="hidden" name="Pending" value="0"/>
+                        <button>
+                            <i class="fa fa-hourglass-half" style="color: rgb(255, 194, 27);"></i>
+                            Mark as Pending
+                        </button>
+                    </form>
+                {% endif %}
+                {% if withdraw_order.status == "Succeeded" or withdraw_order.status == "Pending" %}
+                    <form method="post"> 
+                        <input type="hidden" name="Failed" value="1"/>
+                        <button>
+                            <i class="fa fa-times-circle" style="color: rgb(255, 27, 27);"></i>
+                            Mark as Failed
+                        </button>
+                    </form>
+                {% endif %}
+                {% if withdraw_order.status == "Pending" or withdraw_order.status == "Failed" %}
+                    <form method="post">
+                        <input type="hidden" name="Succeeded" value="2"/>
+                        <button>
+                            <i class="fa fa-check-circle" style="color: rgb(0, 212, 64);"></i>
+                            Mark as Succeeded
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
